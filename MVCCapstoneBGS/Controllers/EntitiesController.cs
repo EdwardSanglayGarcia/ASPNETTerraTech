@@ -570,6 +570,9 @@ namespace MVCCapstoneBGS.Controllers
         [HttpPost]
         public ActionResult SubmitReport(CaseReport UI, HttpPostedFileBase image1)
         {
+
+            string re = UI.CaseLocation + " " + UI.UserInformationID;
+
             _IDataProvider.InsertCaseReport(UI, image1);
             ViewBag.VBLayout = Layout_CU;
             ViewBag.DATETIMENOW = DateTime.Now.Date.ToLongDateString() + " - " + DateTime.Now.TimeOfDay;
