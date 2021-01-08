@@ -151,8 +151,8 @@ C:\Users\pc\Documents\GitHub\ASPNETTerraTech\ASPNETTerraTech\MVCCapstoneBGS\bin\
 C:\Users\pc\Documents\GitHub\ASPNETTerraTech\ASPNETTerraTech\MVCCapstoneBGS\bin\System.Web.Helpers.xml
 C:\Users\pc\Documents\GitHub\ASPNETTerraTech\ASPNETTerraTech\MVCCapstoneBGS\bin\System.Web.Mvc.xml
 C:\Users\pc\Documents\GitHub\ASPNETTerraTech\ASPNETTerraTech\MVCCapstoneBGS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\pc\Documents\GitHub\ASPNETTerraTech\ASPNETTerraTech\MVCCapstoneBGS\obj\Release\MVCCapstoneBGS.csprojAssemblyReference.cache
 C:\Users\pc\Documents\GitHub\ASPNETTerraTech\ASPNETTerraTech\MVCCapstoneBGS\obj\Release\MVCCapstoneBGS.csproj.CoreCompileInputs.cache
 C:\Users\pc\Documents\GitHub\ASPNETTerraTech\ASPNETTerraTech\MVCCapstoneBGS\obj\Release\MVCCapstoneBGS.csproj.CopyComplete
 C:\Users\pc\Documents\GitHub\ASPNETTerraTech\ASPNETTerraTech\MVCCapstoneBGS\obj\Release\MVCCapstoneBGS.dll
 C:\Users\pc\Documents\GitHub\ASPNETTerraTech\ASPNETTerraTech\MVCCapstoneBGS\obj\Release\MVCCapstoneBGS.pdb
+C:\Users\pc\Documents\GitHub\ASPNETTerraTech\ASPNETTerraTech\MVCCapstoneBGS\obj\Release\MVCCapstoneBGS.csprojAssemblyReference.cache
