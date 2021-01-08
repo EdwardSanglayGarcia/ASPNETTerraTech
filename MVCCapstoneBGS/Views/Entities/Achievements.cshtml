@@ -1,0 +1,135 @@
+﻿@{
+    Layout = "~/TerraTech/TerraShared/CommunityUser.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        @LabelStruct.CommunityUser.Achievements
+    </title>
+</head>
+<body>
+
+
+    <div class="card mb-4">
+        <div class="card-header"></div>
+
+        <div class="card-body">
+
+            <h1 align="center" style="font-size:6vw;">MY ACHIEVEMENTS</h1>
+
+            <div class="control-label col-xs-12 col-sm-4">
+                <label class="asteriskRequired"></label>
+            </div>
+
+            <div class="row">
+                <!--MEDAL FOR TOP MONTHLY AND YEARLY SHOULD BE PUT HERE-->
+
+                <center>
+
+                    @*<img src="https://i.imgur.com/M2yg9DO.png" alt="Land Reporter of the Month (Top 1)" style="width:150px;height:150px;" data-toggle="popover-click" data-content="<h4>Top 1 Land Savior</h4> <em>Rank 1 of the Overall Land Reports of the Month!</em>">
+                    <img src="https://i.imgur.com/OQN4lY8.png" alt="Land Reporter of the Month (Top 2)" style="width:150px;height:150px;" data-toggle="popover-click" data-content="<h4>Top 1 Land Savior</h4> <em>Rank 1 of the Overall Land Reports of the Month!</em>">
+                    <img src="https://i.imgur.com/XTUH37q.png" alt="Land Reporter of the Month (Top 3)" style="width:150px;height:150px;" data-toggle="popover-click" data-content="<h4>Top 1 Land Savior</h4> <em>Rank 1 of the Overall Land Reports of the Month!</em>">
+         
+                    <img src="https://i.imgur.com/80A2uzV.png" alt="Water Reporter of the Month (Top 1)" style="width:150px;height:150px;" data-toggle="popover-click" data-content="<h4>Top 1 Land Savior</h4> <em>Rank 1 of the Overall Land Reports of the Month!</em>">
+                    <img src="https://i.imgur.com/HC1rOJx.png" alt="Water Reporter of the Month (Top 2)" style="width:150px;height:150px;" data-toggle="popover-click" data-content="<h4>Top 1 Land Savior</h4> <em>Rank 1 of the Overall Land Reports of the Month!</em>">
+                    <img src="https://i.imgur.com/x0IOwkC.png" alt="Water Reporter of the Month (Top 3)" style="width:150px;height:150px;" data-toggle="popover-click" data-content="<h4>Top 1 Land Savior</h4> <em>Rank 1 of the Overall Land Reports of the Month!</em>">
+          
+                    <img src="https://i.imgur.com/7vm7Asb.png" alt="Land Reporter of the Year (Top 1-3)" style="width:150px;height:150px;" data-toggle="popover-click" data-content="<h4>Top 1 Land Savior</h4> <em>Rank 1 of the Overall Land Reports of the Month!</em>">
+                    <img src="https://i.imgur.com/y596YWj.png" alt="Land Reporter of the Year (Top 4-7)" style="width:150px;height:150px;" data-toggle="popover-click" data-content="<h4>Top 1 Land Savior</h4> <em>Rank 1 of the Overall Land Reports of the Month!</em>">
+                    <img src="https://i.imgur.com/zJ3GQt4.png" alt="Land Reporter of the Year (Top 8-10)" style="width:150px;height:150px;" data-toggle="popover-click" data-content="<h4>Top 1 Land Savior</h4> <em>Rank 1 of the Overall Land Reports of the Month!</em>">
+
+                    <img src="https://i.imgur.com/HBiFdga.png" alt="Water Reporter of the Year (Top 1-3)" style="width:150px;height:150px;" data-toggle="popover-click" data-content="<h4>Top 1 Land Savior</h4> <em>Rank 1 of the Overall Land Reports of the Month!</em>">
+                    <img src="https://i.imgur.com/gaK5lvU.png" alt="Water Reporter of the Year (Top 4-7)" style="width:150px;height:150px;" data-toggle="popover-click" data-content="<h4>Top 1 Land Savior</h4> <em>Rank 1 of the Overall Land Reports of the Month!</em>">
+                    <img src="https://i.imgur.com/uUe2Um8.png" alt="Water Reporter of the Year (Top 8-10)" style="width:150px;height:150px;" data-toggle="popover-click" data-content="<h4>Top 1 Land Savior</h4> <em>Rank 1 of the Overall Land Reports of the Month!</em>">*@
+
+                </center>
+
+                <!--DATATABLE SHOULD BE PRESENT HERE IN THIS COLUMN AND WORKING FINE-->
+                <div class="col-md-9">
+                    @*<table id="SubmittedTable" class="table table-hover table-striped table-bordered table-responsive-sm" cellspacing="0" style="width:100%; "></table>*@
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card-footer small text-muted"></div>
+    </div>
+
+
+    <div class="card mb-4">
+        <div class="card-header" style="text-align:center;">
+            Overall Achievements
+        </div>
+        <div class="card-body">
+            <center>
+                <img src="https://i.imgur.com/fQWwWWs.png" alt="Helper" style="width:150px;height:150px; @ViewBag.Helper" data-toggle="popover-click" data-content="<h4>Helper</h4> <em>Completed 1 Environmental Concern</em>">
+                <img src="https://i.imgur.com/bC8MSUS.png" alt="Unknown Helper" style="width:150px;height:150px; @ViewBag.UnknownHelper" data-toggle="popover-click" data-content="<h4>Unknown Helper</h4> <em>Completed Concern in 1 Area</em>">
+                <img src="https://i.imgur.com/NfOsGMU.png" alt="Making Changes" style="width:150px;height:150px; @ViewBag.MakingChanges" data-toggle="popover-click" data-content="<h4>Making Changes</h4> <em>Completed Concern in 2  Different Area</em>">
+                <img src="https://i.imgur.com/1Oq8PkM.png" alt="Ally of Environment" style="width:150px;height:150px; @ViewBag.AllyOfEnvironment" data-toggle="popover-click" data-content="<h4>Ally of Environment</h4> <em>Completed Concern in 3 Different Area</em>">
+                <img src="https://i.imgur.com/hqptj8Q.png" alt="Friendly Nature" style="width:150px;height:150px; @ViewBag.FriendlyNature" data-toggle="popover-click" data-content="<h4>Friendly Nature</h4> <em>Completed Concern in 4 Different Area</em>">
+                <img src="https://i.imgur.com/xRzUC4N.png" alt="True Supporter" style="width:150px;height:150px; @ViewBag.TrueSupporter" data-toggle="popover-click" data-content="<h4>True Supporter</h4> <em>Completed Concern in 5 Different Area</em>">
+                <img src="https://i.imgur.com/zL7MNGo.png" alt="The One" style="width:150px;height:150px; @ViewBag.TheOne" data-toggle="popover-click" data-content="<h4>The One</h4> <em>Completed 100 Environmental Concern</em>">
+            </center>
+
+        </div>
+        <div class="card-footer small text-muted"></div>
+    </div>
+
+    <div class="row">
+
+        <!--LAND ACHIEVEMENTS SHOULD BE PUT HERE-->
+        <!--ARRANGEMENTS FOR ACCEPTED REPORT 5-50-->
+        <!--ALTERNATIVE NAME FOR IF THE PICTURE WILL NOT LOAD AND FOR THE PURPOSE OF EASY TO SEARCH-->
+        <div class="col-md-6">
+            <div class="card-header" style="text-align:center;">Land Achievements</div>
+            <center>
+                <img src="https://i.imgur.com/tbvsToi.png" alt="Earth Bender" style="width:150px;height:150px; @ViewBag.EarthBender" data-toggle="popover-click" data-content="<h4>Earth Bender</h4> <em>Completed 5 Land Environmental Concerns</em>">
+                <img src="https://i.imgur.com/tumzAvf.png" alt="Buddy of Land" style="width:150px;height:150px;  @ViewBag.BuddyOfLand" data-toggle="popover-click" data-content="<h4>Buddy of Land</h4> <em>Completed 10 Land Environmental Concerns</em>">
+                <img src="https://i.imgur.com/OpFV67c.png" alt="The Value of Land" style="width:150px;height:150px; @ViewBag.TheValueOfLand" data-toggle="popover-click" data-content="<h4>The Value of Land</h4> <em>Completed 15 Land Environmental Concerns</em>">
+                <img src="https://i.imgur.com/Dhgi0oO.png" alt="Land Expert" style="width:150px;height:150px; @ViewBag.LandExpert" data-toggle="popover-click" data-content="<h4>Land Expert</h4> <em>Completed 20 Land Environmental Concerns</em>">
+                <img src="https://i.imgur.com/AQel0J2.png" alt="True Hero in Land" style="width:150px;height:150px; @ViewBag.TrueHeroInLand" data-toggle="popover-click" data-content="<h4>True Hero in Land</h4> <em>Completed 25 Land Environmental Concerns</em>">
+                <img src="https://i.imgur.com/honNJIR.png" alt="Land Lover" style="width:150px;height:150px; @ViewBag.LandLover" data-toggle="popover-click" data-content="<h4>Land Lover</h4> <em>Completed 30 Land Environmental Concerns</em>">
+                <img src="https://i.imgur.com/mQ3u2gw.png" alt="Captain Saver of Land" style="width:150px;height:150px; @ViewBag.CaptainSaverOfLand" data-toggle="popover-click" data-content="<h4>Captain Saver of Land</h4> <em>Completed 50 Land Environmental Concerns</em>">
+            </center>
+            <div class="card-footer"></div>
+        </div>
+
+        <!--WATER ACHIEVEMENTS SHOULD BE PUT HERE-->
+        <!--ARRANGEMENTS FOR ACCEPTED REPORT 5-50-->
+        <!--ALTERNATIVE NAME FOR IF THE PICTURE WILL NOT LOAD AND FOR THE PURPOSE OF EASY TO SEARCH-->
+        <div class="col-md-6">
+            <div class="card-header" style="text-align:center;">Water Achievements</div>
+            <center>
+                <img src="https://i.imgur.com/6qb53EO.png" alt="Water Bender" style="width:150px;height:150px; @ViewBag.WaterBender" data-toggle="popover-click" data-content="<h4>Water Bender</h4> <em>Completed 5 Water Environmental Concerns</em>">
+                <img src="https://i.imgur.com/kIIlo6i.png" alt="Buddy of Water" style="width:150px;height:150px; @ViewBag.BuddyOfWater" data-toggle="popover-click" data-content="<h4>Buddy of Water</h4> <em>Completed 10 Water Environmental Concerns</em>">
+                <img src="https://i.imgur.com/M4xGarE.png" alt="The Value of  Water" style="width:150px;height:150px; @ViewBag.TheValueOfWater" data-toggle="popover-click" data-content="<h4>The Value of  Water</h4> <em>Completed 15 Land Environmental Concerns</em>">
+                <img src="https://i.imgur.com/bArM4XD.png" alt="Water Expert" style="width:150px;height:150px; @ViewBag.WaterExpert" data-toggle="popover-click" data-content="<h4>Water Expert</h4> <em>Completed 20 Water Environmental Concerns</em>">
+                <img src="https://i.imgur.com/RlfUxJ3.png" alt="True Hero in Water" style="width:150px;height:150px; @ViewBag.TrueHeroInWater" data-toggle="popover-click" data-content="<h4>True Hero in Water</h4> <em>Completed 25 Water Environmental Concerns</em>">
+                <img src="https://i.imgur.com/Iqfl9Kl.png" alt="Water Lover" style="width:150px;height:150px; @ViewBag.WaterLover" data-toggle="popover-click" data-content="<h4>Water Lover</h4> <em>Completed 30 Water Environmental Concerns</em>">
+                <img src="https://i.imgur.com/9ctp4iA.png" alt="Captain Saver of Water" style="width:150px;height:150px; @ViewBag.CaptainSaverOfWater" data-toggle="popover-click" data-content="<h4>Captain Saver of Water</h4> <em>Completed 50 Water Environmental Concerns</em>">
+            </center>
+            <div class="card-footer"></div>
+        </div>
+
+
+        <div class="control-label col-xs-12 col-sm-4">
+            <label class="asteriskRequired"></label>
+        </div>
+    </div>
+</body>
+</html>
+
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="popover-click"]').popover({
+            html: true,
+            trigger: 'hover',
+            placement: 'top',
+            content: function () { return '<img src="' + $(this).data('img') + '" />'; }
+        });
+        $('[data-toggle="popover"]').popover();
+    });
+</script>
