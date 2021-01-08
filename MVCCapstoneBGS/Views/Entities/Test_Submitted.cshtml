@@ -211,6 +211,7 @@
     $('.leaflet-control-attribution').hide();
 
     $('#myModalUpdate').on('shown.bs.modal', function () {
+
         $('#myModalUpdate').modal('show');
 
         setTimeout(function () {
@@ -286,20 +287,21 @@
                     data: "CaseReportID"
                 },
                 {
-                    title: "Date",
+                    title: "Date Reported",
                     data: "DateReported",
-                    "render": function (value) {
-                        if (value === null) return "";
+                    //"render": function (value) {
+                    //    if (value === null) return "";
 
-                        var pattern = /Date\(([^)]+)\)/;
-                        var results = pattern.exec(value);
-                        var dt = new Date(parseFloat(results[1]));
+                    //    var pattern = /Date\(([^)]+)\)/;
+                    //    var results = pattern.exec(value);
+                    //    var dt = new Date(parseFloat(results[1]));
 
-                        return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
-                    }
+                    //    return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
+                    //},
+                    visible: false
                 },
                 {
-                    title: "Date Updated",
+                    title: "Date",
                     data: "UpdatedStatusDate",
                     "render": function (value) {
                         if (value === null) return "";
@@ -310,7 +312,7 @@
 
                         return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
                     },
-                    visible: false
+                    visible: true
                 },
 
                 {
@@ -395,6 +397,7 @@
     });
 
     $(document).on("click", ".btnUpdate", function () {
+
         $('#myModalUpdate').modal('show');
         var data = table.row($(this).parents('tr')).data();
         var PARAM_CaseReportID = data["CaseReportID"];

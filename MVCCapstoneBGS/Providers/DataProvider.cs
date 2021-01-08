@@ -318,17 +318,18 @@ namespace MVCCapstoneBGS
                 var param = new DynamicParameters();
                 param.Add("@UserInformationID", UI.UserInformationID);
                 param.Add("@EnvironmentalConcernID", UI.EnvironmentalConcernID);
-                param.Add("@XCoordinates", UI.XCoordinates);
-                param.Add("@YCoordinates", UI.YCoordinates);
-                param.Add("@CaseLocation", UI.CaseLocation);
+                param.Add("@XCoordinates", 14.565028190612793);
+                param.Add("@YCoordinates", 121.04190826416016);
+                param.Add("@CaseLocation", "DUMMY LOCATION");
                 param.Add("@CaseReportPhoto", UI.CaseReportPhoto);
                 param.Add("@Notes",UI.Notes);
                 param.Add("@Hits",hits);
 
-
-                result = con.Query<CaseReport>(
-               StoredProcedureEnum.I_CaseReport.ToString(), param, commandType: CommandType.StoredProcedure).ToList();
-
+                for (int i = 1; i <= 100; i++)
+                {
+                    result = con.Query<CaseReport>(
+                   StoredProcedureEnum.I_CaseReport.ToString(), param, commandType: CommandType.StoredProcedure).ToList();
+                }
             }
             return result;
         }

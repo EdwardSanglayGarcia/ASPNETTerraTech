@@ -305,10 +305,11 @@
                         var dt = new Date(parseFloat(results[1]));
 
                         return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
-                    }
+                    },
+                    visible: false
                 },
                 {
-                    title: "Date Updated",
+                    title: "Date",
                     data: "UpdatedStatusDate",
                     "render": function (value) {
                         if (value === null) return "";
@@ -318,8 +319,7 @@
                         var dt = new Date(parseFloat(results[1]));
 
                         return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
-                    },
-                    visible: false
+                    }
                 },
 
                 {

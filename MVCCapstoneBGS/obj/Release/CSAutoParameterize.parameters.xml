@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <parameters>
   <parameter name="CapstoneDemo-Web.config Connection String" description="CapstoneDemo Connection String used in web.config by the application to access the database." defaultValue="Data Source=sql5101.site4now.net;Initial Catalog=DB_A6D740_CapstoneBGSTrial;User ID=DB_A6D740_CapstoneBGSTrial_admin;Password=CapstoneBGS123" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="C:\\Users\\pc\\Desktop\\Capstone\ Codes\\Final\ Web\ Application\\MVCCapstoneBGS\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='CapstoneDemo']/@connectionString" />
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\pc\\Documents\\GitHub\\ASPNETTerraTech\\ASPNETTerraTech\\MVCCapstoneBGS\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='CapstoneDemo']/@connectionString" />
   </parameter>
 </parameters>

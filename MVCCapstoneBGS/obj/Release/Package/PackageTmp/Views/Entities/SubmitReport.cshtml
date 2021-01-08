@@ -89,7 +89,7 @@
     var FINAL_LONGITUDE;
     var FINAL_LOCATION;
 
-    var getData = function () {
+    @*var getData = function () {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 browserGeolocationSuccess,
@@ -211,9 +211,9 @@
 
             }
         };
-    }
+    }*@
 
-    @*function getData() {
+    function getData() {
         if (navigator.geolocation) {
 
             navigator.geolocation.watchPosition(providePosition, showError, {
@@ -281,6 +281,7 @@
                 var UserInformationID;
                 UserInformationID = document.getElementById("UserInformationID");
                 UserInformationID.value = @Session["UserInformationID"];
+                alert(UserInformationID);
 
                 XCoordinates = document.getElementById("XCoordinates");
                 XCoordinates.value = FINAL_LATITUDE;
@@ -311,7 +312,7 @@
 
             }
         };
-    }*@
+    }
 
 
     //**ALL COMMENTS HERE ARE STILL COMMENTS
