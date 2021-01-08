@@ -8,7 +8,7 @@ namespace MVCCapstoneBGS.Controllers
 {
     public class DataDeleteController : Controller
     {
-
+        //hello commit
         IDataProvider _IDataProvider;
         public DataDeleteController()
         {
