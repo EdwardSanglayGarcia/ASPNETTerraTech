@@ -314,10 +314,10 @@ namespace MVCCapstoneBGS
                     image1.InputStream.Read(UI.CaseReportPhoto, 0, image1.ContentLength);
                 }
 
-                UI.XCoordinates = Convert.ToInt32(14).ToString();
-                UI.YCoordinates = Convert.ToInt32(121).ToString();
-                UI.UserInformationID = 5;
-                UI.CaseLocation = "Kwarto ko";
+                //UI.XCoordinates = Convert.ToInt32(14).ToString();
+                //UI.YCoordinates = Convert.ToInt32(121).ToString();
+                //UI.UserInformationID = 5;
+                //UI.CaseLocation = "Kwarto ko";
 
 
                 con.Open();

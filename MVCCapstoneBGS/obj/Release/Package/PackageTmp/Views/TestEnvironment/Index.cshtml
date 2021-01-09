@@ -3,156 +3,43 @@
     Layout = null;
 }
 
-<!DOCTYPE html>
-
-<html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-    <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+
 </head>
-<body>
-    <div>
-        @*<img src="/TerraAssets/Photo/Area Report.png" />
-            @ViewBag.ResultLink*@
-    </div>
-</body>
-</html>
-
-
-
 
 <body>
-    <input type="hidden" name="YCoordinates" id="YCoordinates">
-    <input type="hidden" name="XCoordinates" id="XCoordinates">
-    <input type="hidden" name="CaseLocation" id="CaseLocation">
+    <div class="card-body"><canvas id="myBarChart" width="100" height="50"></canvas></div>
 </body>
 
 <script>
+    var BAR = document.getElementById("myBarChart");
+    var myBarChart = new Chart(BAR, {
+        type: 'bar',
+        data: {
+            labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+            datasets:
+                [
+                    { label: "Land Submitted 2020", data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 7, 0], backgroundColor: ['#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107'], }, { label: "Water Submitted 2020", data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0], backgroundColor: ['#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff',], }, { label: "Land Submitted 2021", data: [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], backgroundColor: ['#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107'], }, { label: "Water Submitted 2021", data: [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], backgroundColor: ['#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff',], }, { label: "Land Rejected 2020", data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1], backgroundColor: ['#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107'], }, { label: "Water Rejected 2020", data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0], backgroundColor: ['#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff',], }, { label: "Land Rejected 2021", data: [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], backgroundColor: ['#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107'], }, { label: "Water Rejected 2021", data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], backgroundColor: ['#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff',], }, { label: "Land Accepted 2021", data: [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], backgroundColor: ['#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107'], }, { label: "Water Accepted 2021", data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], backgroundColor: ['#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff',], }, { label: "Land In Progress 2020", data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0], backgroundColor: ['#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107'], }, { label: "Water In Progress 2020", data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], backgroundColor: ['#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff',], }, { label: "Land In Progress 2021", data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], backgroundColor: ['#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107'], }, { label: "Water In Progress 2021", data: [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], backgroundColor: ['#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff',], }, { label: "Land Completed 2020", data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0], backgroundColor: ['#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107'], }, { label: "Water Completed 2020", data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], backgroundColor: ['#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff',], }, { label: "Land Completed 2021", data: [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], backgroundColor: ['#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107'], }, { label: "Water Completed 2021", data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], backgroundColor: ['#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff',], },],
 
-var FINAL_LATITUDE;
-var FINAL_LONGITUDE;
-
-var getData = function() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-    	browserGeolocationSuccess,
-      browserGeolocationFail,
-      {maximumAge: 50000, timeout: 20000, enableHighAccuracy: true});
-  }
-};
-
-var browserGeolocationSuccess = function(position) {
-	alert("Browser geolocation success!\n\nlat = " + position.coords.latitude + "\nlng = " + position.coords.longitude);
-	FINAL_LATITUDE = position.coords.latitude;
-	FINAL_LONGITUDE = position.coords.longitude;
-	displayCoords();
-};
-
-var browserGeolocationFail = function(error) {
-  switch (error.code) {
-    case error.TIMEOUT:
-      alert("Browser geolocation error !\n\nTimeout.");
-      break;
-    case error.PERMISSION_DENIED:
-      if(error.message.indexOf("Only secure origins are allowed") == 0) {
-        tryAPIGeolocation();
-      }
-      break;
-    case error.POSITION_UNAVAILABLE:
-      alert("Browser geolocation error !\n\nPosition unavailable.");
-      break;
-  }
-};
-
-var tryAPIGeolocation = function() {
-	jQuery.post( "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyDCa1LUe1vOczX1hO_iGYgyo8p_jYuGOPU", function(success) {
-		apiGeolocationSuccess({coords: {latitude: success.location.lat, longitude: success.location.lng}});
-  })
-  .fail(function(err) {
-    alert("API Geolocation error! \n\n"+err);
-  });
-};
-
-
-var apiGeolocationSuccess = function(position) {
-	alert("API geolocation success!\n\nlat = " + position.coords.latitude+ "\nlng = " + position.coords.longitude);
-	FINAL_LATITUDE = position.coords.latitude;
-	FINAL_LONGITUDE = position.coords.longitude;
-	displayCoords();
-};
-
-
-function displayCoords()
-{
-alert(FINAL_LATITUDE+' '+FINAL_LONGITUDE);
-providePosition(FINAL_LATITUDE,FINAL_LONGITUDE);
-}
-
-
- function providePosition(lt,ln) {
-
-        var XCoordinate = lt;
-        var YCoordinate = ln;
-
-        var query = "latitude=" + XCoordinate + "&longitude=" + YCoordinate + "&localityLanguage=en";
-
-        //Establish a request
-        const Http = new XMLHttpRequest();
-
-        var bigdatacloud_api = "https://api.bigdatacloud.net/data/reverse-geocode-client?";
-        bigdatacloud_api += query;
-        Http.open("GET", bigdatacloud_api);
-        Http.send();
-
-        Http.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                var myObj = JSON.parse(this.responseText);
-
-                //Information.innerHTML += "<br />" +
-                //    "X Coordinate: " + myObj.latitude + "<br />" +
-                //    "Y Coordinate: " + myObj.longitude + "<br />" +
-                //    "Postal Code: " + myObj.postcode + "<br />" +
-                //    "City: " + myObj.city + "<br />" +
-                //    "Country: " + myObj.countryName + "<br />";
-
-                FINAL_LATITUDE = myObj.latitude;
-                FINAL_LONGITUDE = myObj.longitude;
-                FINAL_LOCATION = myObj.city;
-
-	alert(FINAL_LATITUDE +' '+FINAL_LONGITUDE +' '+FINAL_LOCATION);
-
-	var XCoordinates;
-	XCoordinates = document.getElementById("XCoordinates");
-                XCoordinates.value = FINAL_LATITUDE;
-
-                var YCoordinates;
-                YCoordinates = document.getElementById("YCoordinates");
-                YCoordinates.value = FINAL_LONGITUDE;
-
-                var CaseLocation;
-                CaseLocation = document.getElementById("CaseLocation");
-                CaseLocation.value = FINAL_LOCATION;
-
-                if (FINAL_LOCATION == "" || FINAL_LOCATION == null) {
-                    var nationalURL = "https://open.mapquestapi.com/nominatim/v1/reverse.php?key=QESE6HFZcLB5cX4DHEpV7YMAFEDZS6i6&format=json&lat=" + XCoordinate + "&lon=" + YCoordinate;
-                    async function getISS() {
-                        const response = await fetch(nationalURL);
-                        const data = await response.json();
-                        console.log(data.address.city);
-                        console.log(XCoordinate);
-                        console.log(YCoordinate);
-                        CaseLocation.value = data.address.city;
-                        if (FINAL_LOCATION == "" || FINAL_LOCATION == null) {
-                            CaseLocation == "UNKNOWN";
-                        }
-                    }
-
-                }
-
+        },
+        options: {
+            legend: {
+                display: true
+            },
+            onClick: function (c, i) {
+                e = i[0];
+                alert('INDEX: ' + e._index)
+                var x_value = this.data.labels[e._index];
+                var y_value = this.data.datasets[0].data[e._index];
+                alert('X VALUE: ' + x_value);
+                alert('Y VALUE: ' + y_value);
             }
-        };
-    }
+        }
+    });
 
-getData();
+
 </script>

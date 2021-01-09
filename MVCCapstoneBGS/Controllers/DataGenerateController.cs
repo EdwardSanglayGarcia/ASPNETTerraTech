@@ -61,6 +61,7 @@ namespace MVCCapstoneBGS.Controllers
                 image = Server.MapPath("~/TerraAssets/Photo/Status.png");
             }
 
+
                 var imahe = _IDataProvider.GetCaseReport(1).Select(x => x.Base64Photo).FirstOrDefault();
 
             DefaultData cmd = new DefaultData();

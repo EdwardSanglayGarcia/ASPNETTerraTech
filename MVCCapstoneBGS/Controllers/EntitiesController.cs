@@ -68,7 +68,7 @@ namespace MVCCapstoneBGS.Controllers
                         updatedStatusType = "Completed";
 
                     }
-
+            
                     x +=
                        "{label:" + quote + "[L]" + " " + updatedStatusType + " " + dataGive.Year + quote + "," +
                        "data:[" + dataGive.January_Land + "," + dataGive.February_Land + "," + dataGive.March_Land + "," + dataGive.April_Land + "," + dataGive.May_Land + "," + dataGive.June_Land + "," + dataGive.July_Land + "," + dataGive.August_Land + "," + dataGive.September_Land + "," + dataGive.October_Land + "," + dataGive.November_Land + "," + dataGive.December_Land + "]," +
@@ -301,6 +301,121 @@ namespace MVCCapstoneBGS.Controllers
             ViewBag.DATETIMENOW = DateTime.Now.Date.ToLongDateString() + " - " + DateTime.Now.TimeOfDay;
             ViewBag.CURRENT_YEAR = Year;
             ViewBag.CURRENT_MONTH = Month;
+
+            /*
+                     <div class="col-lg-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-chart-pie mr-1"></i>
+                    Completed Land and Water Concerns
+                </div>
+                <div class="card-body"><canvas id="myPieChart" width="100" height="50"></canvas></div>
+            </div>
+        </div>
+             
+             */
+
+            //string x = "<div class='col-lg-6'><div class='card mb-4'><div class='card-header'><i class='fas fa-chart-pie mr-1'></i>";
+            //string d = "Hello World";
+            //string y = " </div>< div class='card-body'><canvas id = 'myPieChart' width='100' height='50'></canvas></div></div></div>";
+
+            //ViewBag.ReturnMe = x + d + y;
+
+            //GetMonthlyTotals //Per Status
+            string PerStatus="";
+            foreach (var dataGive in _IDataProvider.GetMonthlyTotals(Month, Year))
+            {
+
+                PerStatus += "{ " +
+              "label:" + quote + "Submitted" + quote + "," +
+                "data:[" + dataGive.L_Submitted + "," + dataGive.W_Submitted + "]," +
+                "backgroundColor: ['#ffc107','#007bff']," +
+                             "}," +
+                             "{ " +
+              "label:" + quote + "Accepted" + quote + "," +
+                "data:[" + dataGive.L_Accepted + "," + dataGive.W_Accepted + "]," +
+                "backgroundColor: ['#ffc107','#007bff']," +
+                             "}," +
+                             "{ " +
+              "label:" + quote + "In Progress" + quote + "," +
+                "data:[" + dataGive.L_InProgress + "," + dataGive.W_InProgress + "]," +
+                "backgroundColor: ['#ffc107','#007bff']," +
+                             "}," +
+
+                             "{ " +
+              "label:" + quote + "Completed" + quote + "," +
+                "data:[" + dataGive.L_Completed + "," + dataGive.W_Completed + "]," +
+                "backgroundColor: ['#ffc107','#007bff']," +
+                             "}," +
+
+                             "{ " +
+              "label:" + quote + "Rejected" + quote + "," +
+                "data:[" + dataGive.L_Rejected + "," + dataGive.W_Rejected + "]," +
+                "backgroundColor: ['#ffc107','#007bff']," +
+                             "},";
+
+            }
+
+
+            //GetAreaDetailsPerMonthYear
+            string labelForArea = "";
+            foreach (var dataGive in _IDataProvider.GetAreaDetailsPerMonthYear(Month, Year))
+            {
+                labelForArea +=
+                quote + dataGive.CaseLocation + quote + ",";
+            }
+
+            string dataForSubmitted = "";
+            string dataForAccepted = "";
+            string dataForRejected = "";
+            string dataForInProgress = "";
+            string dataForCompleted = "";
+
+            foreach (var dataGive in _IDataProvider.GetAreaDetailsPerMonthYear(Month, Year))
+            {
+                dataForSubmitted += "{ " +
+              "label:" + quote + dataGive.CaseLocation + quote + "," +
+                "data:[" + dataGive.L_Submitted + "," + dataGive.W_Submitted + "]," +
+                "backgroundColor: ['#ffc107','#007bff']," +
+                             "},";
+
+                dataForAccepted += "{ " +
+             "label:" + quote + dataGive.CaseLocation + quote + "," +
+               "data:[" + dataGive.L_Accepted + "," + dataGive.W_Accepted + "]," +
+               "backgroundColor: ['#ffc107','#007bff']," +
+                            "},";
+
+                dataForInProgress += "{ " +
+          "label:" + quote + dataGive.CaseLocation + quote + "," +
+            "data:[" + dataGive.L_InProgress + "," + dataGive.W_InProgress + "]," +
+            "backgroundColor: ['#ffc107','#007bff']," +
+                         "},";
+                
+                dataForCompleted += "{ " +
+          "label:" + quote + dataGive.CaseLocation + quote + "," +
+            "data:[" + dataGive.L_Completed + "," + dataGive.W_Completed + "]," +
+            "backgroundColor: ['#ffc107','#007bff']," +
+                         "},";
+
+                dataForRejected += "{ " +
+          "label:" + quote + dataGive.CaseLocation + quote + "," +
+            "data:[" + dataGive.L_Rejected + "," + dataGive.W_Rejected + "]," +
+            "backgroundColor: ['#ffc107','#007bff']," +
+                         "},";
+
+
+            }
+
+            ViewBag.PerStatus = PerStatus;
+            ViewBag.LabelForArea = labelForArea;
+
+            ViewBag.dataForSubmitted = dataForSubmitted;
+            ViewBag.dataForAccepted = dataForAccepted;
+            ViewBag.dataForRejected = dataForRejected;
+            ViewBag.dataForCompleted = dataForCompleted;
+            ViewBag.dataForInProgress = dataForInProgress;
+
+
 
             return View();
         }
