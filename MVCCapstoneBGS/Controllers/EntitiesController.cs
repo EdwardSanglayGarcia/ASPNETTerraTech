@@ -9,6 +9,8 @@ using System.Globalization;
 using System.Xml.Linq;
 using System.Collections.Specialized;
 using System.IO;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace MVCCapstoneBGS.Controllers
 {
@@ -212,9 +214,13 @@ namespace MVCCapstoneBGS.Controllers
         #region CombinedFunctionalities
 
         int SESSION_UserInformationID;
-       
+
+     
         public ActionResult Authorise(UserInformation user)
         {
+
+            
+
             var userDetail = _IDataProvider.GetUserInformation().Where(x => x.Username == user.Username && x.Password == user.Password).FirstOrDefault();
 
             if (userDetail == null)

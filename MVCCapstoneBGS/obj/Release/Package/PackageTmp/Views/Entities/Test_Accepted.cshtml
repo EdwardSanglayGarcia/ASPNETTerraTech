@@ -106,7 +106,7 @@
 
                             <div class="col-md-7">
                                 <div class="row-1" style="margin-bottom:10px; height:250px;">
-                                    <img src="https://i.ytimg.com/vi/1jPeMx0mJeU/hqdefault.jpg" id="imageID" style="width:100%; height:240px" />
+                                    <img src="" id="imageID" style="width:100%; height:240px" />
 
                                 </div>
 
@@ -430,7 +430,7 @@
         //);
 
         imgsrc = data["PhotoLink"];
-
+        document.getElementById('imageID').src = imgsrc;
         document.getElementById("tbCaseReportNo").value = PARAM_CaseReportID;
         document.getElementById("tbCaseLocation").value = data["CaseLocation"] + " [" + (Math.round(data["XCoordinates"] * 100) / 100).toFixed(2) + "," + (Math.round(data["YCoordinates"] * 100) / 100).toFixed(2) + "]";
         document.getElementById("tbConcern").value = data["Concern"];
