@@ -115,11 +115,6 @@ namespace MVCCapstoneBGS.Controllers
             //string image = @"C:\Users\pc\Desktop\Photo\Status Report.png";
             //string image = PhotoPath + "Status Report.png";
 
-            string image;
-            using (var w = new WebClient())
-            {
-                image = Server.MapPath("~/TerraAssets/Photo/Status Report.png");
-            }
 
 
             DefaultData cmd = new DefaultData();
@@ -127,17 +122,51 @@ namespace MVCCapstoneBGS.Controllers
             var service = new TwitterService(cmd.CONSUMER_KEY, cmd.CONSUMER_SECRET);
             service.AuthenticateWith(cmd.ACCESS_TOKEN, cmd.ACCESS_TOKEN_SECRET);
 
-            using (var stream = new FileStream(image, FileMode.Open))
+            //IF YOU WANT THE DEFAULT IMAGE
+            //string image;
+            //using (var w = new WebClient())
+            //{
+            //    image = Server.MapPath("~/TerraAssets/Photo/Status Report.png");
+            //}
+
+
+            //using (var stream = new FileStream(image, FileMode.Open))
+            //{
+            //    service.SendTweetWithMedia(new SendTweetWithMediaOptions
+            //    {
+            //        Status =   
+            //        "Completion Report\n"+
+            //        "Case Report No "+CaseReportID+" in "+Location+" having a "+Concern+" last "+DateReported+" was marked as completed ("+DateCompleted+")."+
+            //        " #TerraTechPH",
+            //        Images = new Dictionary<string, Stream> { { image, stream } }
+            //    });
+            //}
+
+
+            //IF YOU WANT THE URL VERSION
+
+
+
+            var url= _IDataProvider.GetCaseReportPhotoIMGUR(CaseReportID).Select(x => x.PhotoLink).FirstOrDefault();
+
+           //string url = "http://www.infinetsoft.com/Images/logoinfi.png";
+            service.SendTweetWithMedia(new SendTweetWithMediaOptions
             {
-                service.SendTweetWithMedia(new SendTweetWithMediaOptions
-                {
-                    Status =   
-                    "Completion Report\n"+
-                    "Case Report No "+CaseReportID+" in "+Location+" having a "+Concern+" last "+DateReported+" was marked as completed ("+DateCompleted+")."+
-                    " #TerraTechPH",
-                    Images = new Dictionary<string, Stream> { { image, stream } }
-                });
-            }
+                Status =
+                        "Completion Report\n" +
+                        "Case Report No " + CaseReportID + " in " + Location + " having a " + Concern + " last " + DateReported + " was marked as completed (" + DateCompleted + ")." +
+                        " #TerraTechPH",
+                Images = new Dictionary<string, Stream> { { "TerraTech", urltostream(url) } }
+            });
+
+        }
+
+        private Stream urltostream(string url)
+        {
+            WebClient wc = new WebClient();
+            byte[] bytes = wc.DownloadData(url);
+            Stream stream = new System.IO.MemoryStream(bytes);
+            return stream;
         }
 
         public void TweetUpdatedStatus(string message)

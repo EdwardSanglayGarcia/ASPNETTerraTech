@@ -94,6 +94,8 @@ namespace MVCCapstoneBGS
 
         List<CaseReport> InsertCaseReportIMGUR(int CaseReportID, string PhotoLink);
 
+        List<CaseReport> GetCaseReportPhotoIMGUR(int CaseReportID);
+
         int GetHomeDashboardProgress();
 
         int GetHomeDashboardSubmitted();

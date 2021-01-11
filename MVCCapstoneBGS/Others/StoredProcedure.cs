@@ -77,7 +77,8 @@ namespace MVCCapstoneBGS
         GENERATION_AreaPerYear,
 
         V_CaseReport_IDENTITY,
-        U_CaseReport_PhotoLink
+        U_CaseReport_PhotoLink,
+        V_CaseReportPhotoIMGUR
 
 
 

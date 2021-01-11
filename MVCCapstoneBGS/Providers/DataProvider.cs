@@ -34,6 +34,21 @@ namespace MVCCapstoneBGS
             return result;
         }
 
+        public List<CaseReport> GetCaseReportPhotoIMGUR(int CaseReportID)
+        {
+            var result = new List<CaseReport>();
+            using (IDbConnection con = new SqlConnection(constring))
+            {
+                con.Open();
+                var param = new DynamicParameters();
+                param.Add("@CaseReportID", CaseReportID);
+
+                result = con.Query<CaseReport>(
+                    StoredProcedureEnum.V_CaseReportPhotoIMGUR.ToString(), param, commandType: CommandType.StoredProcedure).ToList();
+            }
+            return result;
+        }
+
         #region View
         public List<UserType> GetUserType()
         {
