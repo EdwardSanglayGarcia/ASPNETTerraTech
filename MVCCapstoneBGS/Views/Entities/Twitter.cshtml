@@ -102,7 +102,10 @@
 
                 <div class="card-body">
 
-                    <table id="CaseReportTable" class="table table-hover table-striped table-bordered table-responsive-sm" cellspacing="0" style="width:100%; overflow:auto; word-break:break-all;"></table>
+                    @*<table id="CaseReportTable" class="table table-hover table-striped table-bordered table-responsive-sm" cellspacing="0" style="width:100%; overflow:auto; word-break:break-all;"></table>*@
+                    <table id="CaseReportTable" class="table table-hover table-striped table-bordered table-responsive-sm" cellspacing="0" style="width:100%; "></table>
+
+
                     @*   <table id="CaseReportTable" class="table table-hover table-striped table-bordered table-responsive" cellspacing="0" style="width:100%; overflow:auto; word-break:break-all;"></table>
         **@
 
@@ -316,8 +319,10 @@
                             'XCoordinates': c.XCoordinates,
                             'YCoordinates': c.YCoordinates,
                             'Coordinates': "(" + c.XCoordinates + "," + c.YCoordinates + ")",
+                            'DateUpdated': c.DateUpdated,
                             'Notes': c.Notes,
-                           
+                            'Hits': c.Hits,
+                            'PhotoLink': c.PhotoLink
                         });
                     }
                     return a;
@@ -515,25 +520,27 @@
 
         var imgsrc;
 
-        $.ajax({
-            type: "GET",
-            "url": "/DataGet/GetCaseReportPhoto",
-            dataType: "json",
-            async: false,
-            data: {
-                CaseReportID: PARAM_CaseReportID,
-            },
-            success: function (result) {
+        //$.ajax({
+        //    type: "GET",
+        //    "url": "/DataGet/GetCaseReportPhoto",
+        //    dataType: "json",
+        //    async: false,
+        //    data: {
+        //        CaseReportID: PARAM_CaseReportID,
+        //    },
+        //    success: function (result) {
 
-                var jsonStringify = JSON.stringify(result);
-                var jsonObj = JSON.parse(jsonStringify);
-                //alert(jsonStringify);
-                //alert(jsonObj[0]['Base64Photo']);
-                imgsrc = 'data:image/gif;base64,' + jsonObj[0]['Base64Photo'];
-            }
+        //        var jsonStringify = JSON.stringify(result);
+        //        var jsonObj = JSON.parse(jsonStringify);
+        //        //alert(jsonStringify);
+        //        //alert(jsonObj[0]['Base64Photo']);
+        //        imgsrc = 'data:image/gif;base64,' + jsonObj[0]['Base64Photo'];
+        //        }
 
-        }
-        );
+        //}
+        //);
+
+        imgsrc = data["PhotoLink"];
 
         document.getElementById('imageID').src = imgsrc;
 
@@ -589,6 +596,17 @@
 
             }
         })
+    });
+
+    $(document).on("click", "#imageID", function () {
+        var srcImage = document.getElementById("imageID").src;
+
+        let w = window.open('a', 'TerraTech: Image', 'width=' + screen.width + ',height=' + screen.height + ',scrollbars=yes');
+        let image = new Image();
+        image.src = srcImage;
+        setTimeout(function () {
+            w.document.write(image.outerHTML);
+        }, 0);
     });
 
 </script>

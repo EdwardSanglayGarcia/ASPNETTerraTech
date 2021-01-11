@@ -92,14 +92,18 @@ namespace MVCCapstoneBGS
 
         List<CaseReport> GetCaseReportPhoto(int CaseReportID);
 
+        List<CaseReport> InsertCaseReportIMGUR(int CaseReportID, string PhotoLink);
+
         int GetHomeDashboardProgress();
 
         int GetHomeDashboardSubmitted();
 
         int GetDashboard();
 
+        List<CaseReportIdentity> GetCaseReportIdentity();
 
         List<AreaDetails> GetAreaDetailsPerMonthYear(int month, int year);
+        List<AreaDetails> GetAreaDetailsPerYear(int year);
 
         List<AreaDetails> GetMonthlyTotals(int month, int year);
 

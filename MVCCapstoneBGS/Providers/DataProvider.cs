@@ -7,9 +7,13 @@ using System.Net;
 namespace MVCCapstoneBGS
 {
     using Dapper;
+    using System.Collections.Specialized;
     using System.Configuration;
     using System.Data;
     using System.Data.SqlClient;
+    using System.Drawing;
+    using System.IO;
+    using System.Xml.Linq;
 
     public class DataProvider : DataAccess, IDataProvider
     {
@@ -316,7 +320,7 @@ namespace MVCCapstoneBGS
 
                 //UI.XCoordinates = Convert.ToInt32(14).ToString();
                 //UI.YCoordinates = Convert.ToInt32(121).ToString();
-                //UI.UserInformationID = 5;
+                ////UI.UserInformationID = 5;
                 //UI.CaseLocation = "Kwarto ko";
 
 
@@ -331,11 +335,21 @@ namespace MVCCapstoneBGS
                 param.Add("@Notes",UI.Notes);
                 param.Add("@Hits",hits);
 
+                Convert.ToBase64String(UI.CaseReportPhoto);
 
                 result = con.Query<CaseReport>(
                StoredProcedureEnum.I_CaseReport.ToString(), param, commandType: CommandType.StoredProcedure).ToList();
-                
+
+           
+
+
             }
+
+
+
+
+
+
             return result;
         }
 
@@ -711,6 +725,9 @@ namespace MVCCapstoneBGS
             var count = result.Count();
             return count;
         }
+
+
+
         public int GetHomeDashboard(int EnvironmentalConcernID)
         {
             var result = new List<DASHBOARD_Home>();
@@ -805,6 +822,52 @@ namespace MVCCapstoneBGS
 
                 result = con.Query<AreaDetails>(
                     StoredProcedureEnum.GENERATION_AreaPerMonthYear.ToString(), param, commandType: CommandType.StoredProcedure).ToList();
+            }
+            return result;
+        }
+
+
+        public List<CaseReport> InsertCaseReportIMGUR(int CaseReportID, string PhotoLink)
+        {
+            var result = new List<CaseReport>();
+            using (IDbConnection con = new SqlConnection(constring))
+            {
+                con.Open();
+                var param = new DynamicParameters();
+                param.Add("@CaseReportID", CaseReportID);
+                param.Add("@PhotoLink", PhotoLink);
+
+                result = con.Query<CaseReport>(
+                    StoredProcedureEnum.U_CaseReport_PhotoLink.ToString(), param, commandType: CommandType.StoredProcedure).ToList();
+            }
+            return result;
+        }
+
+        public List<CaseReportIdentity> GetCaseReportIdentity()
+        {
+            var result = new List<CaseReportIdentity>();
+            using (IDbConnection con = new SqlConnection(constring))
+            {
+                con.Open();
+                var param = new DynamicParameters();
+
+                result = con.Query<CaseReportIdentity>(
+                    StoredProcedureEnum.V_CaseReport_IDENTITY.ToString(), param, commandType: CommandType.StoredProcedure).ToList();
+            }
+            return  result;
+        }
+
+        public List<AreaDetails> GetAreaDetailsPerYear(int year)
+        {
+            var result = new List<AreaDetails>();
+            using (IDbConnection con = new SqlConnection(constring))
+            {
+                con.Open();
+                var param = new DynamicParameters();
+                param.Add("@year", year);
+
+                result = con.Query<AreaDetails>(
+                    StoredProcedureEnum.GENERATION_AreaPerYear.ToString(), param, commandType: CommandType.StoredProcedure).ToList();
             }
             return result;
         }

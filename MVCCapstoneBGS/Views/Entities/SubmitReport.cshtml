@@ -226,23 +226,41 @@
     }
 
     function showError(error) {
+        var msg;
         switch (error.code) {
             case error.PERMISSION_DENIED:
-                x.innerHTML = "Permission was denied by the user."
+                msg = "Permission was denied by the user."
                 break;
 
             case error.POSITION_UNAVAILABLE:
-                x.innerHTML = "Location information is unavailable."
+                msg = "Location information is unavailable."
                 break;
 
             case error.TIMEOUT:
-                x.innerHTML = "The request to get user location timed out."
+                msg = "The request to get user location timed out."
                 break;
 
             case error.UNKNOWN_ERROR:
-                x.innerHTML = "An unknown error occurred."
+                msg = "An unknown error occurred."
                 break;
         }
+        console.log(msg);
+        var UserInformationID;
+        UserInformationID = document.getElementById("UserInformationID");
+        UserInformationID.value = @Session["UserInformationID"];
+
+        var XCoordinates;
+        XCoordinates = document.getElementById("XCoordinates");
+        XCoordinates.value = "19.262484685117656";
+
+        var YCoordinates;
+        YCoordinates = document.getElementById("YCoordinates");
+        YCoordinates.value = "121.83889226575407";
+
+        var CaseLocation;
+        CaseLocation = document.getElementById("CaseLocation");
+        CaseLocation.value = "LOCATION NOT FOUND!";
+
     }
 
 
@@ -283,6 +301,7 @@
                 UserInformationID.value = @Session["UserInformationID"];
           //      alert("LOL" + @Session["UserInformationID"]); //1 OUTP;UT FOR USER USER
 
+                var XCoordinates;
                 XCoordinates = document.getElementById("XCoordinates");
                 XCoordinates.value = FINAL_LATITUDE;
 
@@ -412,7 +431,7 @@
             }).then((result) => {
                 /* Read more about handling dismissals below */
                 if (result.dismiss === Swal.DismissReason.timer) {
-                    console.log('I was closed by the timer')
+                    console.log('TerraTech Philippines Closed!')
                 }
             })
         });

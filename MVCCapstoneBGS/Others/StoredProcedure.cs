@@ -73,7 +73,11 @@ namespace MVCCapstoneBGS
 
         CHART_StatusLWBetweenDates,
         CHART_OverallStatusUpdate_Year,
-        CHART_StatusLWPerYear
+        CHART_StatusLWPerYear,
+        GENERATION_AreaPerYear,
+
+        V_CaseReport_IDENTITY,
+        U_CaseReport_PhotoLink
 
 
 

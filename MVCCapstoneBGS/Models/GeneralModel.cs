@@ -12,6 +12,11 @@ namespace MVCCapstoneBGS
         public string Notes { get; set; }
     }
 
+    public class CaseReportIdentity
+    {
+        public int Current_Identity { get; set; }
+    }
+
     public class EnvironmentalConcern
     {
         public int EnvironmentalConcernID { get; set; }
@@ -53,6 +58,8 @@ namespace MVCCapstoneBGS
 
         public int Hits { get; set; }
         public string Base64Photo { get; set; }
+
+        public string PhotoLink { get; set; }
     }
 
     public class UserInformation

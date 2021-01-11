@@ -6,6 +6,9 @@ using System.Web;
 using System.Web.Mvc;
 using System.Net;
 using System.Globalization;
+using System.Xml.Linq;
+using System.Collections.Specialized;
+using System.IO;
 
 namespace MVCCapstoneBGS.Controllers
 {
@@ -442,6 +445,111 @@ namespace MVCCapstoneBGS.Controllers
 
             ViewBag.DATETIMENOW = DateTime.Now.Date.ToLongDateString() + " - " + DateTime.Now.TimeOfDay;
             ViewBag.CURRENT_YEAR = Year;
+
+            string x = "";
+            string updatedStatusType = string.Empty;
+
+            for (int i = 1; i <= 5; i++)
+            {
+                foreach (var dataGive in _IDataProvider.GetStatusLWPerYear(i, Year))
+                {
+
+                    if (i == 1)
+                    {
+                        updatedStatusType = "Submitted";
+                    }
+                    else if (i == 2)
+                    {
+                        updatedStatusType = "Rejected";
+
+                    }
+                    else if (i == 3)
+                    {
+                        updatedStatusType = "Accepted";
+
+                    }
+                    else if (i == 4)
+                    {
+                        updatedStatusType = "In Progress";
+
+                    }
+                    else
+                    {
+                        updatedStatusType = "Completed";
+
+                    }
+
+                    x +=
+                       "{label:" + quote + "[L]" + " " + updatedStatusType + " " + dataGive.Year + quote + "," +
+                       "data:[" + dataGive.January_Land + "," + dataGive.February_Land + "," + dataGive.March_Land + "," + dataGive.April_Land + "," + dataGive.May_Land + "," + dataGive.June_Land + "," + dataGive.July_Land + "," + dataGive.August_Land + "," + dataGive.September_Land + "," + dataGive.October_Land + "," + dataGive.November_Land + "," + dataGive.December_Land + "]," +
+                       "  backgroundColor: ['#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107']," +
+                       "}," +
+
+                        "{label:" + quote + "[W]" + " " + updatedStatusType + " " + dataGive.Year + quote + "," +
+                       "data:[" + dataGive.January_Water + "," + dataGive.February_Water + "," + dataGive.March_Water + "," + dataGive.April_Water + "," + dataGive.May_Water + "," + dataGive.June_Water + "," + dataGive.July_Water + "," + dataGive.August_Water + "," + dataGive.September_Water + "," + dataGive.October_Water + "," + dataGive.November_Water + "," + dataGive.December_Water + "]," +
+                       "  backgroundColor: ['#007bff', '#007bff','#007bff','#007bff','#007bff','#007bff','#007bff','#007bff','#007bff','#007bff','#007bff','#007bff',]," +
+                       "},";
+                }
+            }
+
+
+            //GetAreaDetailsPerMonthYear
+            string labelForArea = "";
+            foreach (var dataGive in _IDataProvider.GetAreaDetailsPerMonthYear(Month, Year))
+            {
+                labelForArea +=
+                quote + dataGive.CaseLocation + quote + ",";
+            }
+
+            string dataForSubmitted = "";
+            string dataForAccepted = "";
+            string dataForRejected = "";
+            string dataForInProgress = "";
+            string dataForCompleted = "";
+
+            foreach (var dataGive in _IDataProvider.GetAreaDetailsPerYear(Year))
+            {
+                dataForSubmitted += "{ " +
+              "label:" + quote + dataGive.CaseLocation + quote + "," +
+                "data:[" + dataGive.L_Submitted + "," + dataGive.W_Submitted + "]," +
+                "backgroundColor: ['#ffc107','#007bff']," +
+                             "},";
+
+                dataForAccepted += "{ " +
+             "label:" + quote + dataGive.CaseLocation + quote + "," +
+               "data:[" + dataGive.L_Accepted + "," + dataGive.W_Accepted + "]," +
+               "backgroundColor: ['#ffc107','#007bff']," +
+                            "},";
+
+                dataForInProgress += "{ " +
+          "label:" + quote + dataGive.CaseLocation + quote + "," +
+            "data:[" + dataGive.L_InProgress + "," + dataGive.W_InProgress + "]," +
+            "backgroundColor: ['#ffc107','#007bff']," +
+                         "},";
+
+                dataForCompleted += "{ " +
+          "label:" + quote + dataGive.CaseLocation + quote + "," +
+            "data:[" + dataGive.L_Completed + "," + dataGive.W_Completed + "]," +
+            "backgroundColor: ['#ffc107','#007bff']," +
+                         "},";
+
+                dataForRejected += "{ " +
+          "label:" + quote + dataGive.CaseLocation + quote + "," +
+            "data:[" + dataGive.L_Rejected + "," + dataGive.W_Rejected + "]," +
+            "backgroundColor: ['#ffc107','#007bff']," +
+                         "},";
+
+            }
+
+            ViewBag.Coding = x;
+
+            ViewBag.dataForSubmitted = dataForSubmitted;
+            ViewBag.dataForAccepted = dataForAccepted;
+            ViewBag.dataForRejected = dataForRejected;
+            ViewBag.dataForCompleted = dataForCompleted;
+            ViewBag.dataForInProgress = dataForInProgress;
+
+
             return View();
         }
         public ActionResult Twitter()
@@ -686,20 +794,58 @@ namespace MVCCapstoneBGS.Controllers
         public ActionResult SubmitReport(CaseReport UI, HttpPostedFileBase image1)
         {
 
-            string re = UI.CaseLocation + " " + UI.UserInformationID;
 
-            _IDataProvider.InsertCaseReport(UI, image1);
+           // const string quote = "\"";
+
+           // var html="";
+            var script="";
+
+            if (UI.CaseLocation != "LOCATION NOT FOUND!")
+            {
+                string re = UI.CaseLocation + " " + UI.UserInformationID;
+
+                _IDataProvider.InsertCaseReport(UI, image1);
+                var x = _IDataProvider.GetCaseReportIdentity();
+
+
+                string imgurId = "785030f668c9715";
+
+                using (var w = new WebClient())
+                {
+                    string clientID = imgurId;
+                    w.Headers.Add("Authorization", "Client-ID " + clientID);
+
+
+                    var values = new NameValueCollection { { "image", Convert.ToBase64String(UI.CaseReportPhoto) } };
+                    byte[] response = w.UploadValues("https://api.imgur.com/3/upload.xml", values);
+                    var responseXml = XDocument.Load(new MemoryStream(response));
+                    string imageUrl = (string)responseXml.Root.Element("link");
+
+                    int mynum = 0;
+                    foreach (var xz in _IDataProvider.GetCaseReportIdentity())
+                    {
+                        mynum = xz.Current_Identity;
+                    }
+
+                    _IDataProvider.InsertCaseReportIMGUR(mynum, imageUrl);
+                }
+                //  html = "<div class=" + quote + "card mb-4" + quote + "><div class=" + quote + "card-body" + quote + ">" + "Environmental Concern Submitted! (" + ViewBag.DATETIMENOW + ") " + UI.Concern + " " + UI.CaseLocation + "</div></div>";
+                script = "<script>Swal.fire( 'Report Submitted!','Please go to View Status to check the progress of your report!','success')</script>";
+                //TempData["message"] = "Environmental Concern Submitted! ("+ViewBag.DATETIMENOW+") "+UI.Concern+" "+UI.CaseLocation;
+            }
+
+            else
+            {
+                // html = "<div class=" + quote + "card mb-4" + quote + "><div class=" + quote + "card-body" + quote + ">" + "Environmental Concern Submitted! (" + ViewBag.DATETIMENOW + ") " + UI.Concern + " " + UI.CaseLocation + "</div></div>";
+                script = "<script>Swal.fire( 'ERROR!','Location not found! Please enable the location sharing','error')</script>";
+            }
+
+            TempData["message"] = script;
+
+
             ViewBag.VBLayout = Layout_CU;
             ViewBag.DATETIMENOW = DateTime.Now.Date.ToLongDateString() + " - " + DateTime.Now.TimeOfDay;
             ViewBag.Title = LabelStruct.CommunityUser.SubmitReport;
-
-            const string quote = "\"";
-
-            var html = "<div class="+quote+"card mb-4"+quote+ "><div class=" + quote + "card-body" + quote + ">" + "Environmental Concern Submitted! (" + ViewBag.DATETIMENOW + ") " + UI.Concern + " " + UI.CaseLocation+"</div></div>";
-            var script = "<script>Swal.fire( 'Report Submitted!','Please go to View Status to check the progress of your report!','success')</script>";
-            //TempData["message"] = "Environmental Concern Submitted! ("+ViewBag.DATETIMENOW+") "+UI.Concern+" "+UI.CaseLocation;
-            TempData["message"] = script;
-
 
             return View();
         }

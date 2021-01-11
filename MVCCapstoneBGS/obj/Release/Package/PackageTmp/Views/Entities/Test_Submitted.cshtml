@@ -19,6 +19,8 @@
                 display: none;
             }
         }
+
+
     </style>
 </head>
 <body>
@@ -267,7 +269,8 @@
                             'Coordinates': "(" + c.XCoordinates + "," + c.YCoordinates + ")",
                             'DateUpdated': c.DateUpdated,
                             'Notes': c.Notes,
-                            'Hits': c.Hits
+                            'Hits': c.Hits,
+                            'PhotoLink': c.PhotoLink
                         });
                     }
                     return a;
@@ -421,30 +424,33 @@
             .bindPopup(locations[0][0])
             .addTo(map);
 
-        var src = data["CaseReportPhoto"];
+       // var src = data["CaseReportPhoto"]; //d talaga kasama to
 
-        //var imgsrc = 'data:image/gif;base64,' + data["Base64Photo"];
+        //var imgsrc = 'data:image/gif;base64,' + data["Base64Photo"]; //d talaga kasama to
+
         var imgsrc;
 
-        $.ajax({
-            type: "GET",
-            "url": "/DataGet/GetCaseReportPhoto",
-            dataType: "json",
-            async: false,
-            data: {
-                CaseReportID: PARAM_CaseReportID,
-            },
-            success: function (result) {
+        //$.ajax({
+        //    type: "GET",
+        //    "url": "/DataGet/GetCaseReportPhoto",
+        //    dataType: "json",
+        //    async: false,
+        //    data: {
+        //        CaseReportID: PARAM_CaseReportID,
+        //    },
+        //    success: function (result) {
 
-                var jsonStringify = JSON.stringify(result);
-                var jsonObj = JSON.parse(jsonStringify);
-                //alert(jsonStringify);
-                //alert(jsonObj[0]['Base64Photo']);
-                imgsrc = 'data:image/gif;base64,' + jsonObj[0]['Base64Photo'];
-                }
+        //        var jsonStringify = JSON.stringify(result);
+        //        var jsonObj = JSON.parse(jsonStringify);
+        //        //alert(jsonStringify);
+        //        //alert(jsonObj[0]['Base64Photo']);
+        //        imgsrc = 'data:image/gif;base64,' + jsonObj[0]['Base64Photo'];
+        //        }
 
-        }
-        );
+        //}
+        //);
+
+        imgsrc = data["PhotoLink"];
 
         document.getElementById('imageID').src = imgsrc;
         document.getElementById("tbCaseReportNo").value = PARAM_CaseReportID;
