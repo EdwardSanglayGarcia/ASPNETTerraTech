@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="~/TerraAssets/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="~/TerraAssets/css/form-elements.css">
     <link rel="stylesheet" href="~/TerraAssets/css/style.css">
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -31,6 +31,7 @@
 </head>
 
 <body>
+    @Html.Raw(@TempData["message"])
 
     <!-- Top content -->
     <div class="top-content">
@@ -134,7 +135,7 @@
 
 
 
-                                    
+
                                     <p style="color:white;"><input type="checkbox" class="form-check-input" id="exampleCheck1" required> I agree with the <a href="" style="color:greenyellow;" data-toggle="modal" data-target="#myModalUpdate">User Agreement and Privacy Policy</a></p>
                                     <button type="submit" value="Submit" class="btn">Sign me up!</button>
 

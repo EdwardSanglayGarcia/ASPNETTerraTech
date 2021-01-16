@@ -24,7 +24,8 @@ namespace MVCCapstoneBGS
         List<UpdatedStatus> GetUpdatedStatus();
         List<CaseReport> GetCaseReport(int UpdatedStatusID);
         List<CaseReport> GetCaseReportBetweenDates(int UpdatedStatusID, DateTime StartDate, DateTime EndDate);
-        
+
+        int CheckUsername(string Username);
 
         List<Leaderboard> GetLeaderboards_Year(int UpdatedStatusID, int Year);
         #endregion
@@ -38,6 +39,7 @@ namespace MVCCapstoneBGS
         //List<CaseReport> InsertCaseReport(int UserInformationID, int EnvironmentalConcernID, string XCoordinates, string YCoordinates, byte[] CaseReportPhoto, string CaseLocation);
         List<UserInformation> InsertUserInformation(int UserTypeID, string UserName, string Password, string Email, string GivenName, string MaidenName, string FamilyName);
 
+        List<History> InsertHistory(string Username, string TypeOfActivity);
         List<CaseReport> InsertCaseReport(CaseReport UI, HttpPostedFileBase image1);
 
         #endregion

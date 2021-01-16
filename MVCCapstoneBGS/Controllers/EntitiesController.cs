@@ -229,6 +229,7 @@ namespace MVCCapstoneBGS.Controllers
             }
             else
             {
+                _IDataProvider.InsertHistory(user.Username,"Login");
                 var UserInformationID = userDetail.UserInformationID;
                 var UserTypeID = userDetail.UserTypeID;
                 var Password = userDetail.Password;
@@ -261,8 +262,22 @@ namespace MVCCapstoneBGS.Controllers
 
         public ActionResult Register(UserInformation user)
         {
-            _IDataProvider.InsertUserInformation(2,user.Username,user.Password,user.Email,user.GivenName,user.MaidenName,user.FamilyName);
-            return View("Login");
+            int chkUserExist = _IDataProvider.CheckUsername(user.Username);
+            string result = "";
+            if (chkUserExist > 0 )
+            {
+                result = "<script>Swal.fire({  icon: 'error',  title: 'ERROR!',  text: 'Username already exist.',  footer: '<a href>Powered by TerraTechPH</a>'})</script>";
+
+            }
+
+            else
+            {
+                _IDataProvider.InsertUserInformation(2, user.Username, user.Password, user.Email, user.GivenName, user.MaidenName, user.FamilyName);
+                result = "<script>Swal.fire({  icon: 'success',  title: 'SUCCESS!',  text: 'Account successfully created!',  footer: '<a href>Powered by TerraTechPH</a>'})</script>";
+
+             }
+            TempData["message"] = result;
+            return View("Login", TempData["message"]);
         }
 
         public ActionResult Leaderboard()

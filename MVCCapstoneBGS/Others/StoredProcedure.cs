@@ -78,7 +78,11 @@ namespace MVCCapstoneBGS
 
         V_CaseReport_IDENTITY,
         U_CaseReport_PhotoLink,
-        V_CaseReportPhotoIMGUR
+        V_CaseReportPhotoIMGUR,
+
+        V_CheckUsername,
+        V_History,
+        I_History
 
 
 

@@ -174,6 +174,8 @@ namespace MVCCapstoneBGS
         }
 
 
+
+
         public List<Leaderboard> GetLeaderboards_Year(int UpdatedStatusID, int Year)
         {
             var result = new List<Leaderboard>();
@@ -303,6 +305,43 @@ namespace MVCCapstoneBGS
               
                 }
             return result;
+        }
+
+
+        public List<History> InsertHistory(string Username, string TypeOfActivity)
+        {
+            var result = new List<History>();
+            using (IDbConnection con = new SqlConnection(constring))
+            {
+                con.Open();
+                var param = new DynamicParameters();
+                param.Add("@Username", Username);
+                param.Add("@TypeOfActivity", TypeOfActivity);
+
+                result = con.Query<History>(
+                        StoredProcedureEnum.I_History.ToString(), param, commandType: CommandType.StoredProcedure).ToList();
+
+            }
+            return result;
+        }
+
+
+
+        public int  CheckUsername(string Username)
+        ///Insert User information
+        {
+            var result = new List<UserInformation>();
+            using (IDbConnection con = new SqlConnection(constring))
+            {
+                con.Open();
+                var param = new DynamicParameters();
+                param.Add("@Username", Username);
+
+                result = con.Query<UserInformation>(
+                        StoredProcedureEnum.V_CheckUsername.ToString(), param, commandType: CommandType.StoredProcedure).ToList();
+
+            }
+            return result.Count();
         }
 
         public List<CaseReport> InsertCaseReport(CaseReport UI, HttpPostedFileBase image1)

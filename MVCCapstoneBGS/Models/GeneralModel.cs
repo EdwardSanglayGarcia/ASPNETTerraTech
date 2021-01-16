@@ -12,6 +12,14 @@ namespace MVCCapstoneBGS
         public string Notes { get; set; }
     }
 
+    public class History
+    {
+        public int HistoryID { get; set; }
+        public string Username { get; set; }
+        public string TypeOfActivity { get; set; }
+        public DateTime DateTimeOfActivity { get; set; }
+    }
+
     public class CaseReportIdentity
     {
         public int Current_Identity { get; set; }

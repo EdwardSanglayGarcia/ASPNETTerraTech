@@ -41,22 +41,22 @@
                                 <span class="input-group-btn">
                                     <span class="btn btn-default btn-file" style=" position: relative; overflow: hidden;">
                                         Upload Image
-                                        <input type="file" accept="image/*" id="image1" name="image1" alt="Responsive image" style="position: absolute; top: 0; right: 0; min-width: 100%; min-height: 100%; font-size: 100px; text-align: right; filter: alpha(opacity=0); opacity: 0; outline: none; background: white; cursor: inherit; display: block;" capture onclick="getData()">
+                                        <input type="file" accept="image/*" id="image1" name="image1" alt="Responsive image" style="position: absolute; top: 0; right: 0; min-width: 100%; min-height: 100%; font-size: 100px; text-align: right; filter: alpha(opacity=0); opacity: 0; outline: none; background: white; cursor: inherit; display: block;" capture onclick="getData()" required>
                                     </span>
                                 </span>
-                                <input type="text" class="form-control" readonly>
+                                <input type="text" class="form-control" readonly required>
                             </div>
                         </div>
                     </div>
                     <div class="md-form mb-3">
                         <label id="DropDown">Type of Concern</label>
-                        <select name="EnvironmentalConcernID" id="EnvironmentalConcernID">
+                        <select name="EnvironmentalConcernID" id="EnvironmentalConcernID" required>
                             <option value="1">Land Concern</option>
                             <option value="2">Water Concern</option>
                         </select>
                         <div class="md-form mb-3">
                             <div class="form-group">
-                                <textarea class="form-control rounded-0" id="add-cnrns" rows="3" placeholder="Provide a description (optional)" name="Notes"></textarea>
+                                <textarea class="form-control rounded-0" id="add-cnrns" rows="3" placeholder="Provide a description / nearest landmark" name="Notes" required></textarea>
                             </div>
                         </div>
                     </div>
@@ -69,8 +69,6 @@
                     <div class="modal-footer">
                         <small>Powered by TerraTechPH</small>
                         <input type="submit" value="Submit" class="btn btn-primary btn-md btnREQAddVolunteer" id="btnREQAddVolunteer" />
-
-
                     </div>
                 </div>
             </div>
@@ -214,6 +212,7 @@
     }*@
 
     function getData() {
+        swal.showLoading();
         if (navigator.geolocation) {
 
             navigator.geolocation.watchPosition(providePosition, showError, {
@@ -372,6 +371,7 @@
         //    'You clicked the button!',
         //    'success'
         //)
+
         $(document).on('change', '.btn-file :file', function () {
             var input = $(this),
                 label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
