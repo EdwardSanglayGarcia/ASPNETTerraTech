@@ -254,7 +254,7 @@
             <div class="control-label col-xs-12 col-sm-4">
                 <label class="asteriskRequired"></label>
             </div>
-            <div style="padding-top:25px; height:500px" id='map'></div>
+            <div style="padding-top:25px; height:1000px" id='map'></div>
         </div>
         <div class="card-footer small text-muted">Data as of @ViewBag.DATETIMENOW</div>
     </div>
@@ -605,6 +605,19 @@
         //    }
         //}
         //);
+
+    });
+
+
+    $(document).on("click", "#imageID", function () {
+        Swal.fire({
+            title: 'Environmental Concern',
+            text: 'Powered by TerraTech',
+            imageUrl: $(this)[0].getAttribute('src'),
+            imageWidth: 400,
+            imageHeight: 200,
+            imageAlt: 'Custom image',
+        })
 
     });
 

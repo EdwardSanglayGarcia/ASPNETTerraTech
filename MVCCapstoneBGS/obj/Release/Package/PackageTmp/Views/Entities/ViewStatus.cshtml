@@ -955,4 +955,16 @@
         document.getElementById('imageID').src = imgsrc;
     });
 
+
+    $(document).on("click", "#imageID", function () {
+        var srcImage = document.getElementById("imageID").src;
+
+        let w = window.open('a', 'TerraTech: Image', 'width=' + screen.width + ',height=' + screen.height + ',scrollbars=yes');
+        let image = new Image();
+        image.src = srcImage;
+        setTimeout(function () {
+            w.document.write(image.outerHTML);
+        }, 0);
+
+    });
 </script>

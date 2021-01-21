@@ -4,7 +4,7 @@ jQuery(document).ready(function() {
     /*
         Fullscreen background
     */
-    $.backstretch("../../TerraAssets/img/backgrounds/3.jpg");
+    $.backstretch("https://cdn.jsdelivr.net/gh/ESGFreelance/ASPNETTerraTech/MVCCapstoneBGS/TerraAssets/img/backgrounds/3.jpg");
 
 
 

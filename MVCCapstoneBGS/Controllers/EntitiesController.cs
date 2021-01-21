@@ -171,6 +171,7 @@ namespace MVCCapstoneBGS.Controllers
         Select(
         mmm => "["
         + quote
+        + "<center><img src='" + mmm.PhotoLink+ "' style='width:150px; height:100px;' id=imageID></center>"
         + "Case No: " + mmm.CaseReportID
         + "<br />Reported on: " + mmm.DateReported      
         + "<br />Updated on: " + mmm.UpdatedStatusDate
