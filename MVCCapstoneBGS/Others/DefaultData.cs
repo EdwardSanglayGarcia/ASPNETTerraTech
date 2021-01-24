@@ -16,6 +16,10 @@ namespace MVCCapstoneBGS
         public string ACCESS_TOKEN = "1258097237348896769-AL5rIiYea1qvhRS2PDzUZvrc0CoNAz";
         public string ACCESS_TOKEN_SECRET = "eg93G03bbzry7BrFT29Qqe6f8mNe7dbnJ4lvD3cOmKAuk";
 
+        public string postmaster = "postmaster@terratechbg.com";
+        public string password = "CapstoneBGS123";
+        public string mail = "mail.terratechbg.com";
+
 
         //THIS IS FOR IMGUR
         public string IMGUR_ID = "785030f668c9715";

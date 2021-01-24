@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Net;
+
 
 namespace MVCCapstoneBGS
 {
@@ -15,9 +15,12 @@ namespace MVCCapstoneBGS
     using System.IO;
     using System.Xml.Linq;
 
+    using System.Net;
+    using System.Net.Mail;
+
     public class DataProvider : DataAccess, IDataProvider
     {
-        
+
 
         public List<CaseReport> GetCaseReportPhoto(int CaseReportID)
         {
@@ -27,7 +30,7 @@ namespace MVCCapstoneBGS
                 con.Open();
                 var param = new DynamicParameters();
                 param.Add("@CaseReportID", CaseReportID);
-              
+
                 result = con.Query<CaseReport>(
                     StoredProcedureEnum.V_CaseReportPhoto.ToString(), param, commandType: CommandType.StoredProcedure).ToList();
             }
@@ -105,7 +108,7 @@ namespace MVCCapstoneBGS
                 var param = new DynamicParameters();
                 param.Add("@UpdatedStatusID", UpdatedStatusID);
                 result = con.Query<CaseReport>(
-                    StoredProcedureEnum.V_CaseReport.ToString(),param, commandType: CommandType.StoredProcedure).ToList();
+                    StoredProcedureEnum.V_CaseReport.ToString(), param, commandType: CommandType.StoredProcedure).ToList();
             }
             return result;
         }
@@ -196,7 +199,7 @@ namespace MVCCapstoneBGS
         #region Insert
         public List<UserType> InsertUserType(int UserTypeID, string Description)
         {
-            
+
             var result = new List<UserType>();
             using (IDbConnection con = new SqlConnection(constring))
             {
@@ -256,6 +259,20 @@ namespace MVCCapstoneBGS
             }
             return result;
         }
+
+        public List<UserInformation> Verify_UserInformation(string VerificationCode)
+        {
+            var result = new List<UserInformation>();
+            using (IDbConnection con = new SqlConnection(constring))
+            {
+                con.Open();
+                var param = new DynamicParameters();
+                param.Add("@VerificationCode", VerificationCode);
+                result = con.Query<UserInformation>(
+                    StoredProcedureEnum.Verify_UserInformation.ToString(), param, commandType: CommandType.StoredProcedure).ToList();
+            }
+            return result;
+        }
         //public List<CaseReport> InsertCaseReport(int UserInformationID, int EnvironmentalConcernID, string XCoordinates, string YCoordinates, byte[]CaseReportPhoto, string CaseLocation)
         //{
 
@@ -286,27 +303,153 @@ namespace MVCCapstoneBGS
         public List<UserInformation> InsertUserInformation(int UserTypeID, string UserName, string Password, string Email, string GivenName, string MaidenName, string FamilyName)
         ///Insert User information
         {
-                var result = new List<UserInformation>();
-                using (IDbConnection con = new SqlConnection(constring))
-                {
-                    con.Open();
-                    var param = new DynamicParameters();
-                    param.Add("@UserTypeID", UserTypeID);
-                    param.Add("@UserName", UserName);
-                    param.Add("@Password", Password);
-                    param.Add("@Email", Email);
-                    param.Add("@GivenName", GivenName);
-                    param.Add("@MaidenName", MaidenName);
-                    param.Add("@FamilyName", FamilyName);
+            var result = new List<UserInformation>();
+            using (IDbConnection con = new SqlConnection(constring))
+            {
+                con.Open();
+                var param = new DynamicParameters();
+                string myVerificationCode = RandomString(10).ToUpper();
+                param.Add("@UserTypeID", UserTypeID);
+                param.Add("@UserName", UserName);
+                param.Add("@Password", Password);
+                param.Add("@Email", Email);
+                param.Add("@GivenName", GivenName);
+                param.Add("@MaidenName", MaidenName);
+                param.Add("@FamilyName", FamilyName);
+                param.Add("@VerificationCode", myVerificationCode);
+                SendEmail(Email, myVerificationCode);
+                result = con.Query<UserInformation>(StoredProcedureEnum.I_UserInformation.ToString(), param, commandType: CommandType.StoredProcedure).ToList();
 
-             
-                    result = con.Query<UserInformation>(
-                            StoredProcedureEnum.I_UserInformation.ToString(), param, commandType: CommandType.StoredProcedure).ToList();
-              
-                }
+            }
             return result;
         }
 
+        public List<UserInformation> VERIFY_Request_ForgotPassword(string Email)
+        ///Insert User information
+        {
+            var result = new List<UserInformation>();
+            using (IDbConnection con = new SqlConnection(constring))
+            {
+                con.Open();
+                var param = new DynamicParameters();
+                string myPasswordActivationCode = RandomString(10).ToUpper();
+                param.Add("@Email", Email);
+                param.Add("@PasswordActivationCode", myPasswordActivationCode);
+                SendForgotPasswordEmail(Email, myPasswordActivationCode);
+                result = con.Query<UserInformation>(StoredProcedureEnum.VERIFY_Request_ForgotPassword.ToString(), param, commandType: CommandType.StoredProcedure).ToList();
+
+            }
+            return result;
+        }
+
+        public List<UserInformation> VERIFY_ForgotPassword(string Email,string PasswordActivationCode, string Password)
+        ///Insert User information
+        {
+            var result = new List<UserInformation>();
+            using (IDbConnection con = new SqlConnection(constring))
+            {
+                con.Open();
+                var param = new DynamicParameters();
+            
+                param.Add("@PasswordActivationCode", PasswordActivationCode);
+                param.Add("@Password", Password);
+                SendPasswordChangedEmail(Email);
+                result = con.Query<UserInformation>(StoredProcedureEnum.VERIFY_ForgotPassword.ToString(), param, commandType: CommandType.StoredProcedure).ToList();
+
+            }
+            return result;
+        }
+
+        private void SendPasswordChangedEmail(string Email)
+        {
+            MailMessage mail = new MailMessage();
+            DefaultData dt = new DefaultData();
+            //set the addresses 
+            mail.From = new MailAddress(dt.postmaster); //IMPORTANT: This must be same as your smtp authentication address.
+            mail.To.Add(Email);
+
+
+            //set the content 
+            mail.Subject = "TerraTech Password Changed";
+            mail.Body =
+                "This is to notify you that your password has been changed!" + Environment.NewLine;
+
+            //send the message 
+            SmtpClient smtp = new SmtpClient(dt.mail);
+
+            //IMPORANT:  Your smtp login email MUST be same as your FROM address. 
+            NetworkCredential Credentials = new NetworkCredential(dt.postmaster, dt.password);
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = Credentials;
+            smtp.Port = 8889;    //alternative port number is 8889
+            smtp.EnableSsl = false;
+            smtp.Send(mail);
+        }
+        private void SendForgotPasswordEmail(string Email, string PasswordActivationCode)
+        {
+            MailMessage mail = new MailMessage();
+            DefaultData dt = new DefaultData();
+            //set the addresses 
+            mail.From = new MailAddress(dt.postmaster); //IMPORTANT: This must be same as your smtp authentication address.
+            mail.To.Add(Email);
+
+
+            //set the content 
+            mail.Subject = "TerraTech Forgot Password";
+            mail.Body =
+                "Forgotten your TerraTech password? No worries — it happens!" + Environment.NewLine +
+
+                  "Your Account Activation Code is: " + PasswordActivationCode + Environment.NewLine + Environment.NewLine;
+
+            //send the message 
+            SmtpClient smtp = new SmtpClient(dt.mail);
+
+            //IMPORANT:  Your smtp login email MUST be same as your FROM address. 
+            NetworkCredential Credentials = new NetworkCredential(dt.postmaster, dt.password);
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = Credentials;
+            smtp.Port = 8889;    //alternative port number is 8889
+            smtp.EnableSsl = false;
+            smtp.Send(mail);
+        }
+
+        private void SendEmail(string Email, string VerificationCode)
+        {
+            MailMessage mail = new MailMessage();
+            DefaultData dt = new DefaultData();
+            //set the addresses 
+            mail.From = new MailAddress(dt.postmaster); //IMPORTANT: This must be same as your smtp authentication address.
+            mail.To.Add(Email);
+
+
+            //set the content 
+            mail.Subject = "TerraTech Confirmation Email";
+            mail.Body =
+                "Thank you for registering your account information into the system!" + Environment.NewLine +
+               
+              //  "Your confirmation code is: " + VerificationCode + Environment.NewLine + Environment.NewLine +
+                "Confirm your account now by clicking at this link"+Environment.NewLine+"https://www.TerraTechBG.com/Activation/Index?VerificationCode=" + VerificationCode;
+
+            //send the message 
+            SmtpClient smtp = new SmtpClient(dt.mail);
+
+            //IMPORANT:  Your smtp login email MUST be same as your FROM address. 
+            NetworkCredential Credentials = new NetworkCredential(dt.postmaster, dt.password);
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = Credentials;
+            smtp.Port = 8889;    //alternative port number is 8889
+            smtp.EnableSsl = false;
+            smtp.Send(mail);
+        }
+
+        private static string RandomString(int length)
+        {
+            Random random = new Random();
+            const string pool = "abcdefghijklmnopqrstuvwxyz0123456789";
+            var chars = Enumerable.Range(0, length)
+                .Select(x => pool[random.Next(0, pool.Length)]);
+            return new string(chars.ToArray());
+        }
 
         public List<History> InsertHistory(string Username, string TypeOfActivity)
         {
@@ -327,7 +470,7 @@ namespace MVCCapstoneBGS
 
 
 
-        public int  CheckUsername(string Username)
+        public int CheckUsername(string Username)
         ///Insert User information
         {
             var result = new List<UserInformation>();
@@ -386,15 +529,15 @@ namespace MVCCapstoneBGS
                 param.Add("@YCoordinates", UI.YCoordinates);
                 param.Add("@CaseLocation", UI.CaseLocation);
                 param.Add("@CaseReportPhoto", UI.CaseReportPhoto);
-                param.Add("@Notes",UI.Notes);
-                param.Add("@Hits",hits);
+                param.Add("@Notes", UI.Notes);
+                param.Add("@Hits", hits);
 
                 Convert.ToBase64String(UI.CaseReportPhoto);
 
                 result = con.Query<CaseReport>(
                StoredProcedureEnum.I_CaseReport.ToString(), param, commandType: CommandType.StoredProcedure).ToList();
 
-           
+
 
 
             }
@@ -687,7 +830,7 @@ namespace MVCCapstoneBGS
         #endregion
 
         #region CHARTS_And_GRAPHS
-        public void CHART_Display(string PROC, int Year,int ID, out string Number, out string Description)
+        public void CHART_Display(string PROC, int Year, int ID, out string Number, out string Description)
         {
             //EVERYTHING BEYOND THIS LINE NEEDS TO BE CHANGED PROPERLY BY 8.2.20 5 PM
 
@@ -709,7 +852,7 @@ namespace MVCCapstoneBGS
                 {
                     param.Add("@UpdatedStatusID", ID);
                 }
-                if (PROC.ToString() == "CHART_EnvironmentalConcern_MonthYear" || PROC.ToString()== "CHART_OverallStatusUpdate_MonthYear")
+                if (PROC.ToString() == "CHART_EnvironmentalConcern_MonthYear" || PROC.ToString() == "CHART_OverallStatusUpdate_MonthYear")
                 {
                     param.Add("@Month", ID);
                 }
@@ -725,7 +868,7 @@ namespace MVCCapstoneBGS
             }
         }
 
-        
+
 
         public void CHART_DASHBOARD_DISPLAY(string PROC, out string Number, out string Description)
         {
@@ -748,7 +891,7 @@ namespace MVCCapstoneBGS
 
         public void CHART_DisplayBetweenDates(DateTime StartDate, DateTime EndDate, int UpdatedStatusID, out string Number, out string Description)
         {
-         using (IDbConnection con = new SqlConnection(constring))
+            using (IDbConnection con = new SqlConnection(constring))
             {
                 con.Open();
                 const string quote = "\"";
@@ -820,7 +963,7 @@ namespace MVCCapstoneBGS
                 return 0;
             }
             else
-            return result.Count();
+                return result.Count();
         }
 
         public int GetHomeDashboardSubmitted()
@@ -908,7 +1051,7 @@ namespace MVCCapstoneBGS
                 result = con.Query<CaseReportIdentity>(
                     StoredProcedureEnum.V_CaseReport_IDENTITY.ToString(), param, commandType: CommandType.StoredProcedure).ToList();
             }
-            return  result;
+            return result;
         }
 
         public List<AreaDetails> GetAreaDetailsPerYear(int year)

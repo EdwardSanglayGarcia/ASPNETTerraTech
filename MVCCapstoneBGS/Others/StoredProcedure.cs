@@ -82,7 +82,10 @@ namespace MVCCapstoneBGS
 
         V_CheckUsername,
         V_History,
-        I_History
+        I_History,
+        Verify_UserInformation,
+        VERIFY_Request_ForgotPassword,
+        VERIFY_ForgotPassword
 
 
 

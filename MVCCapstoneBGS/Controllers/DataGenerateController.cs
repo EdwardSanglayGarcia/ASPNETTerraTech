@@ -20,10 +20,10 @@ namespace MVCCapstoneBGS.Controllers
     public class DataGenerateController : Controller
     {
 
-        IDataProvider _IDataProvider;
 
         public string PhotoPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\Photo\";
 
+        IDataProvider _IDataProvider;
      
 
         public DataGenerateController()

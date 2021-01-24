@@ -216,21 +216,74 @@ namespace MVCCapstoneBGS.Controllers
 
         int SESSION_UserInformationID;
 
-     
+
+        public ActionResult ChangePassword(UserInformation user)
+        {
+            var userDetail = _IDataProvider.GetUserInformation().Where(x => x.PasswordActivationCode == user.PasswordActivationCode).FirstOrDefault();
+            string result;
+
+            if (userDetail == null)
+            {
+                result = "<script>Swal.fire({  icon: 'error',  title: 'ERROR!',  text: 'Code not found!',  footer: '<a href>Powered by TerraTechPH</a>'})</script>";
+                TempData["message"] = result;
+                return View("Login", TempData["message"]);
+            }
+
+            else
+            {
+                if (userDetail.PasswordActivationCodeValidity == "Y")
+                {
+                    _IDataProvider.VERIFY_ForgotPassword(userDetail.Email,user.PasswordActivationCode, user.Password);
+                    result = "<script>Swal.fire({  icon: 'success',  title: 'SUCCESS!',  text: 'Password Changed!',  footer: '<a href>Powered by TerraTechPH</a>'})</script>";
+                    TempData["message"] = result;
+                    return View("Login", TempData["message"]);
+                }
+                else
+                {
+                    result = "<script>Swal.fire({  icon: 'error',  title: 'ERROR!',  text: 'Code not valid !',  footer: '<a href>Powered by TerraTechPH</a>'})</script>";
+                    TempData["message"] = result;
+                    return View("Login", TempData["message"]);
+                }
+            }
+        }
+
+
+        public ActionResult RequestForgotPassword(UserInformation user)
+        {
+            var userDetail = _IDataProvider.GetUserInformation().Where(x=>x.Email==user.Email).FirstOrDefault();
+            string result;
+
+            if (userDetail == null)
+            {
+                result = "<script>Swal.fire({  icon: 'error',  title: 'ERROR!',  text: 'Account not found!',  footer: '<a href>Powered by TerraTechPH</a>'})</script>";
+                TempData["message"] = result;
+                return View("Login", TempData["message"]);
+            }
+
+            else
+            {
+                _IDataProvider.VERIFY_Request_ForgotPassword(user.Email);
+                result = "<script>Swal.fire({  icon: 'success',  title: 'SUCCESS!',  text: 'Password Activation Code Sent!',  footer: '<a href>Powered by TerraTechPH</a>'})</script>";
+                TempData["message"] = result;
+                return View("Login", TempData["message"]);
+            }
+        }
+
         public ActionResult Authorise(UserInformation user)
         {
-
-            
-
+            string result = "";
             var userDetail = _IDataProvider.GetUserInformation().Where(x => x.Username == user.Username && x.Password == user.Password).FirstOrDefault();
 
             if (userDetail == null)
             {
-                return View("Login");
+                result = "<script>Swal.fire({  icon: 'error',  title: 'ERROR!',  text: 'Account not found!',  footer: '<a href>Powered by TerraTechPH</a>'})</script>";
+                TempData["message"] = result;
+                return View("Login", TempData["message"]);
             }
-            else
+
+            if (userDetail.IsVerified == "Y")
             {
-                _IDataProvider.InsertHistory(user.Username,"Login");
+                _IDataProvider.InsertHistory(user.Username, "Login");
                 var UserInformationID = userDetail.UserInformationID;
                 var UserTypeID = userDetail.UserTypeID;
                 var Password = userDetail.Password;
@@ -255,7 +308,16 @@ namespace MVCCapstoneBGS.Controllers
                 else
                 {
                     return RedirectToAction("Login", "Home");
+
                 }
+            }
+
+            else
+            {
+                result = "<script>Swal.fire({  icon: 'error',  title: 'ERROR!',  text: 'Please activate your account',  footer: '<a href>Powered by TerraTechPH</a>'})</script>";
+                TempData["message"] = result;
+                return View("Login",TempData["message"]);
+              
             }
 
 
@@ -822,7 +884,7 @@ namespace MVCCapstoneBGS.Controllers
            // var html="";
             var script="";
 
-            if (UI.CaseLocation != "LOCATION NOT FOUND!")
+            if (UI.CaseLocation != "LOCATION NOT FOUND!" || UI.CaseLocation != null)
             {
                 string re = UI.CaseLocation + " " + UI.UserInformationID;
 

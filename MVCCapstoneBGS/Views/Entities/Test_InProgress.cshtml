@@ -155,6 +155,7 @@
 
                 <div class="modal-footer">
                     <p>Powered by TerraTechPH</p>
+                    <button type="button" id="btnReject" class="btn btn-warning btnReject" data-dismiss="modal">Reject</button>
                     <button type="button" id="btnComplete" class="btn btn-success btnComplete" data-dismiss="modal">Complete</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal" title="Close">Close</button>
                 </div>
@@ -480,6 +481,33 @@
             w.document.write(image.outerHTML);
         }, 0);
 
+    });
+
+
+    $(document).on("click", ".btnReject", function () {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you really want to Reject the Report?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, reject it!'
+        }).then((result) => {
+            if (result.value) {
+
+                $.ajax({
+                    type: "GET",
+                    "url": "/DataUpdate/UpdateCaseReportToRejected",
+                    dataType: "json",
+                    async: false,
+                    data: {
+                        CaseReportID: CaseReportID,
+                    }
+                });
+                location.reload();
+            }
+        })
     });
 
     $(document).on("click", ".btnGenerate", function () {

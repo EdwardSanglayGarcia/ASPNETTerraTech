@@ -74,6 +74,8 @@
                                         <input type="password" name="Password" placeholder="Password..." class="form-password form-control" id="form-password" required>
                                     </div>
 
+                                    <a href="" style="color:greenyellow; padding-bottom:5px;" data-toggle="modal" data-target="#myModalForgotPassword">Forgot Password</a>
+
                                     <button type="submit" value="Submit" class="btn">Sign in!</button>
                                 }
 
@@ -255,6 +257,54 @@
 
 
                     </p>
+                </div>
+
+                <div class="modal-footer">
+                    <p>Powered by TerraTechPH</p>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" title="Close">Close</button>
+                </div>
+
+            </div>
+            <!-- Modal content-->
+        </div>
+    </div>
+
+    @*MODAL SECTION FORGOT PASSWORD**@
+    <div class="modal fade" id="myModalForgotPassword" role="dialog">
+        <div class="modal-dialog modal-sm" >
+            <!-- Modal content-->
+            <div class="modal-content" id="modalwindow">
+
+                <div class="modal-header" ">
+                    <h3 class="modal-title Title">Forgot Password</h3>
+                </div>
+
+                <div class="modal-body">
+                    @using (Html.BeginForm("RequestForgotPassword", "Entities", FormMethod.Post))
+                    {
+
+                        <div class="form-group">
+                            <label class="sr-only" for="form-username">Username</label>
+                            <input type="email" name="Email" placeholder="Email..." class="form-email form-control" id="form-email" required>
+                        </div>
+
+                        <button type="submit" value="Submit" class="btn">Recover my account!</button>
+                    }
+                </div>
+
+
+                <div class="modal-body">
+                    @using (Html.BeginForm("ChangePassword", "Entities", FormMethod.Post))
+                    {
+
+                    <div class="form-group">
+                        <input type="text" name="PasswordActivationCode" placeholder="A-C-T-I-V-A-T-I-O-N C-O-D-E" class="form-email form-control" id="form-email" required>
+                        <input type="password" name="Password" placeholder="Password..." class="form-password form-control" id="form-password" required>
+
+                    </div>
+
+                        <button type="submit" value="Submit" class="btn">Change my password!</button>
+                    }
                 </div>
 
                 <div class="modal-footer">

@@ -719,6 +719,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ActivationController.cs" />
     <Compile Include="Controllers\DataDeleteController.cs" />
     <Compile Include="Controllers\DataGenerateController.cs" />
     <Compile Include="Controllers\DataGetController.cs" />
@@ -793,6 +794,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Activation\" />
     <Folder Include="Views\DataDelete\" />
     <Folder Include="Views\DataGenerate\" />
     <Folder Include="Views\DataInsert\" />

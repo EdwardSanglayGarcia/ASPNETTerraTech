@@ -81,6 +81,12 @@ namespace MVCCapstoneBGS
         public string FamilyName { get; set; }
         public string Email { get; set; }
         public string Notes { get; set; }
+
+        public string VerificationCode { get; set; }
+
+        public string PasswordActivationCode { get; set; }
+        public string PasswordActivationCodeValidity { get; set; }
+        public string IsVerified { get; set; }
     }
 
     public class PriorityDictionary

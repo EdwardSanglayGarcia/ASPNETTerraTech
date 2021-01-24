@@ -42,6 +42,13 @@ namespace MVCCapstoneBGS
         List<History> InsertHistory(string Username, string TypeOfActivity);
         List<CaseReport> InsertCaseReport(CaseReport UI, HttpPostedFileBase image1);
 
+        List<UserInformation> Verify_UserInformation(string VerificationCode);
+
+        List<UserInformation> VERIFY_Request_ForgotPassword(string Email);
+
+        List<UserInformation> VERIFY_ForgotPassword(string Email, string PasswordActivationCode, string Password);
+
+
         #endregion
 
         #region Delete
