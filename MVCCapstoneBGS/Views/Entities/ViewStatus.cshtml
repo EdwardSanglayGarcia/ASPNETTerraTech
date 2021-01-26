@@ -889,7 +889,7 @@
         document.getElementById("tbDateReported").value = ConvertToDate(data["DateReported"]);
         document.getElementById("tbDateUpdated").value = ConvertToDate(data["UpdatedStatusDate"]);
         document.getElementById("tbCaseLocation").value = data["CaseLocation"] + " [" + (Math.round(data["XCoordinates"] * 100) / 100).toFixed(2) + "," + (Math.round(data["YCoordinates"] * 100) / 100).toFixed(2) + "]";
-        document.getElementById("tbNotes").value = "Handled by: "+ data["Handler_FullName"];
+        document.getElementById("tbNotes").value = data["Notes"];
 
         var locations;
         locations = [

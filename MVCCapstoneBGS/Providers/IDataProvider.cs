@@ -15,6 +15,9 @@ namespace MVCCapstoneBGS
         List<Records> GetStatusLWBetweenDates(int UpdatedStatusID, DateTime StartDate, DateTime EndDate);
 
         List<Records> GetStatusLWPerYear(int UpdatedStatusID, int Year);
+
+        List<SpecificEnvironmentalConcern> GetSpecificEnvironmentalConcern(int EnvironmentalConcernID);
+
         #endregion
 
         #region View
@@ -46,9 +49,13 @@ namespace MVCCapstoneBGS
 
         List<UserInformation> VERIFY_Request_ForgotPassword(string Email);
 
+
+
         List<UserInformation> VERIFY_ForgotPassword(string Email, string PasswordActivationCode, string Password);
 
+        List<BanList> GetBanList();
 
+        List<UserInformation> BanUser(int UserInformationID, int NoOfDays);
         #endregion
 
         #region Delete

@@ -95,6 +95,19 @@
         <div class="card-footer small text-muted">Data as of @ViewBag.DATETIMENOW</div>
     </div>
 
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-chart-area mr-1"></i>
+            Deactivate Users / Top Users with Rejected Concerns
+        </div>
+
+        <div class="card-body">
+            <table id="BanTable" class="table table-hover table-striped table-bordered table-responsive-sm" cellspacing="0" style="width:100%; "></table>
+        </div>
+
+        <div class="card-footer small text-muted">Data as of @ViewBag.DATETIMENOW</div>
+    </div>
+
     @*MODAL SECTION UPDATE START*@
     <div class="modal fade" id="myModalUpdate" role="dialog">
         <div class="modal-dialog modal-lg">
@@ -202,6 +215,97 @@
 
     $(document).ready(function () {
         LoadRejectedTable();
+        LoadBanTable();
+    });
+
+      function LoadBanTable() {
+        tableBan = $('#BanTable').DataTable({
+            bLengthChange: false,
+            destroy: true,
+            responsive: true,
+            ajax: {
+                type: "GET",
+                "url": "/DataGet/GetBanList",
+                dataSrc: function (json) {
+                    var a = new Array();
+                    for (var b = 0; b <= json.length - 1; b++) {
+                        var c = json[b];
+                        a.push({
+                            'UserInformationID': c.UserInformationID,
+                            'FullName': c.FullName,
+                            'Email': c.Email,
+                            'Rejected': c.Rejected,
+                        });
+                    }
+                    return a;
+                },
+            },
+            columns: [
+                {
+                    title: "Manage",
+                    "render": function () {
+                        var edit = "<a class='btn btn-primary btn-xs btnBan' title='Edit' style='color: white'><i class = 'fa fa-1x fa-address-card'></i></a>";
+                        return edit;
+                    },
+                    width: "80px"
+                },
+                {
+                    title: "User ID",
+                    data: "UserInformationID"
+                },
+                {
+                    title: "Full Name",
+                    data: "FullName"
+                },
+                {
+                    title: "Email",
+                    data: "Email"
+                },
+                {
+                    title: "No. of Rejected",
+                    data: "Rejected"
+                },
+
+            ],
+            'columnDefs': [
+                {
+                    "className": "dt-center", "targets": "_all"
+                }],
+        });
+
+          return tableBan;
+    };
+
+    $(document).on("click", ".btnBan",  function () {
+        var data = tableBan.row($(this).parents('tr')).data(  );
+        var PARAM_BanUser = data["UserInformationID"];
+
+        Swal.fire({
+            text: 'Insert No. of days to deactivate the user',
+            input: 'number'
+        }).then(function (result) {
+            if (result.value) {
+                const daysOfBan = result.value
+                if (daysOfBan < 0) {
+                    swal.fire('Insert valid numbers only');
+                }
+                else {
+                    $.ajax({
+                        type: "GET",
+                        "url": "/DataUpdate/BanUser",
+                        dataType: "json",
+                        async: false,
+                        data: {
+                            UserInformationID: PARAM_BanUser,
+                            NoOfDays: daysOfBan
+                        }
+                    });
+                }
+            }
+        })
+
+        LoadBanTable();
+
     });
 
     function LoadRejectedTable() {
@@ -396,7 +500,7 @@
             .addTo(map);
         var imgsrc;
 
-     
+
 
         //$.ajax({
         //    type: "GET",
@@ -501,6 +605,7 @@
     });
 
     $(document).on("click", ".btnGenerate", function () {
+
         var PARAM_MinDate = $('#myMinDate').val();
         var PARAM_MaxDate = $('#myMaxDate').val();
 

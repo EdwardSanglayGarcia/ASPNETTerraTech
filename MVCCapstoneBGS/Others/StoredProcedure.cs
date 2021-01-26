@@ -85,7 +85,10 @@ namespace MVCCapstoneBGS
         I_History,
         Verify_UserInformation,
         VERIFY_Request_ForgotPassword,
-        VERIFY_ForgotPassword
+        VERIFY_ForgotPassword,
+        V_SpecificEnvironmentalConcern,
+        Ban_List,
+        Ban_User
 
 
 

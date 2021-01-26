@@ -233,7 +233,7 @@
             dataType: "json",
             success: function (response) {
                 $.each(response, function () {
-                    temp.append($("<option></option>").val(this['VolunteerID']).html(this['FullName']));
+                    temp.append($("<option></option>").val(this['UserInformationID']).html(this['GivenName'] + ' ' + this['FamilyName']));
                 });
             }
         })

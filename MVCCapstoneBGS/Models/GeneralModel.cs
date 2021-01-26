@@ -41,6 +41,7 @@ namespace MVCCapstoneBGS
 
     public class CaseReport
     {
+        public int SpecificEnvironmentalConcernID { get; set; }
         public int CaseReportID { get; set; }
         public int UserInformationID { get; set; }
         public string FamilyName { get; set; }
@@ -62,6 +63,10 @@ namespace MVCCapstoneBGS
         public string Handler_GivenName { get; set; }
         public string Handler_MaidenName { get; set; }
         public string Handler_FamilyName { get; set; }
+
+        public string Handler { get; set; }
+
+
         public string Notes { get; set; }
 
         public int Hits { get; set; }
@@ -87,6 +92,8 @@ namespace MVCCapstoneBGS
         public string PasswordActivationCode { get; set; }
         public string PasswordActivationCodeValidity { get; set; }
         public string IsVerified { get; set; }
+
+        public DateTime BannedDate { get; set; }
     }
 
     public class PriorityDictionary
@@ -97,7 +104,7 @@ namespace MVCCapstoneBGS
 
     public class Volunteer
     {
-        public int VolunteerID { get; set; }
+        public int UserInformationID { get; set; }
         public string GivenName { get; set; }
         public string MaidenName { get; set; }
         public string FamilyName { get; set; }
@@ -204,6 +211,24 @@ namespace MVCCapstoneBGS
         public int Year{ get; set; }
         public int Total_Land { get; set; }
         public int Total_Water { get; set; }
+    }
+
+
+    public class SpecificEnvironmentalConcern
+    {
+        public int SpecificEnvironmentalConcernID { get; set; }
+        public int EnvironmentalConcernID { get; set; }
+
+        public string SpecificConcern { get; set; }
+
+        public string Description { get; set; }
+    }
+
+    public class BanList { 
+        public int UserInformationID { get; set; }
+        public string FullName { get; set; }
+        public string Email { get; set; }
+        public int Rejected { get; set; }
     }
 
 }

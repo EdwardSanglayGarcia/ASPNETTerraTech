@@ -33,6 +33,13 @@ namespace MVCCapstoneBGS.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult BanUser(int UserInformationID, int NoOfDays)
+        {
+            var data = _IDataProvider.BanUser(UserInformationID, NoOfDays);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+
         public ActionResult UpdateCaseReportToRejected(int CaseReportID)
         {
             var data = _IDataProvider.UpdateCaseReport_Rejected(CaseReportID);

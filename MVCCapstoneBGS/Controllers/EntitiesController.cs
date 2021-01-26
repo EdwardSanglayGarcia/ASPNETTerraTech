@@ -24,6 +24,8 @@ namespace MVCCapstoneBGS.Controllers
         }
       
         string Layout_ADashboard= "~/TerraTech/TerraShared/AdministratorDashboard.cshtml";
+
+        string Layout_VDashboard= "~/TerraTech/TerraShared/VolunteerDashboard.cshtml";
         //~/TerraAssets/Photo/DENRLogo.png
         string Layout_CU = "~/TerraTech/TerraShared/CommunityUser.cshtml";
 
@@ -224,7 +226,7 @@ namespace MVCCapstoneBGS.Controllers
 
             if (userDetail == null)
             {
-                result = "<script>Swal.fire({  icon: 'error',  title: 'ERROR!',  text: 'Code not found!',  footer: '<a href>Powered by TerraTechPH</a>'})</script>";
+                result = "<script>Swal.fire({  icon: 'error',  title: 'ERROR!',  text: 'Code not found!',  footer: '<a >Powered by TerraTechPH</a>'})</script>";
                 TempData["message"] = result;
                 return View("Login", TempData["message"]);
             }
@@ -234,13 +236,13 @@ namespace MVCCapstoneBGS.Controllers
                 if (userDetail.PasswordActivationCodeValidity == "Y")
                 {
                     _IDataProvider.VERIFY_ForgotPassword(userDetail.Email,user.PasswordActivationCode, user.Password);
-                    result = "<script>Swal.fire({  icon: 'success',  title: 'SUCCESS!',  text: 'Password Changed!',  footer: '<a href>Powered by TerraTechPH</a>'})</script>";
+                    result = "<script>Swal.fire({  icon: 'success',  title: 'SUCCESS!',  text: 'Password Changed!',  footer: '<a >Powered by TerraTechPH</a>'})</script>";
                     TempData["message"] = result;
                     return View("Login", TempData["message"]);
                 }
                 else
                 {
-                    result = "<script>Swal.fire({  icon: 'error',  title: 'ERROR!',  text: 'Code not valid !',  footer: '<a href>Powered by TerraTechPH</a>'})</script>";
+                    result = "<script>Swal.fire({  icon: 'error',  title: 'ERROR!',  text: 'Code not valid !',  footer: '<a >Powered by TerraTechPH</a>'})</script>";
                     TempData["message"] = result;
                     return View("Login", TempData["message"]);
                 }
@@ -255,7 +257,7 @@ namespace MVCCapstoneBGS.Controllers
 
             if (userDetail == null)
             {
-                result = "<script>Swal.fire({  icon: 'error',  title: 'ERROR!',  text: 'Account not found!',  footer: '<a href>Powered by TerraTechPH</a>'})</script>";
+                result = "<script>Swal.fire({  icon: 'error',  title: 'ERROR!',  text: 'Account not found!',  footer: '<a >Powered by TerraTechPH</a>'})</script>";
                 TempData["message"] = result;
                 return View("Login", TempData["message"]);
             }
@@ -263,7 +265,7 @@ namespace MVCCapstoneBGS.Controllers
             else
             {
                 _IDataProvider.VERIFY_Request_ForgotPassword(user.Email);
-                result = "<script>Swal.fire({  icon: 'success',  title: 'SUCCESS!',  text: 'Password Activation Code Sent!',  footer: '<a href>Powered by TerraTechPH</a>'})</script>";
+                result = "<script>Swal.fire({  icon: 'success',  title: 'SUCCESS!',  text: 'Password Activation Code Sent!',  footer: '<a >Powered by TerraTechPH</a>'})</script>";
                 TempData["message"] = result;
                 return View("Login", TempData["message"]);
             }
@@ -276,45 +278,62 @@ namespace MVCCapstoneBGS.Controllers
 
             if (userDetail == null)
             {
-                result = "<script>Swal.fire({  icon: 'error',  title: 'ERROR!',  text: 'Account not found!',  footer: '<a href>Powered by TerraTechPH</a>'})</script>";
+                result = "<script>Swal.fire({  icon: 'error',  title: 'ERROR!',  text: 'Account not found!',  footer: '<a >Powered by TerraTechPH</a>'})</script>";
                 TempData["message"] = result;
                 return View("Login", TempData["message"]);
             }
 
             if (userDetail.IsVerified == "Y")
             {
-                _IDataProvider.InsertHistory(user.Username, "Login");
-                var UserInformationID = userDetail.UserInformationID;
-                var UserTypeID = userDetail.UserTypeID;
-                var Password = userDetail.Password;
-                var Username = userDetail.Username;
-                SESSION_UserInformationID = userDetail.UserInformationID;
-                Session["UserInformationID"] = UserInformationID;
-                Session["Username"] = Username;
-                Session["UserTypeID"] = UserTypeID;
-                Session["Password"] = Password;
 
-                if (UserTypeID == 1)
+                if (userDetail.BannedDate > DateTime.Now)
                 {
-                    return RedirectToAction("Administrator", "Entities");
-                }
-
-                else if (UserTypeID == 2)
-                {
-
-                    return RedirectToAction("CommunityUser", "Entities");
+                    result = "<script>Swal.fire({  icon: 'error',  title: 'WARNING!',  text: 'Account is banned until "+userDetail.BannedDate.ToShortDateString()+" due to violation of rules',  footer: '<a >Powered by TerraTechPH</a>'})</script>";
+                    TempData["message"] = result;
+                    return View("Login", TempData["message"]);
                 }
 
                 else
                 {
-                    return RedirectToAction("Login", "Home");
+                    _IDataProvider.InsertHistory(user.Username, "Login");
+                    var UserInformationID = userDetail.UserInformationID;
+                    var UserTypeID = userDetail.UserTypeID;
+                    var Password = userDetail.Password;
+                    var Username = userDetail.Username;
+                    SESSION_UserInformationID = userDetail.UserInformationID;
+                    Session["UserInformationID"] = UserInformationID;
+                    Session["Username"] = Username;
+                    Session["UserTypeID"] = UserTypeID;
+                    Session["Password"] = Password;
 
+                    if (UserTypeID == 1)
+                    {
+                        return RedirectToAction("Administrator", "Entities");
+                    }
+
+                    else if (UserTypeID == 2)
+                    {
+
+                        return RedirectToAction("CommunityUser", "Entities");
+                    }
+
+                    else if (UserTypeID == 3)
+                    {
+                        return RedirectToAction("Volunteer", "Entities");
+
+                    }
+
+                    else
+                    {
+                        return RedirectToAction("Login", "Home");
+
+                    }
                 }
             }
 
             else
             {
-                result = "<script>Swal.fire({  icon: 'error',  title: 'ERROR!',  text: 'Please activate your account',  footer: '<a href>Powered by TerraTechPH</a>'})</script>";
+                result = "<script>Swal.fire({  icon: 'error',  title: 'ERROR!',  text: 'Please activate your account',  footer: '<a >Powered by TerraTechPH</a>'})</script>";
                 TempData["message"] = result;
                 return View("Login",TempData["message"]);
               
@@ -329,14 +348,14 @@ namespace MVCCapstoneBGS.Controllers
             string result = "";
             if (chkUserExist > 0 )
             {
-                result = "<script>Swal.fire({  icon: 'error',  title: 'ERROR!',  text: 'Username already exist.',  footer: '<a href>Powered by TerraTechPH</a>'})</script>";
+                result = "<script>Swal.fire({  icon: 'error',  title: 'ERROR!',  text: 'Username already exist.',  footer: '<a >Powered by TerraTechPH</a>'})</script>";
 
             }
 
             else
             {
                 _IDataProvider.InsertUserInformation(2, user.Username, user.Password, user.Email, user.GivenName, user.MaidenName, user.FamilyName);
-                result = "<script>Swal.fire({  icon: 'success',  title: 'SUCCESS!',  text: 'Account successfully created!',  footer: '<a href>Powered by TerraTechPH</a>'})</script>";
+                result = "<script>Swal.fire({  icon: 'success',  title: 'SUCCESS!',  text: 'Account successfully created!',  footer: '<a >Powered by TerraTechPH</a>'})</script>";
 
              }
             TempData["message"] = result;
@@ -460,6 +479,7 @@ namespace MVCCapstoneBGS.Controllers
 
             foreach (var dataGive in _IDataProvider.GetAreaDetailsPerMonthYear(Month, Year))
             {
+
                 dataForSubmitted += "{ " +
               "label:" + quote + dataGive.CaseLocation + quote + "," +
                 "data:[" + dataGive.L_Submitted + "," + dataGive.W_Submitted + "]," +
@@ -591,36 +611,39 @@ namespace MVCCapstoneBGS.Controllers
             string dataForInProgress = "";
             string dataForCompleted = "";
 
+
             foreach (var dataGive in _IDataProvider.GetAreaDetailsPerYear(Year))
             {
+                var color = GetRandomHexColor();
+
                 dataForSubmitted += "{ " +
               "label:" + quote + dataGive.CaseLocation + quote + "," +
                 "data:[" + dataGive.L_Submitted + "," + dataGive.W_Submitted + "]," +
-                "backgroundColor: ['#ffc107','#007bff']," +
+                "backgroundColor: ['"+color+ "','" + color + "']," +
                              "},";
 
                 dataForAccepted += "{ " +
              "label:" + quote + dataGive.CaseLocation + quote + "," +
                "data:[" + dataGive.L_Accepted + "," + dataGive.W_Accepted + "]," +
-               "backgroundColor: ['#ffc107','#007bff']," +
+                "backgroundColor: ['" + color + "','" + color + "']," +
                             "},";
 
                 dataForInProgress += "{ " +
           "label:" + quote + dataGive.CaseLocation + quote + "," +
             "data:[" + dataGive.L_InProgress + "," + dataGive.W_InProgress + "]," +
-            "backgroundColor: ['#ffc107','#007bff']," +
+                "backgroundColor: ['" + color + "','" + color + "']," +
                          "},";
 
                 dataForCompleted += "{ " +
           "label:" + quote + dataGive.CaseLocation + quote + "," +
             "data:[" + dataGive.L_Completed + "," + dataGive.W_Completed + "]," +
-            "backgroundColor: ['#ffc107','#007bff']," +
+                "backgroundColor: ['" + color + "','" + color + "']," +
                          "},";
 
                 dataForRejected += "{ " +
           "label:" + quote + dataGive.CaseLocation + quote + "," +
             "data:[" + dataGive.L_Rejected + "," + dataGive.W_Rejected + "]," +
-            "backgroundColor: ['#ffc107','#007bff']," +
+                "backgroundColor: ['" + color + "','" + color + "']," +
                          "},";
 
             }
@@ -636,6 +659,14 @@ namespace MVCCapstoneBGS.Controllers
 
             return View();
         }
+
+        public string GetRandomHexColor()
+        {
+            var result = "#" + Guid.NewGuid().ToString().Substring(0, 6);
+            return result;
+        }
+
+
         public ActionResult Twitter()
         {
             ViewBag.Title = LabelStruct.Administrator.Twitter;
@@ -1352,6 +1383,29 @@ namespace MVCCapstoneBGS.Controllers
             return View();
         }
 
+        #endregion
+
+
+        #region Volunteer
+        public ActionResult Volunteer()
+        {
+            ViewBag.VBLayout = Layout_VDashboard;
+            return View();
+        }
+
+        public ActionResult Assignations()
+        {
+            ViewBag.VBLayout = Layout_VDashboard;
+
+            return View();
+        }
+
+        public ActionResult Completions()
+        {
+            ViewBag.VBLayout = Layout_VDashboard;
+
+            return View();
+        }
         #endregion
 
     }

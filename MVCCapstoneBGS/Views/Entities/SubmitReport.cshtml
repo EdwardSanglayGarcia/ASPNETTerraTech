@@ -38,10 +38,10 @@
                     <div class="md-form mb-3">
                         <div class="form-group">
                             <h4>Submit Report</h4>
-                            <img id='img-upload' style="border:thin; margin-bottom:10px; height:50%; width:100%;" />
+                            <img id='img-upload' style="border:thin; margin-bottom:10px; height:50%; width:100%; border:double;" />
                             <div class="input-group">
                                 <span class="input-group-btn">
-                                    <span class="btn btn-default btn-file" style=" position: relative; overflow: hidden; background-color:black; color:white">
+                                    <span class="btn btn-default btn-file" style=" position: relative; overflow: hidden; background-color:black; color:white;">
                                         <i class='fas fa-camera'></i> Submit Image
                                         <input type="file" accept="image/*" id="image1" name="image1" alt="Responsive image" style="position: absolute; top: 0; right: 0; min-width: 100%; min-height: 100%; font-size: 100px; text-align: right; filter: alpha(opacity=0); opacity: 0; outline: none; background: white; cursor: inherit; display: block;" capture required>
                                     </span>
@@ -52,20 +52,25 @@
                     </div>
                     <div class="md-form mb-3">
                         <label id="DropDown">Type of Concern</label>
-                        <select name="EnvironmentalConcernID" id="EnvironmentalConcernID" required>
-                            <option value="1">Land Concern</option>
-                            <option value="2">Water Concern</option>
-                        </select>
-                        <div class="md-form mb-3">
-                            <div class="form-group">
-                                <textarea class="form-control rounded-0" id="add-cnrns" rows="3" placeholder="Provide a description / nearest landmark" name="Notes" required></textarea>
-                            </div>
-                        </div>
+
+                        <select name="EnvironmentalConcernID" class="btn btn-info EnvironmentalConcernID" style="padding:5px;" required>- Please Select -</select>
+                        <label id="DropDown">Category of Concern</label>
+
+                        <select name="SpecificEnvironmentalConcernID" class="btn btn-info SpecificEnvironmentalConcernID" style="padding:5px;" required>- Please Select -</select>
+
                     </div>
+             
+
+
+                    <div class="md-form mb-3">
+                        <div class="form-group">
+                            <textarea class="form-control rounded-0" id="add-cnrns" rows="3" placeholder="Provide a description / nearest landmark" name="Notes" required></textarea>
+                        </div>
+                    </div> 
 
                     <div class="md-form-mb-3">
-                        <p>Tap the location of the environmental concern</p>
-                        <div id="mapid" style="height: 400px;">
+                        <p>Tap the location of the environmental concern or click <i class="fas fa-location-arrow"></i> to get your current location</p>
+                        <div id="mapid" style="height: 400px; border-color:red; border:double;">
                         </div>
 
                     </div>
@@ -79,10 +84,10 @@
                     <input type="hidden" name="CaseLocation" id="CaseLocation" required>
 
                     <div class="modal-footer" style="position:center;">
-                        <input type="submit" value="Submit" class="btn btn-primary btn-md btnREQAddVolunteer" id="btnREQAddVolunteer" onSubmit ="return checkform()" />
+                        <input type="submit" value="Submit" class="btn btn-primary btn-md btnREQAddVolunteer" id="btnREQAddVolunteer" onSubmit="return checkform()" />
                     </div>
                 </div>
-            </div>
+                </div>
 
         </center>
     }
@@ -102,7 +107,7 @@
     function checkform() {
         if (FINAL_LOCATION == "" || FINAL_LOCATION == null) {
             // something is wrong
-            alert('There is a problem with the first field');
+            console.log('There is a problem with the first field');
             return false;
         }
         else {
@@ -145,7 +150,7 @@
                 var CaseLocation;
                 CaseLocation = document.getElementById("CaseLocation");
                 CaseLocation.value = FINAL_LOCATION;
-                alert(FINAL_LOCATION);
+                console.log(FINAL_LOCATION);
 
 
                 //if (FINAL_LOCATION == "" || FINAL_LOCATION == null) {
@@ -167,10 +172,52 @@
         };
     }
 
+    function loadEnvironmentalConcernType() {
+        var temp = $(".EnvironmentalConcernID").empty();
+        
+        $.ajax({
+            type: "GET",
+            url: "/DataGet/GetEnvironmentalConcern",
+            dataType: "json",
+            success: function (response) {
+                $.each(response, function () {
+
+                    temp.append($("<option></option>").val(this['EnvironmentalConcernID']).html(this['Description']));
+                });
+            }
+        })
+    };
+
+    function loadSpecificEnvironmentalConcernType(id) {
+        var temp = $(".SpecificEnvironmentalConcernID").empty();
+
+        $.ajax({
+            type: "GET",
+            url: "/DataGet/GetSpecificEnvironmentalConcern",
+            data: {
+                EnvironmentalConcernID: id,
+            },
+            dataType: "json",
+            success: function (response) {
+                $.each(response, function () {
+
+                    temp.append($("<option></option>").val(this['SpecificEnvironmentalConcernID']).html(this['SpecificConcern']));
+                });
+            }
+        })
+    };
+
+    $(document).on("change", ".EnvironmentalConcernID", function () {
+
+        var PARAM_EnvironmentalConcernID = $('.EnvironmentalConcernID').val();
+        loadSpecificEnvironmentalConcernType(PARAM_EnvironmentalConcernID);
+    });
 
     $(document).ready(function () {
 
         loadMap();
+        loadEnvironmentalConcernType();
+        loadSpecificEnvironmentalConcernType(1);
 
         $(document).on('change', '.btn-file :file', function () {
             var input = $(this),
@@ -186,7 +233,7 @@
             if (input.length) {
                 input.val(log);
             } else {
-                if (log) alert(log);
+                if (log) console.log(log);
             }
 
         });
@@ -205,36 +252,6 @@
 
         $("#image1").change(function () {
             readURL(this);
-
-            let timerInterval
-            Swal.fire({
-                title: 'Verifying Location!',
-                html: 'Powered by TerraTechPH',
-                timer: 1000,
-                timerProgressBar: true,
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                onBeforeOpen: () => {
-                    Swal.showLoading()
-                    timerInterval = setInterval(() => {
-                        const content = Swal.getContent()
-                        if (content) {
-                            const b = content.querySelector('b')
-                            if (b) {
-                                b.textContent = Swal.getTimerLeft()
-                            }
-                        }
-                    }, 100)
-                },
-                onClose: () => {
-                    clearInterval(timerInterval)
-                }
-            }).then((result) => {
-                /* Read more about handling dismissals below */
-                if (result.dismiss === Swal.DismissReason.timer) {
-                    console.log('TerraTech Philippines Closed!')
-                }
-            })
         });
     });
 
@@ -267,7 +284,7 @@
         FINAL_LONGITUDE = position.coords.longitude;
         markerAutoLocation = L.marker([FINAL_LATITUDE, FINAL_LONGITUDE]).addTo(map);
         map.setView([position.coords.latitude, position.coords.longitude], 30);
-        alert(FINAL_LATITUDE + ',' + FINAL_LONGITUDE);
+        console.log(FINAL_LATITUDE + ',' + FINAL_LONGITUDE);
         provideFinalInformation();
     }
 
@@ -278,7 +295,7 @@
                 map.removeLayer(markerAutoLocation);
             }
             catch (any) {
-                alert(markerToParameterLatitude)
+                console.log(markerToParameterLatitude)
             }
         };
 
@@ -305,7 +322,7 @@
         markerAutoLocation = L.marker([markerToParameterLatitude, markerToParameterLongitude]).addTo(map);
         FINAL_LATITUDE = markerToParameterLatitude;
         FINAL_LONGITUDE = markerToParameterLongitude;
-        alert(FINAL_LATITUDE + ',' + FINAL_LONGITUDE);
+        console.log(FINAL_LATITUDE + ',' + FINAL_LONGITUDE);
         provideFinalInformation();
     });
 

@@ -65,6 +65,20 @@ namespace MVCCapstoneBGS
             }
             return result;
         }
+
+
+        public List<BanList> GetBanList()
+        {
+            var result = new List<BanList>();
+            using (IDbConnection con = new SqlConnection(constring))
+            {
+                con.Open();
+                result = con.Query<BanList>(
+                    StoredProcedureEnum.Ban_List.ToString(), commandType: CommandType.StoredProcedure).ToList();
+                //Gawa ka ng Stored Procedure
+            }
+            return result;
+        }
         public List<Volunteer> GetVolunteer()
         {
             var result = new List<Volunteer>();
@@ -147,6 +161,24 @@ namespace MVCCapstoneBGS
             return result;
         }
 
+
+        public List<UserInformation> BanUser(int UserInformationID, int NoOfDays)
+        {
+            var result = new List<UserInformation>();
+            using (IDbConnection con = new SqlConnection(constring))
+            {
+                con.Open();
+                var param = new DynamicParameters();
+                param.Add("@UserInformationID", UserInformationID);
+                param.Add("@NoOfDays", NoOfDays);
+
+                result = con.Query<UserInformation>(
+                    StoredProcedureEnum.Ban_User.ToString(), param, commandType: CommandType.StoredProcedure).ToList();
+            }
+            return result;
+        }
+
+
         public List<CaseReport> GetCaseReportBetweenDates(int UpdatedStatusID, DateTime StartDate, DateTime EndDate)
         {
             var result = new List<CaseReport>();
@@ -193,6 +225,21 @@ namespace MVCCapstoneBGS
             }
             return result;
         }
+        
+        public List<SpecificEnvironmentalConcern> GetSpecificEnvironmentalConcern(int EnvironmentalConcernID)
+        {
+            var result = new List<SpecificEnvironmentalConcern>();
+            using (IDbConnection con = new SqlConnection(constring))
+            {
+                con.Open();
+                var param = new DynamicParameters();
+                param.Add("@EnvironmentalConcernID", EnvironmentalConcernID);
+                result = con.Query<SpecificEnvironmentalConcern>(
+                    StoredProcedureEnum.V_SpecificEnvironmentalConcern.ToString(), param, commandType: CommandType.StoredProcedure).ToList();
+            }
+            return result;
+        }
+
 
         #endregion
 
@@ -531,6 +578,7 @@ namespace MVCCapstoneBGS
                 param.Add("@CaseReportPhoto", UI.CaseReportPhoto);
                 param.Add("@Notes", UI.Notes);
                 param.Add("@Hits", hits);
+                param.Add("@SpecificEnvironmentalConcernID", UI.SpecificEnvironmentalConcernID);
 
                 Convert.ToBase64String(UI.CaseReportPhoto);
 

@@ -155,4 +155,3 @@ C:\Users\pc\Documents\GitHub\ASPNETTerraTech\ASPNETTerraTech\MVCCapstoneBGS\obj\
 C:\Users\pc\Documents\GitHub\ASPNETTerraTech\ASPNETTerraTech\MVCCapstoneBGS\obj\Release\MVCCapstoneBGS.csproj.CopyComplete
 C:\Users\pc\Documents\GitHub\ASPNETTerraTech\ASPNETTerraTech\MVCCapstoneBGS\obj\Release\MVCCapstoneBGS.dll
 C:\Users\pc\Documents\GitHub\ASPNETTerraTech\ASPNETTerraTech\MVCCapstoneBGS\obj\Release\MVCCapstoneBGS.pdb
-C:\Users\pc\Documents\GitHub\ASPNETTerraTech\ASPNETTerraTech\MVCCapstoneBGS\obj\Release\MVCCapstoneBGS.csprojAssemblyReference.cache

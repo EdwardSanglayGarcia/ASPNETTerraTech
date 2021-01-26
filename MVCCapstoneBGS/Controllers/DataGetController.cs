@@ -18,13 +18,13 @@ namespace MVCCapstoneBGS.Controllers
         [HttpGet]
         public ActionResult BarChart()
         {
-           
+
             try
             {
                 string tempEnvironmentalConcernCount = string.Empty;
                 string tempEnvironmentalConcern = string.Empty;
                 //ViewBag.Dashy = _IDataProvider.GetDashboard()
-                _IDataProvider.CHART_Display(StoredProcedureEnum.CHART_EnvironmentalConcern.ToString(),DateTime.Now.Year,0,out tempEnvironmentalConcernCount, out tempEnvironmentalConcern);
+                _IDataProvider.CHART_Display(StoredProcedureEnum.CHART_EnvironmentalConcern.ToString(), DateTime.Now.Year, 0, out tempEnvironmentalConcernCount, out tempEnvironmentalConcern);
                 ViewBag.ECCount = tempEnvironmentalConcernCount.Trim();
                 ViewBag.ECName = tempEnvironmentalConcern.Trim();
                 //  var x = _IDataProvider.GetDashboard();
@@ -35,7 +35,7 @@ namespace MVCCapstoneBGS.Controllers
                 ViewBag.lols = _IDataProvider.GetDashboard();
                 ViewBag.Greetings = "Hello World!";
 
-              
+
 
                 return View();
             }
@@ -54,7 +54,7 @@ namespace MVCCapstoneBGS.Controllers
         public ActionResult GetUserType()
         {
             //= cmd.GetUserType();
-            var data  = _IDataProvider.GetUserType();
+            var data = _IDataProvider.GetUserType();
             JsonResult json = Json(data, JsonRequestBehavior.AllowGet);
             json.MaxJsonLength = int.MaxValue;
             return json;
@@ -108,7 +108,7 @@ namespace MVCCapstoneBGS.Controllers
 
         public ActionResult GetCaseReportPerUser(int UpdatedStatusID, int UserInformationID)
         {
-            var data = _IDataProvider.GetCaseReport(UpdatedStatusID).Where(x=>x.UserInformationID == UserInformationID);
+            var data = _IDataProvider.GetCaseReport(UpdatedStatusID).Where(x => x.UserInformationID == UserInformationID);
             JsonResult json = Json(data, JsonRequestBehavior.AllowGet);
             json.MaxJsonLength = int.MaxValue;
             return json;
@@ -124,7 +124,7 @@ namespace MVCCapstoneBGS.Controllers
 
         public ActionResult GetUserInformation()
         {
-            var data = _IDataProvider.GetUserInformation().Where(x=>x.UserTypeID==2);
+            var data = _IDataProvider.GetUserInformation().Where(x => x.UserTypeID == 2);
             JsonResult json = Json(data, JsonRequestBehavior.AllowGet);
             json.MaxJsonLength = int.MaxValue;
             return json;
@@ -145,6 +145,14 @@ namespace MVCCapstoneBGS.Controllers
             return json;
         }
 
+        public JsonResult GetBanList()
+        {
+            var data = _IDataProvider.GetBanList();
+            JsonResult json = Json(data, JsonRequestBehavior.AllowGet);
+            json.MaxJsonLength = int.MaxValue;
+            return json;
+        }
+
         public ActionResult GetUpdatedStatus()
         {
             var data = _IDataProvider.GetUpdatedStatus();
@@ -155,7 +163,25 @@ namespace MVCCapstoneBGS.Controllers
 
         public ActionResult GetLeaderboard_Year(int UpdatedStatusID, int Year)
         {
-            var data = _IDataProvider.GetLeaderboards_Year(UpdatedStatusID, Year).OrderByDescending(x=>x.Points);
+            var data = _IDataProvider.GetLeaderboards_Year(UpdatedStatusID, Year).OrderByDescending(x => x.Points);
+            JsonResult json = Json(data, JsonRequestBehavior.AllowGet);
+            json.MaxJsonLength = int.MaxValue;
+            return json;
+        }
+
+
+
+        public ActionResult GetEnvironmentalConcern()
+        {
+            var data = _IDataProvider.GetEnvironmentalConcern();
+            JsonResult json = Json(data, JsonRequestBehavior.AllowGet);
+            json.MaxJsonLength = int.MaxValue;
+            return json;
+        }
+
+        public ActionResult GetSpecificEnvironmentalConcern(int EnvironmentalConcernID)
+        {
+            var data = _IDataProvider.GetSpecificEnvironmentalConcern(EnvironmentalConcernID);
             JsonResult json = Json(data, JsonRequestBehavior.AllowGet);
             json.MaxJsonLength = int.MaxValue;
             return json;

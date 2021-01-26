@@ -15,6 +15,13 @@ namespace MVCCapstoneBGS.Controllers
     public class TestEnvironmentController : Controller
     {
         // GET: TestEnvironment
+
+
+        public ActionResult TestPOST(int CaseReportID)
+        {
+            ViewBag.Case = CaseReportID;
+            return View();
+        }
         public ActionResult Index()
         {
 

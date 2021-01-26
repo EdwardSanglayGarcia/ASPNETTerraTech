@@ -785,6 +785,10 @@
     <Content Include="Views\Entities\Test_InProgress.cshtml" />
     <Content Include="Views\Entities\Test_Completed.cshtml" />
     <Content Include="Views\TestEnvironment\Index.cshtml" />
+    <Content Include="Views\TestEnvironment\TestPOST.cshtml" />
+    <Content Include="Views\Entities\Volunteer.cshtml" />
+    <Content Include="TerraTech\TerraShared\VolunteerDashboard.cshtml" />
+    <Content Include="Views\Entities\Assignations.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
