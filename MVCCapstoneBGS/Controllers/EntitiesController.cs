@@ -24,13 +24,15 @@ namespace MVCCapstoneBGS.Controllers
         }
       
         string Layout_ADashboard= "~/TerraTech/TerraShared/AdministratorDashboard.cshtml";
-
         string Layout_VDashboard= "~/TerraTech/TerraShared/VolunteerDashboard.cshtml";
-        //~/TerraAssets/Photo/DENRLogo.png
-        string Layout_CU = "~/TerraTech/TerraShared/CommunityUser.cshtml";
-
         string Layout_CUDashboard = "~/TerraTech/TerraShared/CommunityUser.cshtml";
+
         const string quote = "\"";
+        int SESSION_UserInformationID;
+        string SESSION_GivenName;
+        string SESSION_MaidenName;
+        string SESSION_FamilyName;
+        int SESSION_UserTypeID;
 
         public ActionResult Administrator(int UpdatedStatusID = 0)
         {
@@ -216,7 +218,6 @@ namespace MVCCapstoneBGS.Controllers
 
         #region CombinedFunctionalities
 
-        int SESSION_UserInformationID;
 
 
         public ActionResult ChangePassword(UserInformation user)
@@ -305,6 +306,11 @@ namespace MVCCapstoneBGS.Controllers
                     Session["Username"] = Username;
                     Session["UserTypeID"] = UserTypeID;
                     Session["Password"] = Password;
+
+                    SESSION_FamilyName = userDetail.FamilyName;
+                    SESSION_MaidenName = userDetail.MaidenName;
+                    SESSION_GivenName = userDetail.GivenName;
+                    SESSION_UserTypeID = UserTypeID;
 
                     if (UserTypeID == 1)
                     {
@@ -898,7 +904,7 @@ namespace MVCCapstoneBGS.Controllers
 
         public ActionResult SubmitReport()
         {
-            ViewBag.VBLayout = Layout_CU;
+            ViewBag.VBLayout = Layout_CUDashboard;
             ViewBag.DATETIMENOW = DateTime.Now.Date.ToLongDateString() + " - " + DateTime.Now.TimeOfDay;
 
             ViewBag.Title = LabelStruct.CommunityUser.SubmitReport;
@@ -958,7 +964,7 @@ namespace MVCCapstoneBGS.Controllers
             TempData["message"] = script;
 
 
-            ViewBag.VBLayout = Layout_CU;
+            ViewBag.VBLayout = Layout_CUDashboard;
             ViewBag.DATETIMENOW = DateTime.Now.Date.ToLongDateString() + " - " + DateTime.Now.TimeOfDay;
             ViewBag.Title = LabelStruct.CommunityUser.SubmitReport;
 
@@ -966,7 +972,7 @@ namespace MVCCapstoneBGS.Controllers
         }
         public ActionResult ViewStatus()
         {
-            ViewBag.VBLayout = Layout_CU;
+            ViewBag.VBLayout = Layout_CUDashboard;
             ViewBag.DATETIMENOW = DateTime.Now.Date.ToLongDateString() + " - " + DateTime.Now.TimeOfDay;
 
             ViewBag.Title = LabelStruct.CommunityUser.ViewStatus;
@@ -974,7 +980,7 @@ namespace MVCCapstoneBGS.Controllers
         }
         public ActionResult Achievements()
         {
-            ViewBag.VBLayout = Layout_CU;
+            ViewBag.VBLayout = Layout_CUDashboard;
             ViewBag.DATETIMENOW = DateTime.Now.Date.ToLongDateString() + " - " + DateTime.Now.TimeOfDay;
             int PASS_UserInformationID = Convert.ToInt32(Session["UserInformationID"]);
 
@@ -1396,14 +1402,14 @@ namespace MVCCapstoneBGS.Controllers
         public ActionResult Assignations()
         {
             ViewBag.VBLayout = Layout_VDashboard;
+            ViewBag.UserInformationID = SESSION_UserInformationID;
 
             return View();
         }
 
-        public ActionResult Completions()
+        public ActionResult Finalized()
         {
             ViewBag.VBLayout = Layout_VDashboard;
-
             return View();
         }
         #endregion

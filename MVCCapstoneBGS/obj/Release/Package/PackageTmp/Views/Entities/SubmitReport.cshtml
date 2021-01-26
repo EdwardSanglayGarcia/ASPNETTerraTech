@@ -1,0 +1,335 @@
+﻿@model MVCCapstoneBGS.CaseReport
+@{
+    Layout = "~/TerraTech/TerraShared/CommunityUser.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@LabelStruct.CommunityUser.SubmitReport</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+</head>
+
+<body>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="">Community User</a></li>
+        <li class="breadcrumb-item active">Submit Report</li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            @LabelStruct.CommunityUser_Message.M_SubmitReport
+        </div>
+    </div>
+
+    @Html.Raw(@TempData["message"])
+
+    @using (Html.BeginForm("SubmitReport", "Entities", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <center>
+            <div id="SubmitReport" role="dialog">
+                <div class="col-md-6">
+                    <div class="md-form mb-3">
+                        <div class="form-group">
+                            <h4>Submit Report</h4>
+                            <img id='img-upload' style="border:thin; margin-bottom:10px; height:50%; width:100%; border:double;" />
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <span class="btn btn-default btn-file" style=" position: relative; overflow: hidden; background-color:black; color:white;">
+                                        <i class='fas fa-camera'></i> Submit Image
+                                        <input type="file" accept="image/*" id="image1" name="image1" alt="Responsive image" style="position: absolute; top: 0; right: 0; min-width: 100%; min-height: 100%; font-size: 100px; text-align: right; filter: alpha(opacity=0); opacity: 0; outline: none; background: white; cursor: inherit; display: block;" capture required>
+                                    </span>
+                                </span>
+                                <input type="text" class="form-control" readonly required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md-form mb-3">
+                        <label id="DropDown">Type of Concern</label>
+
+                        <select name="EnvironmentalConcernID" class="btn btn-info EnvironmentalConcernID" style="padding:5px;" required>- Please Select -</select>
+                        <label id="DropDown">Category of Concern</label>
+
+                        <select name="SpecificEnvironmentalConcernID" class="btn btn-info SpecificEnvironmentalConcernID" style="padding:5px;" required>- Please Select -</select>
+
+                    </div>
+             
+
+
+                    <div class="md-form mb-3">
+                        <div class="form-group">
+                            <textarea class="form-control rounded-0" id="add-cnrns" rows="3" placeholder="Provide a description / nearest landmark" name="Notes" required></textarea>
+                        </div>
+                    </div> 
+
+                    <div class="md-form-mb-3">
+                        <p>Tap the location of the environmental concern or click <i class="fas fa-location-arrow"></i> to get your current location</p>
+                        <div id="mapid" style="height: 400px; border-color:red; border:double;">
+                        </div>
+
+                    </div>
+
+
+
+
+                    <input type="hidden" name="UserInformationID" id="UserInformationID">
+                    <input type="hidden" name="YCoordinates" id="YCoordinates" required>
+                    <input type="hidden" name="XCoordinates" id="XCoordinates" required>
+                    <input type="hidden" name="CaseLocation" id="CaseLocation" required>
+
+                    <div class="modal-footer" style="position:center;">
+                        <input type="submit" value="Submit" class="btn btn-primary btn-md btnREQAddVolunteer" id="btnREQAddVolunteer" onSubmit="return checkform()" />
+                    </div>
+                </div>
+                </div>
+
+        </center>
+    }
+
+
+</body>
+</html>
+
+
+<script>
+    var FINAL_LATITUDE;
+    var FINAL_LONGITUDE;
+    var FINAL_LOCATION;
+
+    var Information = document.getElementById("DisplayInformation");
+
+    function checkform() {
+        if (FINAL_LOCATION == "" || FINAL_LOCATION == null) {
+            // something is wrong
+            console.log('There is a problem with the first field');
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    function provideFinalInformation() {
+         var query = "latitude=" + FINAL_LATITUDE + "&longitude=" + FINAL_LONGITUDE + "&localityLanguage=en";
+        const Http = new XMLHttpRequest();
+        var bigdatacloud_api = "https://api.bigdatacloud.net/data/reverse-geocode-client?";
+        bigdatacloud_api += query;
+        Http.open("GET", bigdatacloud_api);
+        Http.send();
+
+        Http.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var myObj = JSON.parse(this.responseText);
+
+                FINAL_LATITUDE = myObj.latitude;
+                FINAL_LONGITUDE = myObj.longitude;
+                FINAL_LOCATION = myObj.city;
+
+                if (FINAL_LOCATION == "") {
+                    FINAL_LOCATION = myObj.locality;
+                }
+
+                var UserInformationID;
+                UserInformationID = document.getElementById("UserInformationID");
+                UserInformationID.value = @Session["UserInformationID"];
+
+                var XCoordinates;
+                XCoordinates = document.getElementById("XCoordinates");
+                XCoordinates.value = FINAL_LATITUDE;
+
+                var YCoordinates;
+                YCoordinates = document.getElementById("YCoordinates");
+                YCoordinates.value = FINAL_LONGITUDE;
+
+                var CaseLocation;
+                CaseLocation = document.getElementById("CaseLocation");
+                CaseLocation.value = FINAL_LOCATION;
+                console.log(FINAL_LOCATION);
+
+
+                //if (FINAL_LOCATION == "" || FINAL_LOCATION == null) {
+                //    var nationalURL = "https://open.mapquestapi.com/nominatim/v1/reverse.php?key=QESE6HFZcLB5cX4DHEpV7YMAFEDZS6i6&format=json&lat=" + FINAL_LATITUDE + "&lon=" + FINAL_LONGITUDE;
+                //    async function getISS() {
+                //        const response = await fetch(nationalURL);
+                //        const data = await response.json();
+                //        //console.log(data.address.city);
+                //        //console.log(FINAL_LATITUDE);
+                //        //console.log(FINAL_LONGITUDE);
+                //        CaseLocation.value = data.address.city;
+                //        if (FINAL_LOCATION == "" || FINAL_LOCATION == null) {
+                //            CaseLocation == "UNKNOWN";
+                //        }
+                //    }
+                //}
+
+            }
+        };
+    }
+
+    function loadEnvironmentalConcernType() {
+        var temp = $(".EnvironmentalConcernID").empty();
+        
+        $.ajax({
+            type: "GET",
+            url: "/DataGet/GetEnvironmentalConcern",
+            dataType: "json",
+            success: function (response) {
+                $.each(response, function () {
+
+                    temp.append($("<option></option>").val(this['EnvironmentalConcernID']).html(this['Description']));
+                });
+            }
+        })
+    };
+
+    function loadSpecificEnvironmentalConcernType(id) {
+        var temp = $(".SpecificEnvironmentalConcernID").empty();
+
+        $.ajax({
+            type: "GET",
+            url: "/DataGet/GetSpecificEnvironmentalConcern",
+            data: {
+                EnvironmentalConcernID: id,
+            },
+            dataType: "json",
+            success: function (response) {
+                $.each(response, function () {
+
+                    temp.append($("<option></option>").val(this['SpecificEnvironmentalConcernID']).html(this['SpecificConcern']));
+                });
+            }
+        })
+    };
+
+    $(document).on("change", ".EnvironmentalConcernID", function () {
+
+        var PARAM_EnvironmentalConcernID = $('.EnvironmentalConcernID').val();
+        loadSpecificEnvironmentalConcernType(PARAM_EnvironmentalConcernID);
+    });
+
+    $(document).ready(function () {
+
+        loadMap();
+        loadEnvironmentalConcernType();
+        loadSpecificEnvironmentalConcernType(1);
+
+        $(document).on('change', '.btn-file :file', function () {
+            var input = $(this),
+                label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+            input.trigger('fileselect', [label]);
+        });
+
+        $('.btn-file :file').on('fileselect', function (event, label) {
+
+            var input = $(this).parents('.input-group').find(':text'),
+                log = label;
+
+            if (input.length) {
+                input.val(log);
+            } else {
+                if (log) console.log(log);
+            }
+
+        });
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#img-upload').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#image1").change(function () {
+            readURL(this);
+        });
+    });
+
+    var markerAutoLocation;
+    var markerToParameterLatitude;
+    var markerToParameterLongitude;
+    var a = 'https://api.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiYmJyb29rMTU0IiwiYSI6ImNpcXN3dnJrdDAwMGNmd250bjhvZXpnbWsifQ.Nf9Zkfchos577IanoKMoYQ';
+    var b = 'https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
+    var c = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
+
+    var map = L.map('mapid');
+
+
+    var maxBounds = [
+        [21.116625, 131.175528],
+        [4.991861, 115.976455]
+    ];
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+    }
+
+    function showPosition(position) {
+        clearMarker();
+        FINAL_LATITUDE = position.coords.latitude;
+        FINAL_LONGITUDE = position.coords.longitude;
+        markerAutoLocation = L.marker([FINAL_LATITUDE, FINAL_LONGITUDE]).addTo(map);
+        map.setView([position.coords.latitude, position.coords.longitude], 30);
+        console.log(FINAL_LATITUDE + ',' + FINAL_LONGITUDE);
+        provideFinalInformation();
+    }
+
+    function clearMarker() {
+        if (markerAutoLocation != undefined) {
+            map.removeLayer(markerAutoLocation);
+            try {
+                map.removeLayer(markerAutoLocation);
+            }
+            catch (any) {
+                console.log(markerToParameterLatitude)
+            }
+        };
+
+    }
+
+    function loadMap() {
+        map.setView([14.642285, 121.050823], 30);
+        map.setMaxBounds(maxBounds);
+        map.zo
+        map.fitBounds(maxBounds);
+        L.tileLayer(c, {
+            maxZoom: 20,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1
+        }).addTo(map);
+        $('.leaflet-control-attribution').hide();
+    }
+
+    map.on('click', function (e) {
+        markerToParameterLatitude = e.latlng.lat;
+        markerToParameterLongitude = e.latlng.lng;
+        clearMarker();
+        markerAutoLocation = L.marker([markerToParameterLatitude, markerToParameterLongitude]).addTo(map);
+        FINAL_LATITUDE = markerToParameterLatitude;
+        FINAL_LONGITUDE = markerToParameterLongitude;
+        console.log(FINAL_LATITUDE + ',' + FINAL_LONGITUDE);
+        provideFinalInformation();
+    });
+
+    L.easyButton('fas fa-location-arrow', function () {
+        getLocation();
+    }).addTo(map);
+
+
+
+</script>

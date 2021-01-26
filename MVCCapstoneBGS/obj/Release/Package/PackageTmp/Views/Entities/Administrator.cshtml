@@ -1,0 +1,624 @@
+﻿
+@{
+    Layout = @ViewBag.VBLayout;
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@LabelStruct.Administrator.AdministratorHomepage</title>
+    <style type="text/css">
+   .mobileHide { display: inline;}
+   /* Smartphone Portrait and Landscape */
+   @@media only screen
+   and (min-device-width : 320px)
+   and (max-device-width : 480px){  .mobileHide { display: none;}}
+    </style>
+</head>
+<body>
+
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="">Administrator</a></li>
+        <li class="breadcrumb-item active">Homepage</li>
+    </ol>
+
+
+    @*@ViewBag.Coding*@
+
+    @*<ul>
+            @foreach (var person in ViewBag.DUMMY)
+            {
+                <li>'@person.XCoordinates - @person.YCoordinates'</li>
+            }
+        </ul>*@
+
+    <!--DESCRIPTION START-->
+    <div class="card mb-4">
+        <div class="card-body">
+            @LabelStruct.Administrator_Message.M_AdministratorHomepage
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-primary text-white mb-4">
+                <div class="card-body">Solved Water Cases</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link">@ViewBag.VBWater</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-warning text-white mb-4">
+                <div class="card-body">Solved Land Cases</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link">@ViewBag.VBLand</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-success text-white mb-4">
+                <div class="card-body">Pending Cases</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link">@ViewBag.VBProgress</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-danger text-white mb-4">
+                <div class="card-body">Community Users</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link">@ViewBag.VBUsers</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--DESCRIPTION END-->
+    <!--TITLE START-->
+
+    <div class="row mobileHide">
+        <div class="col-lg-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-chart-bar mr-1"></i>
+                    This Year's Monthly Status
+                </div>
+
+                <div class="card-body">
+                    <canvas id="myChart" width="100" height="50"></canvas>
+
+                    @*<div class="row">
+                        <div class="col-lg-3 offset two" id="chart-legends">
+                        </div>
+                        <div class="col-lg-9 one" id="chartyheight">
+                            <canvas id="myChart" width="100" height="50"></canvas>
+
+                        </div>
+                    </div>*@
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-chart-bar mr-1"></i>
+                    Overall Concern Status
+                </div>
+                <div class="card-body"><canvas id="myBarChart" width="100" height="50"></canvas></div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-chart-pie mr-1"></i>
+                    Overall Submitted Concerns Per Area
+                </div>
+
+                <div class="card-body">
+                    @*<select name="YearDDL" class="btn btn-primary YearDDL">- Please Select -</select>*@
+                    <canvas id="myPieChart" width="100" height="50"></canvas>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-chart-area mr-1"></i>
+            Recently Submitted Concerns
+        </div>
+
+
+        <div class="card-body">
+            <table id="CaseReportTable" class="table table-hover table-striped table-bordered table-responsive-sm" cellspacing="0" style="width:100%; "></table>
+            @*
+                overflow:auto; word-break:break-all;**@
+        </div>
+
+        <div class="card-footer small text-muted">Data as of @ViewBag.DATETIMENOW</div>
+    </div>
+
+    <!--TITLE END-->
+    <!--ADD MODAL BEGIN-->
+    <div class="modal fade" id="myModalAdd" role="dialog">
+        <div class="modal-dialog modal-md">
+            <!-- Modal content-->
+            <div class="modal-content" id="modalwindow">
+                <div class="modal-header">
+                    <h3 class="modal-title Title">Insert : User Information</h3>
+                </div>
+                <div class="modal-body">
+
+                    <div class="modal-body mx-3">
+
+                        <div class="md-form mb-5">
+                            <input type="text" id="orangeForm-name" class="form-control validate">
+                            <label data-error="wrong" data-success="right" for="orangeForm-name">Username</label>
+                        </div>
+
+                        <div class="md-form mb-5">
+                            <input type="text" id="orangeForm-name" class="form-control validate">
+                            <label data-error="wrong" data-success="right" for="orangeForm-name">Given Name</label>
+                        </div>
+
+                        <div class="md-form mb-5">
+                            <input type="text" id="orangeForm-name" class="form-control validate">
+                            <label data-error="wrong" data-success="right" for="orangeForm-name">Maiden Name</label>
+                        </div>
+
+                        <div class="md-form mb-5">
+                            <input type="text" id="orangeForm-name" class="form-control validate">
+                            <label data-error="wrong" data-success="right" for="orangeForm-name">Family Name</label>
+                        </div>
+
+                        <div class="md-form mb-5">
+                            <input type="email" id="orangeForm-email" class="form-control validate">
+                            <label data-error="wrong" data-success="right" for="orangeForm-email">Email Address</label>
+                        </div>
+
+                        <div class="md-form mb-4">
+                            <input type="password" id="orangeForm-pass" class="form-control validate">
+                            <label data-error="wrong" data-success="right" for="orangeForm-pass">Password</label>
+                        </div>
+
+                        <div class="md-form mb-4">
+                            <input type="password" id="orangeForm-pass" class="form-control validate">
+                            <label data-error="wrong" data-success="right" for="orangeForm-pass">Confirm Password</label>
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" id="btnAddRemarks" value="Insert" class="btn btn-primary btn-md btnAddRemarks" />
+                </div>
+            </div>
+            <!-- Modal content-->
+        </div>
+    </div>
+    <!--ADD MODAL END-->
+    <!--UPDATE MODAL BEGIN-->
+    <div class="modal fade" id="myModalUpdate" role="dialog">
+        <div class="modal-dialog modal-md">
+            <!-- Modal content-->
+            <div class="modal-content" id="modalwindow">
+                <div class="modal-header">
+                    <h3 class="modal-title Title">Update : User Type</h3>
+                </div>
+
+                <div class="modal-body">
+                    <fieldset id="EditSection">
+                        <div class="control-label col-xs-12 col-sm-4">
+                            Hello World!
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="modal-footer">
+                    <input type="submit" id="btnUpdateRemarks" value="Update" class="btn btn-primary btn-md btnUpdateRemarks" />
+                </div>
+            </div>
+            <!-- Modal content-->
+        </div>
+    </div>
+    <!--UPDATE MOAL END-->
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-chart-area mr-1"></i>
+            Overall Status
+        </div>
+
+
+        <div class="card-body">
+            <select name="UpdatedStatusDDL" class="btn btn-dark UpdatedStatusDDL">- Please Select -</select>
+            <div class="control-label col-xs-12 col-sm-4">
+                <label class="asteriskRequired"></label>
+            </div>
+            <div style="padding-top:25px; height:1000px" id='map'></div>
+        </div>
+        <div class="card-footer small text-muted">Data as of @ViewBag.DATETIMENOW</div>
+    </div>
+</body>
+</html>
+
+<script>
+
+    $(document).ready(function () {
+        LoadMap();
+        LoadCaseReport();
+        LoadUpdatedStatusDDL();
+        LoadYearDDL();
+    });
+
+   //$("#chart-legends").height($("#chartyheight").height());
+
+
+    function LoadYearDDL() {
+        var temp = $(".YearDDL").empty();
+        temp.append($("<option>Select Year</option>"));
+        $.ajax({
+            type: "GET",
+            url: "/DataGet/GetYear",
+            dataType: "json",
+            success: function (response) {
+                $.each(response, function () {
+
+                    temp.append($("<option></option>").val(this['Description']).html(this['Description']));
+                });
+            }
+        })
+    };
+
+    var BAR1 = document.getElementById("myChart");
+    var myBarChart = new Chart(BAR1, {
+        type: 'bar',
+        data: {
+            labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+            datasets: [
+                 @Html.Raw(@ViewBag.Coding)
+            ],
+        },
+        options: {
+
+            //legendCallback: function (chart) {
+            //    var text = [];
+            //    text.push('<ul>');
+            //    for (var i = 0; i < chart.data.datasets.length; i++) {
+            //        console.log(chart.data.datasets[i]); // see what's inside the obj.
+            //        text.push('<li>');
+            //        text.push('<span style="background-color:' + chart.data.datasets[i].borderColor + '">' + chart.data.datasets[i].label + '</span>');
+            //        text.push('</li>');
+            //    }
+            //    text.push('</ul>');
+            //    return text.join("");
+            //},
+
+
+            responsive: true,
+
+
+            layout: {
+                padding: {
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0
+                }
+            },
+            legend: {
+                position: "left",
+                display: true,
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        min: 0
+                    }
+                }]
+            }
+        }
+    });
+    //document.getElementById('chart-legends').innerHTML = myBarChart.generateLegend();
+
+
+    $(document).on("change", ".UpdatedStatusDDL", function () {
+        var PARAM_UPDATEDSTATUSID = $('.UpdatedStatusDDL').val();
+        if (PARAM_UPDATEDSTATUSID == 0 || PARAM_UPDATEDSTATUSID == "" || PARAM_UPDATEDSTATUSID == null || PARAM_UPDATEDSTATUSID == "Select Status") {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Please select a year!',
+                footer: '<a>Powered by TerraTech</a>'
+            })
+        }
+        else {
+            try {
+                window.location.href = "/Entities/Administrator?UpdatedStatusID=" + PARAM_UPDATEDSTATUSID;
+            }
+            catch
+            {
+
+            }
+        }
+    });
+
+    function LoadUpdatedStatusDDL() {
+        var temp = $(".UpdatedStatusDDL").empty();
+        temp.append($("<option>Select Status</option>"));
+        $.ajax({
+            type: "GET",
+            url: "/DataGet/GetUpdatedStatus",
+            dataType: "json",
+            success: function (response) {
+                $.each(response, function () {
+
+                    temp.append($("<option></option>").val(this['UpdatedStatusID']).html(this['Description']));
+                });
+            }
+        })
+    };
+
+    function LoadMap() {
+    var map = L.map('map');
+        var locations = [
+            ["DENR HEADQUARTERS", 14.642285, 121.050823],
+        @Html.Raw(ViewBag.DUMMY2)
+        ];
+        var a = 'https://api.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiYmJyb29rMTU0IiwiYSI6ImNpcXN3dnJrdDAwMGNmd250bjhvZXpnbWsifQ.Nf9Zkfchos577IanoKMoYQ';
+        var b = 'https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
+
+        map.invalidateSize();
+        var maxBounds = [
+            [21.116625, 131.175528],
+            [4.991861, 115.976455]
+        ];
+
+        L.tileLayer(b).addTo(map);
+        map.setView([14.642285, 121.050823], 15);
+        map.setMaxBounds(maxBounds);
+        map.fitBounds(maxBounds);
+        var marker;
+        for (var i = 0; i < locations.length; i++) {
+            marker =  new L.marker([locations[i][1], locations[i][2]])
+                .bindPopup(locations[i][0])
+                .addTo(map);
+        }
+        /*
+                 for (var i = 0; i < locations.length; i++) {
+            marker =  new L.marker([locations[i][1], locations[i][2]])
+                .bindPopup(locations[i][0]).on('click',onClick)
+                .addTo(map);
+        }
+         */
+        $('.leaflet-control-attribution').hide();
+        setTimeout(function () {
+            map.invalidateSize();
+        }, 10);
+    };
+
+    $(document).on("click", ".AddUserType", function () {
+        $('#myModalAdd').modal('show');
+    });
+
+    function LoadCaseReport() {
+        table = $('#CaseReportTable').DataTable({
+            bLengthChange: false,
+            destroy: true,
+            responsive: true,
+            order: [[1, 'asc']],
+            ajax: {
+                type: "GET",
+                "url": "/DataGet/GetCurrentCaseReport?UpdatedStatusID=1",
+                dataSrc: function (json) {
+                    var a = new Array();
+                    for (var b = 0; b <= json.length - 1; b++) {
+                        var c = json[b];
+                        a.push({
+                            'CaseReportID': c.CaseReportID,
+                            'UserInformationID': c.UserInformationID,
+                            'FamilyName': c.FamilyName,
+                            'GivenName': c.GivenName,
+                            'MaidenName': c.MaidenName,
+                            'FullName': c.GivenName + " " + c.MaidenName + " " + c.FamilyName,
+                            'EnvironmentalConcernID': c.EnvironmentalConcernID,
+                            'DateReported': c.DateReported,
+                            'Concern': c.Concern,
+                            'UpdatedStatus': c.UpdatedStatus,
+                            'UpdatedStatusDate': c.UpdatedStatusDate,
+                            'CaseLocation': c.CaseLocation,
+                            'XCoordinates': c.XCoordinates,
+                            'YCoordinates': c.YCoordinates,
+                            'Coordinates': "(" + c.XCoordinates + "," + c.YCoordinates + ")",
+                            'Notes': c.Notes
+                        });
+                    }
+                    return a;
+                },
+            },
+            columns: [
+                {
+                    title: "No.",
+                    data: "CaseReportID"
+                },
+                {
+                    title: "Date",
+                    data: "DateReported",
+                    "render": function (value) {
+                        if (value === null) return "";
+
+                        var pattern = /Date\(([^)]+)\)/;
+                        var results = pattern.exec(value);
+                        var dt = new Date(parseFloat(results[1]));
+
+                        return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
+                    }
+                },
+
+                {
+                    title: "Area",
+                    data: "CaseLocation"
+                },
+                {
+                    title: "Coordinates",
+                    data: "Coordinates"
+                },
+
+            ],
+            'columnDefs': [
+                {
+                    "className": "dt-center", "targets": "_all"
+                }],
+        });
+
+        return table;
+    };
+
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF'.split('');
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    var PIE = document.getElementById("myPieChart");
+    var myPieChart = new Chart(PIE, {
+        type: 'pie',
+        data: {
+            labels: [@Html.Raw(ViewBag.ECName)],
+            datasets: [{
+                data: [@ViewBag.ECCount],
+                backgroundColor: [getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor()],
+                    //['#00FFFF', '#32CD32']
+            }],
+        },
+    });
+
+    var BAR = document.getElementById("myBarChart");
+    var myBarChart = new Chart(BAR, {
+        type: 'bar',
+        data: {
+            labels: [@Html.Raw(ViewBag.SStatus)],
+            datasets: [{
+                data: [@ViewBag.SCount],
+                backgroundColor: [getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor()],
+
+            }],
+        },
+        options: {
+            legend: {
+                display: false
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        min: 0
+                    }
+                }]
+            }
+        }
+    });
+
+    //function onClick(e) { alert('lol'); }
+
+    /*LIGHT COLORS
+     *  function getRandomColor() {
+                var letters = 'BCDEF'.split('');
+                var color = '#';
+                for (var i = 0; i < 6; i++ ) {
+                    color += letters[Math.floor(Math.random() * letters.length)];
+                }
+                return color;
+            }
+     * */
+
+    //$(document).on("change", ".YearDDL", function () {
+
+    //    alert();
+
+    //});
+
+
+    $(document).on("change", ".YearDDL", function () {
+
+        var PARAM_Year = $('.YearDDL').val();
+
+        if (PARAM_Year == 0 || PARAM_Year == "" || PARAM_Year == null || PARAM_Year == "Select Year") {
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Please select a year!',
+                footer: '<a>Powered by TerraTech</a>'
+            })
+        }
+
+        else {
+            try {
+                window.location.href = "/Entities/Administrator?UpdatedStatusID=" + PARAM_Year;
+            }
+            catch
+            {
+
+            }
+        }
+        //$.ajax({
+        //    type: "GET",
+        //    "url": "/DataGet/GetLWStatus",
+        //    dataType: "json",
+        //    async: false,
+        //    data: {
+        //        UpdatedStatusID: 1,
+        //    },
+        //    success: function (result) {
+
+        //        //$.each(result, function (index, value) {
+        //        var jsonStringify = JSON.stringify(result);
+        //        var jsonObj = JSON.parse(jsonStringify);
+        //        //console.table(jsonObj);
+        //        console.log(jsonObj);
+        //        alert(jsonObj[0]['January_Land'] + ' ' + jsonObj[0]['February_Land']);
+        //        //});
+        //    }
+        //}
+        //);
+
+    });
+
+
+    $(document).on("click", "#imageID", function () {
+        Swal.fire({
+            title: 'Environmental Concern',
+            text: 'Powered by TerraTech',
+            imageUrl: $(this)[0].getAttribute('src'),
+            imageWidth: 400,
+            imageHeight: 200,
+            imageAlt: 'Custom image',
+        })
+
+    });
+
+</script>
