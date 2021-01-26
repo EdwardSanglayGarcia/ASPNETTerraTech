@@ -516,6 +516,23 @@ namespace MVCCapstoneBGS
         }
 
 
+        public List<CaseReport> GetAssignedConcerns(int VolunteerID)
+        {
+            var result = new List<CaseReport>();
+            using (IDbConnection con = new SqlConnection(constring))
+            {
+                con.Open();
+                var param = new DynamicParameters();
+                param.Add("@VolunteerID", VolunteerID);
+
+                result = con.Query<CaseReport>(
+                        StoredProcedureEnum.V_AssignedConcerns.ToString(), param, commandType: CommandType.StoredProcedure).ToList();
+
+            }
+            return result;
+        }
+
+
 
         public int CheckUsername(string Username)
         ///Insert User information

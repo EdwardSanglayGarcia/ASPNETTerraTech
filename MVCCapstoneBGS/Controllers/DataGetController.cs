@@ -114,6 +114,14 @@ namespace MVCCapstoneBGS.Controllers
             return json;
         }
 
+        public ActionResult GetAssignedConcerns(int VolunteerID)
+        {
+            var data = _IDataProvider.GetAssignedConcerns(VolunteerID);
+            JsonResult json = Json(data, JsonRequestBehavior.AllowGet);
+            json.MaxJsonLength = int.MaxValue;
+            return json;
+        }
+
         public ActionResult GetCurrentCompletedReports(int UpdatedStatusID)
         {
             var data = _IDataProvider.GetCaseReport(UpdatedStatusID).Where(x => x.UpdatedStatusDate.Year == DateTime.Now.Year && x.UpdatedStatusID == UpdatedStatusID);

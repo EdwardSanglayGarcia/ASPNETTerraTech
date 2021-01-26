@@ -28,11 +28,7 @@ namespace MVCCapstoneBGS.Controllers
         string Layout_CUDashboard = "~/TerraTech/TerraShared/CommunityUser.cshtml";
 
         const string quote = "\"";
-        int SESSION_UserInformationID;
-        string SESSION_GivenName;
-        string SESSION_MaidenName;
-        string SESSION_FamilyName;
-        int SESSION_UserTypeID;
+
 
         public ActionResult Administrator(int UpdatedStatusID = 0)
         {
@@ -301,16 +297,14 @@ namespace MVCCapstoneBGS.Controllers
                     var UserTypeID = userDetail.UserTypeID;
                     var Password = userDetail.Password;
                     var Username = userDetail.Username;
-                    SESSION_UserInformationID = userDetail.UserInformationID;
+                    
+
                     Session["UserInformationID"] = UserInformationID;
                     Session["Username"] = Username;
                     Session["UserTypeID"] = UserTypeID;
                     Session["Password"] = Password;
 
-                    SESSION_FamilyName = userDetail.FamilyName;
-                    SESSION_MaidenName = userDetail.MaidenName;
-                    SESSION_GivenName = userDetail.GivenName;
-                    SESSION_UserTypeID = UserTypeID;
+                  
 
                     if (UserTypeID == 1)
                     {
@@ -381,7 +375,6 @@ namespace MVCCapstoneBGS.Controllers
         #region Administrator
         public ActionResult Accounts()
         {
-            ViewBag.SESSIONID = SESSION_UserInformationID;
             ViewBag.Title = LabelStruct.Administrator.Volunteers;
             ViewBag.VBLayout = Layout_ADashboard;
             ViewBag.DATETIMENOW = DateTime.Now.Date.ToLongDateString() + " - " + DateTime.Now.TimeOfDay;
@@ -1396,13 +1389,15 @@ namespace MVCCapstoneBGS.Controllers
         public ActionResult Volunteer()
         {
             ViewBag.VBLayout = Layout_VDashboard;
+            ViewBag.UserInformationID = Convert.ToInt32(Session["UserInformationID"]);
             return View();
         }
 
         public ActionResult Assignations()
         {
             ViewBag.VBLayout = Layout_VDashboard;
-            ViewBag.UserInformationID = SESSION_UserInformationID;
+            ViewBag.UserInformationID = Convert.ToInt32(Session["UserInformationID"]);
+
 
             return View();
         }

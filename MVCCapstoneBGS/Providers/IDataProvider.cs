@@ -26,6 +26,9 @@ namespace MVCCapstoneBGS
         List<EnvironmentalConcern> GetEnvironmentalConcern();
         List<UpdatedStatus> GetUpdatedStatus();
         List<CaseReport> GetCaseReport(int UpdatedStatusID);
+
+        List<CaseReport> GetAssignedConcerns(int VolunteerID);
+
         List<CaseReport> GetCaseReportBetweenDates(int UpdatedStatusID, DateTime StartDate, DateTime EndDate);
 
         int CheckUsername(string Username);
