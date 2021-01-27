@@ -1439,11 +1439,23 @@ namespace MVCCapstoneBGS.Controllers
         [HttpPost]
         public ActionResult CompleteConcern(CaseReport UI, HttpPostedFileBase image1)
         {
+            //string message="TerraTechPH";
+            //try
+            //{
+                _IDataProvider.UpdateCaseReport_Completed(UI, image1);
+                var x = _IDataProvider.GetCaseReportIdentity();
+            //    message = "<script>Swal.fire({  icon: 'success',  title: 'SUCCESS!',  text: 'Password Changed!',  footer: '<a >Powered by TerraTechPH</a>'})</script>";
 
-            _IDataProvider.UpdateCaseReport_Completed(UI, image1);
-            var x = _IDataProvider.GetCaseReportIdentity();
+            ////}
 
-            return View("Assignations");
+            //catch (Exception ex)
+            //{
+            //    message = "<script>Swal.fire({  icon: 'error',  title: 'ERROR!',  text: 'Wrong Parameters Provided!',  footer: '<a >Powered by TerraTechPH</a>'})</script>";
+
+            //}
+            return RedirectToAction("Volunteer","Entities");
+
+           // return message;
         }
         #endregion
 

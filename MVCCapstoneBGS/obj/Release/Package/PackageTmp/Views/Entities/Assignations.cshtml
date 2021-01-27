@@ -46,8 +46,6 @@
                 <input type="hidden" name="EnvironmentalConcernID" id="EnvironmentalConcernID" required>
                 <input type="hidden" name="Notes" id="Notes" required>
 
-
-
             }
 
         </div>
@@ -55,97 +53,6 @@
         <div class="card-footer small text-muted">Data as of @ViewBag.DATETIMENOW</div>
     </div>
 
-    @*MODAL SECTION UPDATE START*@
-    <div class="modal fade" id="myModalUpdate" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <!-- Modal content-->
-            <div class="modal-content" id="modalwindow">
-                <div class="modal-header">
-                    <h3 class="modal-title Title">Update : Assigned Case Report</h3>
-                </div>
-                <div class="modal-body">
-
-                    <div class="modal-body mx-3">
-
-                        <div class="form-group">
-                            <img id='img-upload' style="border:thin; margin-bottom:10px; height:75%; width:100%; border:double;" />
-                            <div class="input-group">
-                                <span class="input-group-btn">
-                                    <span class="btn btn-default btn-file" style=" position: relative; overflow: hidden; background-color:black; color:white;">
-                                        <i class='fas fa-camera'></i> Submit Image
-                                        <input type="file" accept="image/*" id="image1" name="image1" alt="Responsive image" style="position: absolute; top: 0; right: 0; min-width: 100%; min-height: 100%; font-size: 100px; text-align: right; filter: alpha(opacity=0); opacity: 0; outline: none; background: white; cursor: inherit; display: block;" capture required>
-                                    </span>
-                                </span>
-                                <input type="text" class="form-control" readonly required>
-                            </div>
-                        </div>
-
-                    </div>
-
-
-                </div>
-                <div class="modal-footer">
-                    <input type="submit" id="btnREQUpdateVolunteer" value="Update" class="btn btn-primary btn-md btnREQUpdateVolunteer" />
-                    <button type="button" class="btn btn-danger" data-dismiss="modal" title="Close">Close</button>
-                </div>
-            </div>
-            <!-- Modal content-->
-        </div>
-    </div>
-    @*MODAL SECTION UPDATE END*@
-
-    <div class="modal fade" id="myModalDummy" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <!-- Modal content-->
-            <div class="modal-content" id="modalwindow">
-                <div class="modal-header">
-                    <h3 class="modal-title Title">DUMMY MODAL</h3>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        @*LEFT SIDE*@
-                        <div class="col-md-6">
-                            @*PHOTO*@
-                            <div class="col-md-6">
-                                ROW A
-                            </div>
-
-                            @*MAP*@
-                            <div class="col-md-6">
-                                ROW B
-                            </div>
-                        </div>
-
-                        @*RIGHT SIDE*@
-                        <div class="col-md-6">
-
-                            <div class="md-form mb-3">
-                                <input type="text" id="tbGivenName" class="form-control validate tbGivenName">
-                                <label data-error="wrong" data-success="right" for="orangeForm-name">Given Name</label>
-                            </div>
-
-                            <div class="md-form mb-3">
-                                <input type="text" id="tbMaidenName" class="form-control validate tbMaidenName">
-                                <label data-error="wrong" data-success="right" for="orangeForm-name">Maiden Name</label>
-                            </div>
-
-                            <div class="md-form mb-3">
-                                <input type="text" id="tbFamilyName" class="form-control validate tbFamilyName">
-                                <label data-error="wrong" data-success="right" for="orangeForm-name">Family Name</label>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <input type="submit" id="btnREQAddVolunteer" value="Insert" class="btn btn-primary btn-md btnREQAddVolunteer" />
-                    <button type="button" class="btn btn-danger" data-dismiss="modal" title="Close">Close</button>
-                </div>
-            </div>
-            <!-- Modal content-->
-        </div>
-    </div>
 
 </body>
 </html>
@@ -156,42 +63,6 @@
 
     $(document).ready(function () {
         LoadVolunteer();
-
-
-        $(document).on('change', '.btn-file :file', function () {
-            var input = $(this),
-                label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-            input.trigger('fileselect', [label]);
-        });
-
-        $('.btn-file :file').on('fileselect', function (event, label) {
-
-            var input = $(this).parents('.input-group').find(':text'),
-                log = label;
-
-            if (input.length) {
-                input.val(log);
-            } else {
-                if (log) console.log(log);
-            }
-
-        });
-
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    $('#img-upload').attr('src', e.target.result);
-                }
-
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        $("#image1").change(function () {
-            readURL(this);
-        });
     });
 
     function LoadVolunteer() {

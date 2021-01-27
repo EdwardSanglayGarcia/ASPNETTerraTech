@@ -28,11 +28,12 @@
             <div class="control-label col-xs-12 col-sm-4">
                 <label class="asteriskRequired"></label>
             </div>
+            <b>Case Report No: </b>@ViewBag.CaseReportID   <br />
             <b>Date Reported: </b>@ViewBag.DateReported   <br />
             <b>Date Assigned: </b>@ViewBag.UpdatedStatusDate<br />
             <b>X Coordinates: </b>@ViewBag.XCoordinates  <br />
             <b>Y Coordinates: </b>@ViewBag.YCoordinates  <br />
-            <div style="padding-top:25px; height:550px; border:double;" id='map'></div>
+            <div style="padding-top:100px; height:550px; border:double;" id='map'></div>
         </div>
     </div>
 
@@ -95,7 +96,7 @@
                     <div class="modal-footer">
                         <p>Powered by TerraTechPH</p>
                         @*<button type="button" id="btnReject" class="btn btn-warning btnReject" data-dismiss="modal">Reject</button>*@
-                        <input type="submit" value="Complete" class="btn btn-primary btn-md btnREQAddVolunteer" id="btnREQAddVolunteer" />
+                        <input type="submit" value="Complete" class="btn btn-primary btn-md btnREQAddVolunteer" id="btnREQAddVolunteer" disabled/>
 
                         <button type="button" class="btn btn-danger" data-dismiss="modal" title="Close">Close</button>
                     </div>
@@ -150,6 +151,7 @@
         }
 
         $("#image1").change(function () {
+            document.getElementById("btnREQAddVolunteer").disabled = false;
             readURL(this);
         });
     });
@@ -229,33 +231,26 @@
     $(document).on("click", ".btnREQAddVolunteer", function () {
         CaseReportID = document.getElementById("CaseReportID");
         CaseReportID.value = @ViewBag.CaseReportID;
-    });
-
-    $(document).on("click", ".btnComplete", function () {
         Swal.fire({
-            title: 'Are you sure?',
-            text: "Do you really want to mark this as Completed?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, mark it as as Completed!'
-        }).then((result) => {
-            if (result.value) {
-
-                $.ajax({
-                    type: "GET",
-                    "url": "/DataUpdate/UpdateCaseReportToCompleted",
-                    dataType: "json",
-                    async: false,
-                    data: {
-                        CaseReportID: @ViewBag.CaseReportID,
-                    }
-                });
-                location.reload();
-            }
-        })
+            title: 'Please Wait !',
+            html: 'data uploading',// add html attribute if you want or remove
+            allowOutsideClick: false,
+            onBeforeOpen: () => {
+                Swal.showLoading()
+            },
+        });
     });
 
+    $(document).on("click", "#imageID", function () {
+        Swal.fire({
+            title: 'Environmental Concern',
+            text: 'Powered by TerraTech',
+            imageUrl: $(this)[0].getAttribute('src'),
+            imageWidth: 400,
+            imageHeight: 200,
+            imageAlt: 'Custom image',
+        })
+
+    });
 
 </script>
