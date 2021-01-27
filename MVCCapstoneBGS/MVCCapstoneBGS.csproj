@@ -790,6 +790,7 @@
     <Content Include="TerraTech\TerraShared\VolunteerDashboard.cshtml" />
     <Content Include="Views\Entities\Assignations.cshtml" />
     <Content Include="Views\Entities\Finalized.cshtml" />
+    <Content Include="Views\Entities\ManageConcern.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

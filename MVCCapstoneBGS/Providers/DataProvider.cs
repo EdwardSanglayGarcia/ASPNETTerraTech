@@ -532,6 +532,22 @@ namespace MVCCapstoneBGS
             return result;
         }
 
+        public List<CaseReport> GetCompletedAssignedConcerns(int VolunteerID)
+        {
+            var result = new List<CaseReport>();
+            using (IDbConnection con = new SqlConnection(constring))
+            {
+                con.Open();
+                var param = new DynamicParameters();
+                param.Add("@VolunteerID", VolunteerID);
+
+                result = con.Query<CaseReport>(
+                        StoredProcedureEnum.V_CompletedAssignedConcerns.ToString(), param, commandType: CommandType.StoredProcedure).ToList();
+
+            }
+            return result;
+        }
+
 
 
         public int CheckUsername(string Username)
@@ -579,10 +595,6 @@ namespace MVCCapstoneBGS
                     image1.InputStream.Read(UI.CaseReportPhoto, 0, image1.ContentLength);
                 }
 
-                //UI.XCoordinates = Convert.ToInt32(14).ToString();
-                //UI.YCoordinates = Convert.ToInt32(121).ToString();
-                ////UI.UserInformationID = 5;
-                //UI.CaseLocation = "Kwarto ko";
 
 
                 con.Open();
@@ -597,21 +609,11 @@ namespace MVCCapstoneBGS
                 param.Add("@Hits", hits);
                 param.Add("@SpecificEnvironmentalConcernID", UI.SpecificEnvironmentalConcernID);
 
-                Convert.ToBase64String(UI.CaseReportPhoto);
+                //  Convert.ToBase64String(UI.CaseReportPhoto);
 
                 result = con.Query<CaseReport>(
                StoredProcedureEnum.I_CaseReport.ToString(), param, commandType: CommandType.StoredProcedure).ToList();
-
-
-
-
             }
-
-
-
-
-
-
             return result;
         }
 
@@ -831,14 +833,41 @@ namespace MVCCapstoneBGS
             return result;
         }
 
-        public List<CaseReport> UpdateCaseReport_Completed(int CaseReportID)
+        public List<CaseReport> UpdateCaseReport_Completed(CaseReport UI, HttpPostedFileBase image1)
         {
             var result = new List<CaseReport>();
             using (IDbConnection con = new SqlConnection(constring))
             {
+
+                if (image1 != null)
+                {
+                    UI.CaseReportPhotoCompleted = new byte[image1.ContentLength];
+                    image1.InputStream.Read(UI.CaseReportPhotoCompleted, 0, image1.ContentLength);
+                }
+
+
+                string imgurId = "785030f668c9715";
+                string finalURL;
+                using (var w = new WebClient())
+                {
+                    string clientID = imgurId;
+                    w.Headers.Add("Authorization", "Client-ID " + clientID);
+
+
+                    var values = new NameValueCollection { { "image", Convert.ToBase64String(UI.CaseReportPhotoCompleted) } };
+                    byte[] response = w.UploadValues("https://api.imgur.com/3/upload.xml", values);
+                    var responseXml = XDocument.Load(new MemoryStream(response));
+                    string imageUrl = (string)responseXml.Root.Element("link");
+
+                    finalURL = imageUrl;
+                }
+
                 con.Open();
                 var param = new DynamicParameters();
-                param.Add("@CaseReportID", CaseReportID);
+                param.Add("@CaseReportID", UI.CaseReportID);
+                param.Add("@CaseReportPhotoCompleted", UI.CaseReportPhotoCompleted);
+                param.Add("@CaseReportPhotoLinkCompleted", finalURL);
+
 
                 result = con.Query<CaseReport>(
                     StoredProcedureEnum.U_CaseReport_C.ToString(), param, commandType: CommandType.StoredProcedure).ToList();

@@ -41,6 +41,8 @@ namespace MVCCapstoneBGS
 
     public class CaseReport
     {
+        public byte[] CaseReportPhotoCompleted { get; set; }
+        public string CaseReportPhotoLinkCompleted { get; set; }
         public int SpecificEnvironmentalConcernID { get; set; }
         public int CaseReportID { get; set; }
         public int UserInformationID { get; set; }
@@ -58,7 +60,11 @@ namespace MVCCapstoneBGS
         public string XCoordinates { get; set; }
         public string YCoordinates { get; set; }
 
+        public string SubCategory { get; set; }
+
         public int VolunteerID { get; set; }
+
+        public string Handler_Username { get; set; }
 
         public string Handler_GivenName { get; set; }
         public string Handler_MaidenName { get; set; }
@@ -73,6 +79,9 @@ namespace MVCCapstoneBGS
         public string Base64Photo { get; set; }
 
         public string PhotoLink { get; set; }
+
+        public string DateReportedConverted { get; set; }
+        public string DateUpdatedConverted { get; set; }
     }
 
     public class UserInformation

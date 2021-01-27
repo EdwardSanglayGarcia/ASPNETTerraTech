@@ -8,16 +8,35 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>@LabelStruct.CommunityUser.CommunityUserHomepage</title>
-    <style>
-    </style>
+    <title>@LabelStruct.Administrator.Volunteers</title>
 
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
 </head>
 <body>
+
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="">Volunteer</a></li>
+        <li class="breadcrumb-item active">Completions</li>
+    </ol>
+
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-chart-area mr-1"></i>
+            List of Completed Concerns
+        </div>
+
+        <div class="card-body">
+            <div class="control-label col-xs-12 col-sm-4">
+                <label class="asteriskRequired"></label>
+            </div>
+
+            <table id="VolunteerTable" class="table table-hover table-striped table-bordered table-responsive-sm" cellspacing="0" style="width:100%; "></table>
+        </div>
+
+        <div class="card-footer small text-muted">Data as of @ViewBag.DATETIMENOW</div>
+    </div>
 
 
 </body>
@@ -27,6 +46,10 @@
 <script>
 
 
+    $(document).ready(function () {
+        LoadVolunteer();
+
+
+    });
+
 </script>
-
-

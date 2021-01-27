@@ -149,8 +149,10 @@
 
         <div class="card-body">
             <table id="CaseReportTable" class="table table-hover table-striped table-bordered table-responsive-sm" cellspacing="0" style="width:100%; "></table>
+
+
             @*
-                overflow:auto; word-break:break-all;**@
+        overflow:auto; word-break:break-all;**@
         </div>
 
         <div class="card-footer small text-muted">Data as of @ViewBag.DATETIMENOW</div>
@@ -442,7 +444,7 @@
                             'MaidenName': c.MaidenName,
                             'FullName': c.GivenName + " " + c.MaidenName + " " + c.FamilyName,
                             'EnvironmentalConcernID': c.EnvironmentalConcernID,
-                            'DateReported': c.DateReported,
+                            'DateReported': new Date(parseInt(c.DateReported.substr(6))),
                             'Concern': c.Concern,
                             'UpdatedStatus': c.UpdatedStatus,
                             'UpdatedStatusDate': c.UpdatedStatusDate,
@@ -462,27 +464,21 @@
                     data: "CaseReportID"
                 },
                 {
-                    title: "Date",
-                    data: "DateReported",
-                    "render": function (value) {
-                        if (value === null) return "";
-
-                        var pattern = /Date\(([^)]+)\)/;
-                        var results = pattern.exec(value);
-                        var dt = new Date(parseFloat(results[1]));
-
-                        return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
-                    }
+                    title: "Citizen",
+                    data: "FullName"
                 },
-
+                {
+                    title: "Concern",
+                    data: "Concern"
+                },
+                {
+                    title: "Date",
+                    data: "DateReported"
+                },
                 {
                     title: "Area",
                     data: "CaseLocation"
-                },
-                {
-                    title: "Coordinates",
-                    data: "Coordinates"
-                },
+                }
 
             ],
             'columnDefs': [

@@ -1,6 +1,6 @@
 ﻿
 @{
-    Layout = @ViewBag.VBLayout; 
+    Layout = @ViewBag.VBLayout;
 }
 
 <!DOCTYPE html>
@@ -8,16 +8,19 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>@LabelStruct.CommunityUser.CommunityUserHomepage</title>
-    <style>
-    </style>
+    <title>@LabelStruct.Administrator.Volunteers</title>
 
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
 </head>
 <body>
+
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="">Volunteer</a></li>
+        <li class="breadcrumb-item active">Dashboard</li>
+    </ol>
+
+
 
 
 </body>
@@ -27,6 +30,10 @@
 <script>
 
 
+    $(document).ready(function () {
+        LoadVolunteer();
+
+
+    });
+
 </script>
-
-

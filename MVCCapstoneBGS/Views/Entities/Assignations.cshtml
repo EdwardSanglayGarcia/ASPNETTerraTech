@@ -9,6 +9,9 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@LabelStruct.Administrator.Volunteers</title>
+
+
+
 </head>
 <body>
 
@@ -28,153 +31,34 @@
                 <label class="asteriskRequired"></label>
             </div>
 
-            <table id="VolunteerTable" class="table table-hover table-striped table-bordered table-responsive-sm" cellspacing="0" style="width:100%; "></table>
+            @using (Html.BeginForm("ManageConcern", "Entities", FormMethod.Post, new { @id = "manageForm" }))
+            {
+                <table id="VolunteerTable" class="table table-hover table-striped table-bordered table-responsive-sm" cellspacing="0" style="width:100%; "></table>
+                <input type="hidden" name="CaseReportID" id="CaseReportID" required>
+                <input type="hidden" name="XCoordinates" id="XCoordinates" required>
+                <input type="hidden" name="YCoordinates" id="YCoordinates" required>
+                <input type="hidden" name="DateReportedConverted" id="DateReportedConverted" required>
+                <input type="hidden" name="DateUpdatedConverted" id="DateUpdatedConverted" required>
+                <input type="hidden" name="PhotoLink" id="PhotoLink" required>
+                <input type="hidden" name="Concern" id="Concern" required>
+                <input type="hidden" name="SubCategory" id="SubCategory" required>
+                <input type="hidden" name="SpecificEnvironmentalConcernID" id="SpecificEnvironmentalConcernID" required>
+                <input type="hidden" name="EnvironmentalConcernID" id="EnvironmentalConcernID" required>
+                <input type="hidden" name="Notes" id="Notes" required>
+
+            }
+
         </div>
 
         <div class="card-footer small text-muted">Data as of @ViewBag.DATETIMENOW</div>
     </div>
 
-    @*MODAL SECTION ADD START*@
-    <div class="modal fade" id="myModalAdd" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <!-- Modal content-->
-            <div class="modal-content" id="modalwindow">
-                <div class="modal-header">
-                    <h3 class="modal-title Title">Insert : Community Volunteer</h3>
-                </div>
-                <div class="modal-body">
-
-                    <div class="modal-body mx-3">
-
-                        <div class="md-form mb-5">
-                            <input type="text" id="tbGivenName" class="form-control validate tbGivenName">
-                            <label data-error="wrong" data-success="right" for="orangeForm-name">Given Name</label>
-                        </div>
-
-                        <div class="md-form mb-5">
-                            <input type="text" id="tbMaidenName" class="form-control validate tbMaidenName">
-                            <label data-error="wrong" data-success="right" for="orangeForm-name">Maiden Name</label>
-                        </div>
-
-                        <div class="md-form mb-5">
-                            <input type="text" id="tbFamilyName" class="form-control validate tbFamilyName">
-                            <label data-error="wrong" data-success="right" for="orangeForm-name">Family Name</label>
-                        </div>
-
-                    </div>
-
-
-                </div>
-                <div class="modal-footer">
-                    <input type="submit" id="btnREQAddVolunteer" value="Insert" class="btn btn-primary btn-md btnREQAddVolunteer" />
-                    <button type="button" class="btn btn-danger" data-dismiss="modal" title="Close">Close</button>
-                </div>
-            </div>
-            <!-- Modal content-->
-        </div>
-    </div>
-    @*MODAL SECTION ADD END*@
-
-    @*MODAL SECTION UPDATE START*@
-    <div class="modal fade" id="myModalUpdate" role="dialog">
-        <div class="modal-dialog modal-md">
-            <!-- Modal content-->
-            <div class="modal-content" id="modalwindow">
-                <div class="modal-header">
-                    <h3 class="modal-title Title">Update : Community Volunteer</h3>
-                </div>
-                <div class="modal-body">
-
-                    <div class="modal-body mx-3">
-
-                        <div class="md-form mb-5">
-                            <input type="text" id="tbUGivenName" class="form-control validate tbUGivenName">
-                            <label data-error="wrong" data-success="right" for="orangeForm-name">Given Name</label>
-                        </div>
-
-                        <div class="md-form mb-5">
-                            <input type="text" id="tbUMaidenName" class="form-control validate tbUMaidenName">
-                            <label data-error="wrong" data-success="right" for="orangeForm-name">Maiden Name</label>
-                        </div>
-
-                        <div class="md-form mb-5">
-                            <input type="text" id="tbUFamilyName" class="form-control validate tbUFamilyName">
-                            <label data-error="wrong" data-success="right" for="orangeForm-name">Family Name</label>
-                        </div>
-
-                    </div>
-
-
-                </div>
-                <div class="modal-footer">
-                    <input type="submit" id="btnREQUpdateVolunteer" value="Update" class="btn btn-primary btn-md btnREQUpdateVolunteer" />
-                    <button type="button" class="btn btn-danger" data-dismiss="modal" title="Close">Close</button>
-                </div>
-            </div>
-            <!-- Modal content-->
-        </div>
-    </div>
-    @*MODAL SECTION UPDATE END*@
-
-    <div class="modal fade" id="myModalDummy" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <!-- Modal content-->
-            <div class="modal-content" id="modalwindow">
-                <div class="modal-header">
-                    <h3 class="modal-title Title">DUMMY MODAL</h3>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        @*LEFT SIDE*@
-                        <div class="col-md-6">
-                            @*PHOTO*@
-                            <div class="col-md-6">
-                                ROW A
-                            </div>
-
-                            @*MAP*@
-                            <div class="col-md-6">
-                                ROW B
-                            </div>
-                        </div>
-
-                        @*RIGHT SIDE*@
-                        <div class="col-md-6">
-
-                            <div class="md-form mb-3">
-                                <input type="text" id="tbGivenName" class="form-control validate tbGivenName">
-                                <label data-error="wrong" data-success="right" for="orangeForm-name">Given Name</label>
-                            </div>
-
-                            <div class="md-form mb-3">
-                                <input type="text" id="tbMaidenName" class="form-control validate tbMaidenName">
-                                <label data-error="wrong" data-success="right" for="orangeForm-name">Maiden Name</label>
-                            </div>
-
-                            <div class="md-form mb-3">
-                                <input type="text" id="tbFamilyName" class="form-control validate tbFamilyName">
-                                <label data-error="wrong" data-success="right" for="orangeForm-name">Family Name</label>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <input type="submit" id="btnREQAddVolunteer" value="Insert" class="btn btn-primary btn-md btnREQAddVolunteer" />
-                    <button type="button" class="btn btn-danger" data-dismiss="modal" title="Close">Close</button>
-                </div>
-            </div>
-            <!-- Modal content-->
-        </div>
-    </div>
 
 </body>
 </html>
 
 
 <script>
-
 
 
     $(document).ready(function () {
@@ -185,7 +69,8 @@
         table = $('#VolunteerTable').DataTable({
             bLengthChange: false,
             destroy: true,
-            responsive: true,
+            responsive:true,
+        
             order: [[1, 'asc']],
             ajax: {
                 type: "GET",
@@ -203,14 +88,18 @@
                             'FullName': c.GivenName + " " + c.MaidenName + " " + c.FamilyName,
                             'Notes': c.Notes,
                             'UserInformationID': c.UserInformationID,
-                            'DateReported': c.DateReported,
+                            'DateReported': new Date(parseInt(c.DateReported.substr(6))),
                             'CaseLocation': c.CaseLocation,
                             'EnvironmentalConcernID': c.EnvironmentalConcernID,
                             'XCoordinates': c.XCoordinates,
                             'YCoordinates': c.YCoordinates,
-                            'UpdatedStatusDate': c.UpdatedStatusDate,
+                            'UpdatedStatusDate': new Date(parseInt(c.UpdatedStatusDate.substr(6))),
                             'PhotoLink': c.PhotoLink,
-                            'SpecificEnvironmentalConcernID': c.SpecificEnvironmentalConcernID
+                            'SpecificEnvironmentalConcernID': c.SpecificEnvironmentalConcernID,
+                            'CaseReportID': c.CaseReportID,
+                            'Concern': c.Concern,
+                            'SubCategory': c.SubCategory
+
 
                         });
                     }
@@ -221,20 +110,73 @@
                 {
                     title: "Action",
                     "render": function () {
-                        var del = "<a class='btn btn-danger btn-xs btnDelete'  title='Delete' style='color: white'><i class='fas fa-times'></i></a>";
-                        var edit = "<a class='btn btn-success btn-xs btnUpdate' title='Edit' style='color: white'><i class = 'fas fa-check'></i></a>";
-                        return edit + "   " + del;
+                        //var del = "<a class='btn btn-danger btn-xs btnReject'  title='Delete' style='color: white'><i class='fas fa-times'></i></a>";
+                        //var approve = "<a class='btn btn-success btn-xs btnUpdate' title='Edit' style='color: white'><i class = 'fas fa-check'></i></a>";
+                      //  var view = "<a href='javascript:{}' onclick='document.getElementById('manageForm').submit();' class='btn btn-primary btn-xs btnView' title='Edit' style='color: white'><i class = 'fa fa-1x fa-address-card'></i></a>";
+                        var btn = " <input type='submit' value='Manage' class='btn btn-primary btn-md btnREQAddVolunteer' id='btnREQAddVolunteer'/>";
+
+                        // return view + "   " + approve + "   " + del;
+                        //return approve + "   " + del;
+                        return btn;
+
                     },
                     width: "80px"
                 },
                 {
-                    title: "ID Number",
-                    data: "VolunteerID"
+                    title: "No.",
+                    data: "CaseReportID"
                 },
                 {
-                    title: "Name",
-                    data: "FullName"
+                    title: "Type",
+                    data: "Concern"
                 },
+                {
+                    title: "Category",
+                    data: "SubCategory"
+                },
+                {
+                    title: "Area",
+                    data: "CaseLocation"
+                },
+                //{
+                //    title: "Date Assigned",
+                //    data: "UpdatedStatusDate",
+                //    "render": function (value) {
+                //        if (value === null) return "";
+
+                //        var pattern = /Date\(([^)]+)\)/;
+                //        var results = pattern.exec(value);
+                //        var dt = new Date(parseFloat(results[1]));
+
+                //        var res = (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
+                //        return res;
+                        
+                //    },
+
+                //},
+                //{
+                //    title: "Date Assigned",
+                //    data: "UpdatedStatusDate",
+                //    "render": function (value) {
+                //        return moment(value).format('MM/DD/YYYY');
+                //    }
+                //},
+                //{
+                //    title: "Date Assigned",
+                //    data: "UpdatedStatusDate",
+                //    "render": function (value) {
+                //        return new Date(parseInt(value.substr(6)));
+                //    }
+                //},
+                {
+                    title: "Date Reported",
+                    data: "DateReported"
+                },
+                {
+                    title: "Date Assigned",
+                    data: "UpdatedStatusDate"
+                },
+
             ],
             'columnDefs': [
                 {
@@ -249,23 +191,42 @@
         $('#myModalAdd').modal('show');
     });
 
+
     $(document).on("click", ".btnREQAddVolunteer", function () {
+        var data = table.row($(this).parents('tr')).data();
+        CaseReportID = document.getElementById("CaseReportID");
+        CaseReportID.value = data['CaseReportID'];
 
-        var PARAM_GivenName = $('.tbGivenName').val();
-        var PARAM_MaidenName = $('.tbMaidenName').val();
-        var PARAM_FamilyName = $('.tbFamilyName').val();
+        XCoordinates = document.getElementById("XCoordinates");
+        XCoordinates.value = data['XCoordinates'];
 
-        $.ajax({
-            type: "GET",
-            "url": "/DataInsert/InsertVolunteer",
-            dataType: "json",
-            async: false,
-            data: { GivenName: PARAM_GivenName, MaidenName: PARAM_MaidenName, FamilyName: PARAM_FamilyName }
-        });
+        YCoordinates = document.getElementById("YCoordinates");
+        YCoordinates.value = data['YCoordinates'];
 
-        $('#myModalAdd').modal('hide');
+        DateReported = document.getElementById("DateReportedConverted");
+        DateReported.value = data['DateReported'];
 
-        LoadVolunteer();
+        UpdatedStatusDate = document.getElementById("DateUpdatedConverted");
+        UpdatedStatusDate.value = data['UpdatedStatusDate'];
+
+        PhotoLink = document.getElementById("PhotoLink");
+        PhotoLink.value = data['PhotoLink'];
+
+        Concern = document.getElementById("Concern");
+        Concern.value = data['Concern'];
+
+        SubCategory = document.getElementById("SubCategory");
+        SubCategory.value = data['SubCategory'];
+
+        SpecificEnvironmentalConcernID = document.getElementById("SpecificEnvironmentalConcernID");
+        SpecificEnvironmentalConcernID.value = data['SpecificEnvironmentalConcernID'];
+
+        EnvironmentalConcernID = document.getElementById("EnvironmentalConcernID");
+        EnvironmentalConcernID.value = data['EnvironmentalConcernID'];
+
+        Notes = document.getElementById("Notes");
+        Notes.value = data['Notes'];
+
     });
 
     $(document).on("click", ".btnUpdate", function () {
@@ -319,26 +280,28 @@
         })
     });
 
-    $(document).on("click", ".btnDelete", function () {
+    $(document).on("click", ".btnReject", function () {
         var data = table.row($(this).parents('tr')).data();
-        var PARAM_VolunteerID = data["VolunteerID"];
-
+        var PARAM_CaseReportID = data["CaseReportID"];
         Swal.fire({
             title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            text: "Do you really want to Reject the Report?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes. Delete it!'
+            confirmButtonText: 'Yes, reject it!'
         }).then((result) => {
             if (result.value) {
+
                 $.ajax({
                     type: "GET",
-                    "url": "/DataDelete/DeleteVolunteer",
+                    "url": "/DataUpdate/UpdateCaseReportToRejected",
                     dataType: "json",
                     async: false,
-                    data: { VolunteerID: PARAM_VolunteerID }
+                    data: {
+                        CaseReportID: PARAM_CaseReportID,
+                    }
                 });
                 LoadVolunteer();
             }

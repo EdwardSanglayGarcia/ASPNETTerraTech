@@ -58,6 +58,7 @@
 
                 <div class="card-body">
                     <table id="SubmittedTable" class="table table-hover table-striped table-bordered table-responsive-sm" cellspacing="0" style="width:100%; "></table>
+
                 </div>
 
                 <div class="card-footer small text-muted">Data as of @ViewBag.DATETIMENOW</div>
@@ -228,6 +229,25 @@
         LoadAcceptedTable();
         LoadInProgressTable();
         LoadCompletedTable();
+
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            $($.fn.dataTable.tables(true)).DataTable()
+                .columns.adjust()
+                .responsive.recalc();
+        });   
+    });
+
+    $(function () {
+        $('#myTab a:last').tab('show');
+    });
+
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        var target = $(e.target).attr("href");
+        if ((target == '#messages')) {
+            alert('ok');
+        } else {
+            alert('not ok');
+        }
     });
 
     function LoadSubmittedTable() {
@@ -255,10 +275,10 @@
                             'MaidenName': c.MaidenName,
                             'FullName': c.GivenName + " " + c.MaidenName + " " + c.FamilyName,
                             'EnvironmentalConcernID': c.EnvironmentalConcernID,
-                            'DateReported': c.DateReported,
+                            'DateReported': new Date(parseInt(c.DateReported.substr(6))),
                             'Concern': c.Concern,
                             'UpdatedStatus': c.UpdatedStatus,
-                            'UpdatedStatusDate': c.UpdatedStatusDate,
+                            'UpdatedStatusDate': new Date(parseInt(c.UpdatedStatusDate.substr(6))),
                             'CaseLocation': c.CaseLocation,
                             'XCoordinates': c.XCoordinates,
                             'YCoordinates': c.YCoordinates,
@@ -288,32 +308,8 @@
                 },
                 {
                     title: "Date",
-                    data: "DateReported",
-                    "render": function (value) {
-                        if (value === null) return "";
-
-                        var pattern = /Date\(([^)]+)\)/;
-                        var results = pattern.exec(value);
-                        var dt = new Date(parseFloat(results[1]));
-
-                        return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
-                    }
+                    data: "DateReported"
                 },
-                {
-                    title: "Date Updated",
-                    data: "UpdatedStatusDate",
-                    "render": function (value) {
-                        if (value === null) return "";
-
-                        var pattern = /Date\(([^)]+)\)/;
-                        var results = pattern.exec(value);
-                        var dt = new Date(parseFloat(results[1]));
-
-                        return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
-                    },
-                    visible: false
-                },
-
                 {
                     title: "Area",
                     data: "CaseLocation"
@@ -358,10 +354,10 @@
                             'MaidenName': c.MaidenName,
                             'FullName': c.GivenName + " " + c.MaidenName + " " + c.FamilyName,
                             'EnvironmentalConcernID': c.EnvironmentalConcernID,
-                            'DateReported': c.DateReported,
+                            'DateReported': new Date(parseInt(c.DateReported.substr(6))),
                             'Concern': c.Concern,
                             'UpdatedStatus': c.UpdatedStatus,
-                            'UpdatedStatusDate': c.UpdatedStatusDate,
+                            'UpdatedStatusDate': new Date(parseInt(c.UpdatedStatusDate.substr(6))),
                             'CaseLocation': c.CaseLocation,
                             'XCoordinates': c.XCoordinates,
                             'YCoordinates': c.YCoordinates,
@@ -388,33 +384,13 @@
                     data: "CaseReportID"
                 },
                 {
-                    title: "Date",
-                    data: "DateReported",
-                    "render": function (value) {
-                        if (value === null) return "";
-
-                        var pattern = /Date\(([^)]+)\)/;
-                        var results = pattern.exec(value);
-                        var dt = new Date(parseFloat(results[1]));
-
-                        return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
-                    }
+                    title: "Date Reported",
+                    data: "DateReported"
                 },
                 {
-                    title: "Date Updated",
-                    data: "UpdatedStatusDate",
-                    "render": function (value) {
-                        if (value === null) return "";
-
-                        var pattern = /Date\(([^)]+)\)/;
-                        var results = pattern.exec(value);
-                        var dt = new Date(parseFloat(results[1]));
-
-                        return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
-                    },
-                    visible: false
+                    title: "Date Rejected",
+                    data: "UpdatedStatusDate"
                 },
-
                 {
                     title: "Area",
                     data: "CaseLocation"
@@ -459,10 +435,10 @@
                             'MaidenName': c.MaidenName,
                             'FullName': c.GivenName + " " + c.MaidenName + " " + c.FamilyName,
                             'EnvironmentalConcernID': c.EnvironmentalConcernID,
-                            'DateReported': c.DateReported,
+                            'DateReported': new Date(parseInt(c.DateReported.substr(6))),
                             'Concern': c.Concern,
                             'UpdatedStatus': c.UpdatedStatus,
-                            'UpdatedStatusDate': c.UpdatedStatusDate,
+                            'UpdatedStatusDate': new Date(parseInt(c.UpdatedStatusDate.substr(6))),
                             'CaseLocation': c.CaseLocation,
                             'XCoordinates': c.XCoordinates,
                             'YCoordinates': c.YCoordinates,
@@ -489,33 +465,13 @@
                     data: "CaseReportID"
                 },
                 {
-                    title: "Date",
-                    data: "DateReported",
-                    "render": function (value) {
-                        if (value === null) return "";
-
-                        var pattern = /Date\(([^)]+)\)/;
-                        var results = pattern.exec(value);
-                        var dt = new Date(parseFloat(results[1]));
-
-                        return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
-                    }
+                    title: "Date Reported",
+                    data: "DateReported"
                 },
                 {
-                    title: "Date Updated",
-                    data: "UpdatedStatusDate",
-                    "render": function (value) {
-                        if (value === null) return "";
-
-                        var pattern = /Date\(([^)]+)\)/;
-                        var results = pattern.exec(value);
-                        var dt = new Date(parseFloat(results[1]));
-
-                        return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
-                    },
-                    visible: false
+                    title: "Date Accepted",
+                    data: "UpdatedStatusDate"
                 },
-
                 {
                     title: "Area",
                     data: "CaseLocation"
@@ -560,10 +516,10 @@
                             'MaidenName': c.MaidenName,
                             'FullName': c.GivenName + " " + c.MaidenName + " " + c.FamilyName,
                             'EnvironmentalConcernID': c.EnvironmentalConcernID,
-                            'DateReported': c.DateReported,
+                            'DateReported': new Date(parseInt(c.DateReported.substr(6))),
                             'Concern': c.Concern,
                             'UpdatedStatus': c.UpdatedStatus,
-                            'UpdatedStatusDate': c.UpdatedStatusDate,
+                            'UpdatedStatusDate': new Date(parseInt(c.UpdatedStatusDate.substr(6))),
                             'CaseLocation': c.CaseLocation,
                             'XCoordinates': c.XCoordinates,
                             'YCoordinates': c.YCoordinates,
@@ -594,33 +550,13 @@
                     data: "CaseReportID"
                 },
                 {
-                    title: "Date",
-                    data: "DateReported",
-                    "render": function (value) {
-                        if (value === null) return "";
-
-                        var pattern = /Date\(([^)]+)\)/;
-                        var results = pattern.exec(value);
-                        var dt = new Date(parseFloat(results[1]));
-
-                        return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
-                    }
+                    title: "Date Reported",
+                    data: "DateReported"
                 },
                 {
-                    title: "Date Updated",
-                    data: "UpdatedStatusDate",
-                    "render": function (value) {
-                        if (value === null) return "";
-
-                        var pattern = /Date\(([^)]+)\)/;
-                        var results = pattern.exec(value);
-                        var dt = new Date(parseFloat(results[1]));
-
-                        return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
-                    },
-                    visible: false
+                    title: "Date Assigned",
+                    data: "UpdatedStatusDate"
                 },
-
                 {
                     title: "Area",
                     data: "CaseLocation"
@@ -665,10 +601,10 @@
                             'MaidenName': c.MaidenName,
                             'FullName': c.GivenName + " " + c.MaidenName + " " + c.FamilyName,
                             'EnvironmentalConcernID': c.EnvironmentalConcernID,
-                            'DateReported': c.DateReported,
+                            'DateReported': new Date(parseInt(c.DateReported.substr(6))),
                             'Concern': c.Concern,
                             'UpdatedStatus': c.UpdatedStatus,
-                            'UpdatedStatusDate': c.UpdatedStatusDate,
+                            'UpdatedStatusDate': new Date(parseInt(c.UpdatedStatusDate.substr(6))),
                             'CaseLocation': c.CaseLocation,
                             'XCoordinates': c.XCoordinates,
                             'YCoordinates': c.YCoordinates,
@@ -694,33 +630,17 @@
                     title: "No.",
                     data: "CaseReportID"
                 },
+
                 {
-                    title: "Date",
-                    data: "DateReported",
-                    "render": function (value) {
-                        if (value === null) return "";
-
-                        var pattern = /Date\(([^)]+)\)/;
-                        var results = pattern.exec(value);
-                        var dt = new Date(parseFloat(results[1]));
-
-                        return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
-                    }
+                    title: "Date Reported",
+                    data: "DateReported"
                 },
+
                 {
-                    title: "Date Updated",
-                    data: "UpdatedStatusDate",
-                    "render": function (value) {
-                        if (value === null) return "";
-
-                        var pattern = /Date\(([^)]+)\)/;
-                        var results = pattern.exec(value);
-                        var dt = new Date(parseFloat(results[1]));
-
-                        return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
-                    },
-                    visible: false
+                    title: "Date Completed",
+                    data: "UpdatedStatusDate"
                 },
+
 
                 {
                     title: "Area",
@@ -741,13 +661,14 @@
         return table;
     };
 
-    function ConvertToDate(value) {
-        var pattern = /Date\(([^)]+)\)/;
-        var results = pattern.exec(value);
-        var dt = new Date(parseFloat(results[1]));
+    //$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+    //    $($.fn.dataTable.tables({ visible: true, api: true })).DataTable()
+    //        .columns.adjust()
+    //        .responsive.recalc();
+    //});
+  
 
-        return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
-    };
+
 
 
     $(document).on("click", ".btnViewSubmitted", function () {
@@ -763,16 +684,16 @@
         var data = $('#SubmittedTable').DataTable().row($tr).data();
         document.getElementById("tbCaseReportNo").value = data["CaseReportID"];
         document.getElementById("tbConcern").value = data["Concern"];
-        document.getElementById("tbDateReported").value = ConvertToDate(data["DateReported"]);
-        document.getElementById("tbDateUpdated").value = ConvertToDate(data["UpdatedStatusDate"]);
+        document.getElementById("tbDateReported").value = (data["DateReported"]);
+        document.getElementById("tbDateUpdated").value = (data["UpdatedStatusDate"]);
         document.getElementById("tbCaseLocation").value = data["CaseLocation"] + " [" + (Math.round(data["XCoordinates"] * 100) / 100).toFixed(2) + "," + (Math.round(data["YCoordinates"] * 100) / 100).toFixed(2) + "]";
         document.getElementById("tbNotes").value = data["Notes"];
         var locations;
         locations = [
             [
                 "Case No: " + data["CaseReportID"] + "<br />" +
-                "Date Reported: " + ConvertToDate(data["DateReported"]) + "<br />" +
-                "Date Updated: " + ConvertToDate(data["UpdatedStatusDate"]) + "<br />" +
+                "Date Reported: " + (data["DateReported"]) + "<br />" +
+                "Date Updated: " + (data["UpdatedStatusDate"]) + "<br />" +
                 "Type: " + data["Concern"] + "<br />" +
                 "Location: " + data["CaseLocation"] + " [" + data["XCoordinates"] + "," + data["YCoordinates"] + "]"
                 , data["XCoordinates"]
@@ -805,16 +726,16 @@
         var data = $('#RejectedTable').DataTable().row($tr).data();
         document.getElementById("tbCaseReportNo").value = data["CaseReportID"];
         document.getElementById("tbConcern").value = data["Concern"];
-        document.getElementById("tbDateReported").value = ConvertToDate(data["DateReported"]);
-        document.getElementById("tbDateUpdated").value = ConvertToDate(data["UpdatedStatusDate"]);
+        document.getElementById("tbDateReported").value = (data["DateReported"]);
+        document.getElementById("tbDateUpdated").value = (data["UpdatedStatusDate"]);
         document.getElementById("tbCaseLocation").value = data["CaseLocation"] + " [" + (Math.round(data["XCoordinates"] * 100) / 100).toFixed(2) + "," + (Math.round(data["YCoordinates"] * 100) / 100).toFixed(2) + "]";
         document.getElementById("tbNotes").value = data["Notes"];
         var locations;
         locations = [
             [
                 "Case No: " + data["CaseReportID"] + "<br />" +
-                "Date Reported: " + ConvertToDate(data["DateReported"]) + "<br />" +
-                "Date Updated: " + ConvertToDate(data["UpdatedStatusDate"]) + "<br />" +
+                "Date Reported: " + (data["DateReported"]) + "<br />" +
+                "Date Updated: " + (data["UpdatedStatusDate"]) + "<br />" +
                 "Type: " + data["Concern"] + "<br />" +
                 "Location: " + data["CaseLocation"] + " [" + data["XCoordinates"] + "," + data["YCoordinates"] + "]"
                 , data["XCoordinates"]
@@ -845,16 +766,16 @@
         var data = $('#AcceptedTable').DataTable().row($tr).data();
         document.getElementById("tbCaseReportNo").value = data["CaseReportID"];
         document.getElementById("tbConcern").value = data["Concern"];
-        document.getElementById("tbDateReported").value = ConvertToDate(data["DateReported"]);
-        document.getElementById("tbDateUpdated").value = ConvertToDate(data["UpdatedStatusDate"]);
+        document.getElementById("tbDateReported").value = (data["DateReported"]);
+        document.getElementById("tbDateUpdated").value = (data["UpdatedStatusDate"]);
         document.getElementById("tbCaseLocation").value = data["CaseLocation"] + " [" + (Math.round(data["XCoordinates"] * 100) / 100).toFixed(2) + "," + (Math.round(data["YCoordinates"] * 100) / 100).toFixed(2) + "]";
         document.getElementById("tbNotes").value = data["Notes"];
         var locations;
         locations = [
             [
                 "Case No: " + data["CaseReportID"] + "<br />" +
-                "Date Reported: " + ConvertToDate(data["DateReported"]) + "<br />" +
-                "Date Updated: " + ConvertToDate(data["UpdatedStatusDate"]) + "<br />" +
+                "Date Reported: " + (data["DateReported"]) + "<br />" +
+                "Date Updated: " + (data["UpdatedStatusDate"]) + "<br />" +
                 "Type: " + data["Concern"] + "<br />" +
                 "Location: " + data["CaseLocation"] + " [" + data["XCoordinates"] + "," + data["YCoordinates"] + "]"
                 , data["XCoordinates"]
@@ -886,8 +807,8 @@
         var data = $('#InProgressTable').DataTable().row($tr).data();
         document.getElementById("tbCaseReportNo").value = data["CaseReportID"];
         document.getElementById("tbConcern").value = data["Concern"];
-        document.getElementById("tbDateReported").value = ConvertToDate(data["DateReported"]);
-        document.getElementById("tbDateUpdated").value = ConvertToDate(data["UpdatedStatusDate"]);
+        document.getElementById("tbDateReported").value = (data["DateReported"]);
+        document.getElementById("tbDateUpdated").value = (data["UpdatedStatusDate"]);
         document.getElementById("tbCaseLocation").value = data["CaseLocation"] + " [" + (Math.round(data["XCoordinates"] * 100) / 100).toFixed(2) + "," + (Math.round(data["YCoordinates"] * 100) / 100).toFixed(2) + "]";
         document.getElementById("tbNotes").value = data["Notes"];
 
@@ -895,8 +816,8 @@
         locations = [
             [
                 "Case No: " + data["CaseReportID"] + "<br />" +
-                "Date Reported: " + ConvertToDate(data["DateReported"]) + "<br />" +
-                "Date Updated: " + ConvertToDate(data["UpdatedStatusDate"]) + "<br />" +
+                "Date Reported: " + (data["DateReported"]) + "<br />" +
+                "Date Updated: " + (data["UpdatedStatusDate"]) + "<br />" +
                 "Type: " + data["Concern"] + "<br />" +
                 "Location: " + data["CaseLocation"] + " [" + data["XCoordinates"] + "," + data["YCoordinates"] + "]"
                 , data["XCoordinates"]
@@ -927,16 +848,16 @@
         var data = $('#CompletedTable').DataTable().row($tr).data();
         document.getElementById("tbCaseReportNo").value = data["CaseReportID"];
         document.getElementById("tbConcern").value = data["Concern"];
-        document.getElementById("tbDateReported").value = ConvertToDate(data["DateReported"]);
-        document.getElementById("tbDateUpdated").value = ConvertToDate(data["UpdatedStatusDate"]);
+        document.getElementById("tbDateReported").value = (data["DateReported"]);
+        document.getElementById("tbDateUpdated").value = (data["UpdatedStatusDate"]);
         document.getElementById("tbCaseLocation").value = data["CaseLocation"] + " [" + (Math.round(data["XCoordinates"] * 100) / 100).toFixed(2) + "," + (Math.round(data["YCoordinates"] * 100) / 100).toFixed(2) + "]";
         document.getElementById("tbNotes").value = data["Notes"];
         var locations;
         locations = [
             [
                 "Case No: " + data["CaseReportID"] + "<br />" +
-                "Date Reported: " + ConvertToDate(data["DateReported"]) + "<br />" +
-                "Date Updated: " + ConvertToDate(data["UpdatedStatusDate"]) + "<br />" +
+                "Date Reported: " + (data["DateReported"]) + "<br />" +
+                "Date Updated: " + (data["UpdatedStatusDate"]) + "<br />" +
                 "Type: " + data["Concern"] + "<br />" +
                 "Location: " + data["CaseLocation"] + " [" + data["XCoordinates"] + "," + data["YCoordinates"] + "]"
                 , data["XCoordinates"]
@@ -954,7 +875,6 @@
         imgsrc = data["PhotoLink"];
         document.getElementById('imageID').src = imgsrc;
     });
-
 
     $(document).on("click", "#imageID", function () {
         var srcImage = document.getElementById("imageID").src;

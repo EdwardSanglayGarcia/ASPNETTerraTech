@@ -29,6 +29,8 @@ namespace MVCCapstoneBGS
 
         List<CaseReport> GetAssignedConcerns(int VolunteerID);
 
+        List<CaseReport> GetCompletedAssignedConcerns(int VolunteerID);
+
         List<CaseReport> GetCaseReportBetweenDates(int UpdatedStatusID, DateTime StartDate, DateTime EndDate);
 
         int CheckUsername(string Username);
@@ -84,7 +86,7 @@ namespace MVCCapstoneBGS
 
         List<CaseReport> UpdateCaseReport_Accepted(int CaseReportID);
 
-        List<CaseReport> UpdateCaseReport_Completed(int CaseReportID);
+        List<CaseReport> UpdateCaseReport_Completed(CaseReport UI, HttpPostedFileBase image1);
 
         List<CaseReport> UpdateCaseReport_InProgress(int CaseReportID, int VolunteerID);
 

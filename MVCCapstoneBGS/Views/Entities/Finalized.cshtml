@@ -8,16 +8,35 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>@LabelStruct.CommunityUser.CommunityUserHomepage</title>
-    <style>
-    </style>
+    <title>@LabelStruct.Administrator.Volunteers</title>
 
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
 </head>
 <body>
+
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="">Volunteer</a></li>
+        <li class="breadcrumb-item active">Completions</li>
+    </ol>
+
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-chart-area mr-1"></i>
+            List of Completed Concerns
+        </div>
+
+        <div class="card-body">
+            <div class="control-label col-xs-12 col-sm-4">
+                <label class="asteriskRequired"></label>
+            </div>
+
+            <table id="AssignedCompletedTable" class="table table-hover table-striped table-bordered table-responsive-sm" cellspacing="0" style="width:100%; "></table>
+        </div>
+
+        <div class="card-footer small text-muted">Data as of @ViewBag.DATETIMENOW</div>
+    </div>
 
 
 </body>
@@ -27,6 +46,100 @@
 <script>
 
 
+    $(document).ready(function () {
+
+        LoadAssignedCompleted();
+    });
+
+
+    function LoadAssignedCompleted() {
+        table = $('#AssignedCompletedTable').DataTable({
+            bLengthChange: false,
+            destroy: true,
+            responsive:true,
+
+            order: [[1, 'asc']],
+            ajax: {
+                type: "GET",
+                "url": "/DataGet/GetCompletedAssignedConcerns?VolunteerID",
+                data: { VolunteerID: @ViewBag.UserInformationID},
+                dataSrc: function (json) {
+                    var a = new Array();
+                    for (var b = 0; b <= json.length - 1; b++) {
+                        var c = json[b];
+                        a.push({
+                            'VolunteerID': c.VolunteerID,
+                            'FamilyName': c.FamilyName,
+                            'GivenName': c.GivenName,
+                            'MaidenName': c.MaidenName,
+                            'FullName': c.GivenName + " " + c.MaidenName + " " + c.FamilyName,
+                            'Notes': c.Notes,
+                            'UserInformationID': c.UserInformationID,
+                            'DateReported': new Date(parseInt(c.DateReported.substr(6))),
+                            'CaseLocation': c.CaseLocation,
+                            'EnvironmentalConcernID': c.EnvironmentalConcernID,
+                            'XCoordinates': c.XCoordinates,
+                            'YCoordinates': c.YCoordinates,
+                            'UpdatedStatusDate': new Date(parseInt(c.UpdatedStatusDate.substr(6))),
+                            'PhotoLink': c.PhotoLink,
+                            'SpecificEnvironmentalConcernID': c.SpecificEnvironmentalConcernID,
+                            'CaseReportID': c.CaseReportID,
+                            'Concern': c.Concern,
+                            'SubCategory': c.SubCategory
+                        });
+                    }
+                    return a;
+                },
+            },
+            columns: [
+                {
+                    title: "Action",
+                    "render": function () {
+                        //var del = "<a class='btn btn-danger btn-xs btnReject'  title='Delete' style='color: white'><i class='fas fa-times'></i></a>";
+                        //var approve = "<a class='btn btn-success btn-xs btnUpdate' title='Edit' style='color: white'><i class = 'fas fa-check'></i></a>";
+                      //  var view = "<a href='javascript:{}' onclick='document.getElementById('manageForm').submit();' class='btn btn-primary btn-xs btnView' title='Edit' style='color: white'><i class = 'fa fa-1x fa-address-card'></i></a>";
+                        var btn = " <input type='submit' value='View' class='btn btn-primary btn-md btnREQAddVolunteer' id='btnREQAddVolunteer'/>";
+
+                        // return view + "   " + approve + "   " + del;
+                        //return approve + "   " + del;
+                        return btn;
+
+                    },
+                    width: "80px"
+                },
+                {
+                    title: "No.",
+                    data: "CaseReportID"
+                },
+                {
+                    title: "Type",
+                    data: "Concern"
+                },
+                {
+                    title: "Category",
+                    data: "SubCategory"
+                },
+                {
+                    title: "Area",
+                    data: "CaseLocation"
+                },
+                {
+                    title: "Date Reported",
+                    data: "DateReported"
+                },
+                {
+                    title: "Date Completed",
+                    data: "UpdatedStatusDate"
+                },
+
+            ],
+            'columnDefs': [
+                {
+                    "className": "dt-center", "targets": "_all"
+                }],
+        });
+
+        return table;
+    };
+
 </script>
-
-

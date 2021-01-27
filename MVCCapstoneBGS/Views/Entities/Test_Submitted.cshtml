@@ -225,20 +225,19 @@
         map.removeLayer(marker);
     });
 
-    function ConvertToDate(value) {
-        var pattern = /Date\(([^)]+)\)/;
-        var results = pattern.exec(value);
-        var dt = new Date(parseFloat(results[1]));
+    //function ConvertToDate(value) {
+    //    var pattern = /Date\(([^)]+)\)/;
+    //    var results = pattern.exec(value);
+    //    var dt = new Date(parseFloat(results[1]));
 
-        return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
-    };
+    //    return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
+    //};
 
     function LoadSubmittedTable() {
         table = $('#SubmittedTable').DataTable({
             bLengthChange: false,
             destroy: true,
             responsive: true,
-            order: [[6, 'desc']],
             ajax: {
                 type: "GET",
                 "url": "/DataGet/GetCaseReportBetweenDates",
@@ -259,10 +258,10 @@
                             'MaidenName': c.MaidenName,
                             'FullName': c.GivenName + " " + c.MaidenName + " " + c.FamilyName,
                             'EnvironmentalConcernID': c.EnvironmentalConcernID,
-                            'DateReported': c.DateReported,
+                            'DateReported': new Date(parseInt(c.DateReported.substr(6))),
                             'Concern': c.Concern,
                             'UpdatedStatus': c.UpdatedStatus,
-                            'UpdatedStatusDate': c.UpdatedStatusDate,
+                            'UpdatedStatusDate': new Date(parseInt(c.UpdatedStatusDate.substr(6))),
                             'CaseLocation': c.CaseLocation,
                             'XCoordinates': c.XCoordinates,
                             'YCoordinates': c.YCoordinates,
@@ -270,7 +269,8 @@
                             'DateUpdated': c.DateUpdated,
                             'Notes': c.Notes,
                             'Hits': c.Hits,
-                            'PhotoLink': c.PhotoLink
+                            'PhotoLink': c.PhotoLink,
+                            'SubCategory': c.SubCategory
                         });
                     }
                     return a;
@@ -291,33 +291,12 @@
                 },
                 {
                     title: "Date Reported",
-                    data: "DateReported",
-                    //"render": function (value) {
-                    //    if (value === null) return "";
-
-                    //    var pattern = /Date\(([^)]+)\)/;
-                    //    var results = pattern.exec(value);
-                    //    var dt = new Date(parseFloat(results[1]));
-
-                    //    return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
-                    //},
-                    visible: false
+                    data: "DateReported"
                 },
                 {
-                    title: "Date",
-                    data: "UpdatedStatusDate",
-                    "render": function (value) {
-                        if (value === null) return "";
-
-                        var pattern = /Date\(([^)]+)\)/;
-                        var results = pattern.exec(value);
-                        var dt = new Date(parseFloat(results[1]));
-
-                        return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
-                    },
-                    visible: true
+                    title: "Date Updated",
+                    data: "UpdatedStatusDate"
                 },
-
                 {
                     title: "Area",
                     data: "CaseLocation"
@@ -327,8 +306,8 @@
                     data: "Concern"
                 },
                 {
-                    title: "Priority",
-                    data: "Hits"
+                    title: "Category",
+                    data: "SubCategory"
                 },
 
             ],
@@ -404,13 +383,15 @@
         $('#myModalUpdate').modal('show');
         var data = table.row($(this).parents('tr')).data();
         var PARAM_CaseReportID = data["CaseReportID"];
+
+
         CaseReportID = PARAM_CaseReportID;
 
         var locations = [
             [
                 "Case No: " + data["CaseReportID"] + "<br />" +
-                "Date Reported: " + ConvertToDate(data["DateReported"]) + "<br />" +
-                "Date Updated: " + ConvertToDate(data["UpdatedStatusDate"]) + "<br />" +
+                "Date Reported: " + (data["DateReported"]) + "<br />" +
+                "Date Updated: " + (data["UpdatedStatusDate"]) + "<br />" +
                 "Type: " + data["Concern"] + "<br />"+
                 "Location: " + data["CaseLocation"] + " [" + data["XCoordinates"] + "," + data["YCoordinates"]+"]"
                 , data["XCoordinates"]
@@ -424,42 +405,14 @@
             .bindPopup(locations[0][0])
             .addTo(map);
 
-       // var src = data["CaseReportPhoto"]; //d talaga kasama to
-
-        //var imgsrc = 'data:image/gif;base64,' + data["Base64Photo"]; //d talaga kasama to
-
-        var imgsrc;
-
-        //$.ajax({
-        //    type: "GET",
-        //    "url": "/DataGet/GetCaseReportPhoto",
-        //    dataType: "json",
-        //    async: false,
-        //    data: {
-        //        CaseReportID: PARAM_CaseReportID,
-        //    },
-        //    success: function (result) {
-
-        //        var jsonStringify = JSON.stringify(result);
-        //        var jsonObj = JSON.parse(jsonStringify);
-        //        //alert(jsonStringify);
-        //        //alert(jsonObj[0]['Base64Photo']);
-        //        imgsrc = 'data:image/gif;base64,' + jsonObj[0]['Base64Photo'];
-        //        }
-
-        //}
-        //);
-
         imgsrc = data["PhotoLink"];
 
         document.getElementById('imageID').src = imgsrc;
         document.getElementById("tbCaseReportNo").value = PARAM_CaseReportID;
         document.getElementById("tbCaseLocation").value = data["CaseLocation"] + " [" + (Math.round(data["XCoordinates"] * 100) / 100).toFixed(2) + "," + (Math.round(data["YCoordinates"] * 100) / 100).toFixed(2) +"]";
         document.getElementById("tbConcern").value = data["Concern"];
-        document.getElementById("tbDateReported").value = ConvertToDate(data["DateReported"]);
-        //document.getElementById("tbDateUpdated").value = ConvertToDate(data["UpdatedStatusDate"]);
+        document.getElementById("tbDateReported").value = (data["DateReported"]);
         document.getElementById("tbDateUpdated").value = data["Notes"];
-        //document.getElementById("tbReporter").value = data["FamilyName"];
 
 
 

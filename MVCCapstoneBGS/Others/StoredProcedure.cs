@@ -89,7 +89,8 @@ namespace MVCCapstoneBGS
         V_SpecificEnvironmentalConcern,
         Ban_List,
         Ban_User,
-        V_AssignedConcerns
+        V_AssignedConcerns,
+        V_CompletedAssignedConcerns
 
 
 

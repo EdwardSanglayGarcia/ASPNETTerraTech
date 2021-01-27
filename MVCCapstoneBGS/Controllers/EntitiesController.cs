@@ -430,33 +430,39 @@ namespace MVCCapstoneBGS.Controllers
             string PerStatus="";
             foreach (var dataGive in _IDataProvider.GetMonthlyTotals(Month, Year))
             {
+                var color1 = GetRandomHexColor();
+                var color2 = GetRandomHexColor();
+                var color3 = GetRandomHexColor();
+                var color4 = GetRandomHexColor();
+                var color5 = GetRandomHexColor();
+
 
                 PerStatus += "{ " +
               "label:" + quote + "Submitted" + quote + "," +
                 "data:[" + dataGive.L_Submitted + "," + dataGive.W_Submitted + "]," +
-                "backgroundColor: ['#ffc107','#007bff']," +
+                "backgroundColor: ['" + color1 + "','" + color1 + "']," +
                              "}," +
                              "{ " +
               "label:" + quote + "Accepted" + quote + "," +
                 "data:[" + dataGive.L_Accepted + "," + dataGive.W_Accepted + "]," +
-                "backgroundColor: ['#ffc107','#007bff']," +
+                "backgroundColor: ['" + color2 + "','" + color2 + "']," +
                              "}," +
                              "{ " +
               "label:" + quote + "In Progress" + quote + "," +
                 "data:[" + dataGive.L_InProgress + "," + dataGive.W_InProgress + "]," +
-                "backgroundColor: ['#ffc107','#007bff']," +
+                "backgroundColor: ['" + color3 + "','" + color3 + "']," +
                              "}," +
 
                              "{ " +
               "label:" + quote + "Completed" + quote + "," +
                 "data:[" + dataGive.L_Completed + "," + dataGive.W_Completed + "]," +
-                "backgroundColor: ['#ffc107','#007bff']," +
+                "backgroundColor: ['" + color4 + "','" + color4 + "']," +
                              "}," +
 
                              "{ " +
               "label:" + quote + "Rejected" + quote + "," +
                 "data:[" + dataGive.L_Rejected + "," + dataGive.W_Rejected + "]," +
-                "backgroundColor: ['#ffc107','#007bff']," +
+                "backgroundColor: ['" + color5 + "','" + color5 + "']," +
                              "},";
 
             }
@@ -478,35 +484,36 @@ namespace MVCCapstoneBGS.Controllers
 
             foreach (var dataGive in _IDataProvider.GetAreaDetailsPerMonthYear(Month, Year))
             {
+                var color = GetRandomHexColor();
 
                 dataForSubmitted += "{ " +
               "label:" + quote + dataGive.CaseLocation + quote + "," +
                 "data:[" + dataGive.L_Submitted + "," + dataGive.W_Submitted + "]," +
-                "backgroundColor: ['#ffc107','#007bff']," +
+                "backgroundColor: ['" + color + "','" + color + "']," +
                              "},";
 
                 dataForAccepted += "{ " +
              "label:" + quote + dataGive.CaseLocation + quote + "," +
                "data:[" + dataGive.L_Accepted + "," + dataGive.W_Accepted + "]," +
-               "backgroundColor: ['#ffc107','#007bff']," +
+                "backgroundColor: ['" + color + "','" + color + "']," +
                             "},";
 
                 dataForInProgress += "{ " +
           "label:" + quote + dataGive.CaseLocation + quote + "," +
             "data:[" + dataGive.L_InProgress + "," + dataGive.W_InProgress + "]," +
-            "backgroundColor: ['#ffc107','#007bff']," +
+                "backgroundColor: ['" + color + "','" + color + "']," +
                          "},";
                 
                 dataForCompleted += "{ " +
           "label:" + quote + dataGive.CaseLocation + quote + "," +
             "data:[" + dataGive.L_Completed + "," + dataGive.W_Completed + "]," +
-            "backgroundColor: ['#ffc107','#007bff']," +
+                "backgroundColor: ['" + color + "','" + color + "']," +
                          "},";
 
                 dataForRejected += "{ " +
           "label:" + quote + dataGive.CaseLocation + quote + "," +
             "data:[" + dataGive.L_Rejected + "," + dataGive.W_Rejected + "]," +
-            "backgroundColor: ['#ffc107','#007bff']," +
+                "backgroundColor: ['" + color + "','" + color + "']," +
                          "},";
 
 
@@ -919,6 +926,7 @@ namespace MVCCapstoneBGS.Controllers
                 string re = UI.CaseLocation + " " + UI.UserInformationID;
 
                 _IDataProvider.InsertCaseReport(UI, image1);
+
                 var x = _IDataProvider.GetCaseReportIdentity();
 
 
@@ -1404,8 +1412,38 @@ namespace MVCCapstoneBGS.Controllers
 
         public ActionResult Finalized()
         {
+            ViewBag.UserInformationID = Convert.ToInt32(Session["UserInformationID"]);
             ViewBag.VBLayout = Layout_VDashboard;
             return View();
+        }
+        [HttpPost]
+        public ActionResult ManageConcern(CaseReport report)
+        {
+            ViewBag.VBLayout = Layout_VDashboard;
+            
+            ViewBag.CaseReportID = report.CaseReportID;
+            ViewBag.XCoordinates = report.XCoordinates;
+            ViewBag.YCoordinates = report.YCoordinates;
+            ViewBag.DateReported = report.DateReportedConverted;
+            ViewBag.UpdatedStatusDate = report.DateUpdatedConverted;
+            ViewBag.PhotoLink = report.PhotoLink;
+            ViewBag.Concern = report.Concern;
+            ViewBag.SubCategory = report.SubCategory;
+            ViewBag.SpecificEnvironmentalConcernID = report.SpecificEnvironmentalConcernID;
+            ViewBag.EnvironmentalConcernID = report.EnvironmentalConcernID;
+            ViewBag.Notes = report.Notes;
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CompleteConcern(CaseReport UI, HttpPostedFileBase image1)
+        {
+
+            _IDataProvider.UpdateCaseReport_Completed(UI, image1);
+            var x = _IDataProvider.GetCaseReportIdentity();
+
+            return View("Assignations");
         }
         #endregion
 
