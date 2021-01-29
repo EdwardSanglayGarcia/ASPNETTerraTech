@@ -46,6 +46,12 @@ namespace MVCCapstoneBGS.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult UpdateCaseReportConcern(CaseReport UI)
+        {
+            var data = _IDataProvider.UpdateCaseReportConcern(UI);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult UpdateCaseReportToCompleted(CaseReport UI, HttpPostedFileBase image1)
         {
             var data = _IDataProvider.UpdateCaseReport_Completed(UI, image1);

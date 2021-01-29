@@ -22,13 +22,12 @@ namespace MVCCapstoneBGS
 
         #region View
         List<UserType> GetUserType();
-        List<Volunteer> GetVolunteer();
+        List<UserInformation> GetVolunteer();
         List<EnvironmentalConcern> GetEnvironmentalConcern();
         List<UpdatedStatus> GetUpdatedStatus();
         List<CaseReport> GetCaseReport(int UpdatedStatusID);
-
+        List<CaseReport> UpdateCaseReportConcern(CaseReport UI);
         List<CaseReport> GetAssignedConcerns(int VolunteerID);
-
         List<CaseReport> GetCompletedAssignedConcerns(int VolunteerID);
 
         List<CaseReport> GetCaseReportBetweenDates(int UpdatedStatusID, DateTime StartDate, DateTime EndDate);

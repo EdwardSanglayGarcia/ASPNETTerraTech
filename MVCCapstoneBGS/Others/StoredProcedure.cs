@@ -90,7 +90,8 @@ namespace MVCCapstoneBGS
         Ban_List,
         Ban_User,
         V_AssignedConcerns,
-        V_CompletedAssignedConcerns
+        V_CompletedAssignedConcerns,
+        U_CaseReportConcern
 
 
 

@@ -50,9 +50,9 @@
                 </div>
                 <label for="example-date-input" class="col-md-6 col-form-label">End Date</label>
                 <div class="col-10">
-                    <input type="date" id="myMaxDate"  value="@ViewBag.EndDatePCK" class="form-control validate" max="">
+                    <input type="date" id="myMaxDate" value="@ViewBag.EndDatePCK" class="form-control validate" max="">
                 </div>
-                <div class="col-xs-12 col-sm-8" >
+                <div class="col-xs-12 col-sm-8">
                     <input style="margin-top:10px; margin-bottom:65px;" type="submit" id="btnGenerate" value="Generate" class="btn btn-primary btn-md btnGenerate" />
                 </div>
             </div>
@@ -69,97 +69,128 @@
         </div>
     </div>
 
-  
 
 
-        <div class="row mobileHide">
-            <div class="col-lg-12">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-chart-bar mr-1"></i>
-                        Monthly Status
-                    </div>
-                    <div class="card-body"><canvas id="myBarChart" width="100" height="50"></canvas></div>
+
+    <div class="row mobileHide">
+        <div class="col-lg-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-chart-bar mr-1"></i>
+                    Monthly Status
                 </div>
+                <div class="card-body"><canvas id="myBarChart" width="100" height="50"></canvas></div>
             </div>
         </div>
+    </div>
 
-        <div class="card mb-4">
-            <div class="card-header">
-                <i class="fas fa-chart-area mr-1"></i>
-                Recent Concerns
-            </div>
-
-            <div class="card-body">
-                <table id="SubmittedTable" class="table table-hover table-striped table-bordered table-responsive-sm" cellspacing="0" style="width:100%; "></table>
-            </div>
-
-            <div class="card-footer small text-muted">Data as of @ViewBag.DATETIMENOW</div>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-chart-area mr-1"></i>
+            Recent Concerns
         </div>
 
-        @*MODAL SECTION UPDATE START*@
-        <div class="modal fade" id="myModalUpdate" role="dialog">
-            <div class="modal-dialog modal-lg">
-                <!-- Modal content-->
-                <div class="modal-content" id="modalwindow">
-                    <div class="modal-header">
-                        <h3 class="modal-title Title">Update Status: Submitted</h3>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
+        <div class="card-body">
+            <table id="SubmittedTable" class="table table-hover table-striped table-bordered table-responsive-sm" cellspacing="0" style="width:100%; "></table>
+        </div>
 
-                            <div class="col-md-7">
-                                <div class="row-1" style="margin-bottom:10px; height:250px;">
-                                    <img src="" id="imageID" style="width:100%; height:240px; border:double;" />
-                                </div>
+        <div class="card-footer small text-muted">Data as of @ViewBag.DATETIMENOW</div>
+    </div>
 
-                                <div id="mapid" class="row-1" style="border:double; margin-bottom:10px; height: 250px;">
-                                </div>
+    @*MODAL SECTION UPDATE START*@
+    <div class="modal fade" id="myModalUpdate" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content" id="modalwindow">
+                <div class="modal-header">
+                    <h3 class="modal-title Title">Update Status: Submitted</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+                        <div class="col-md-7">
+                            <div class="row-1" style="margin-bottom:10px; height:250px;">
+                                <img src="" id="imageID" style="width:100%; height:240px; border:double;" />
                             </div>
 
-                            <div class="col-md-5">
-                                <div class="md-form mb-3">
-                                    <label data-error="wrong" data-success="right" for="orangeForm-name">Case Report No.</label>
-                                    <input type="text" id="tbCaseReportNo" class="form-control validate" disabled>
-                                </div>
-                                <div class="md-form mb-3">
-                                    <label data-error="wrong" data-success="right" for="orangeForm-name">Case Location</label>
-                                    <input type="text" id="tbCaseLocation" class="form-control validate" disabled>
-                                </div>
-                                <div class="md-form mb-3">
-                                    <label data-error="wrong" data-success="right" for="orangeForm-text">Concern</label>
-                                    <input type="text" id="tbConcern" class="form-control validate" disabled>
-                                </div>
-                                <div class="md-form mb-3">
-                                    <label data-error="wrong" data-success="right" for="orangeForm-text">Date Reported</label>
-                                    <input type="text" id="tbDateReported" class="form-control validate" disabled>
-                                </div>
-
-                                <div class="md-form mb-3">
-                                    <label data-error="wrong" data-success="right" for="orangeForm-text">Description</label>
-                                    <textarea class="form-control" style="resize:none;" id="tbDateUpdated" rows="5" disabled></textarea>
-                                </div>
-
-
-
+                            <div id="mapid" class="row-1" style="border:double; margin-bottom:10px; height: 250px;">
                             </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <div class="md-form mb-3">
+                                <label data-error="wrong" data-success="right" for="orangeForm-name">Case Report No.</label>
+                                <input type="text" id="tbCaseReportNo" class="form-control validate" disabled>
+                            </div>
+                            <div class="md-form mb-3">
+                                <label data-error="wrong" data-success="right" for="orangeForm-name">Case Location</label>
+                                <input type="text" id="tbCaseLocation" class="form-control validate" disabled>
+                            </div>
+                            <div class="md-form mb-3">
+                                <label data-error="wrong" data-success="right" for="orangeForm-text">Concern</label>
+                                <input type="text" id="tbConcern" class="form-control validate" disabled>
+                            </div>
+                            <div class="md-form mb-3">
+                                <label data-error="wrong" data-success="right" for="orangeForm-text">Date Reported</label>
+                                <input type="text" id="tbDateReported" class="form-control validate" disabled>
+                            </div>
+
+                            <div class="md-form mb-3">
+                                <label data-error="wrong" data-success="right" for="orangeForm-text">Description</label>
+                                <textarea class="form-control" style="resize:none;" id="tbDateUpdated" rows="5" disabled></textarea>
+                            </div>
+
 
 
                         </div>
 
+
                     </div>
 
-                    <div class="modal-footer">
-                        <p>Powered by TerraTechPH</p>
-                        <button type="button" id="btnAccept" class="btn btn-success btnAccept" data-dismiss="modal">Accept</button>
-                        <button type="button" id="btnReject" class="btn btn-warning btnReject" data-dismiss="modal">Reject</button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal" title="Close">Close</button>
-                    </div>
                 </div>
-                <!-- Modal content-->
+
+                <div class="modal-footer">
+                    <p>Powered by TerraTechPH</p>
+                    <button type="button" id="btnAccept" class="btn btn-success btnAccept" data-dismiss="modal">Accept</button>
+                    <button type="button" id="btnReject" class="btn btn-warning btnReject" data-dismiss="modal">Reject</button>
+                    <button type="button" id="btnChange" class="btn btn-info btnChange" data-dismiss="modal">Change</button>
+
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" title="Close">Close</button>
+                </div>
             </div>
+            <!-- Modal content-->
         </div>
-        @*MODAL SECTION UPDATE END*@
+    </div>
+    @*MODAL SECTION UPDATE END*@
+
+
+
+    @*MODAL SECTION UPDATE START*@
+    <div class="modal fade" id="myModalChange" role="dialog">
+        <div class="modal-dialog modal-md">
+            <!-- Modal content-->
+            <div class="modal-content" id="modalwindow">
+                <div class="modal-header">
+                    <h3 class="modal-title Title">Change Concern</h3>
+                </div>
+                <div class="modal-body">
+
+                    <select name="ddlEnvironmentalConcernID" class="btn btn-info ddlEnvironmentalConcernID" style="padding:5px;" required>- Please Select -</select>
+                    <select name="ddlSpecificEnvironmentalConcernID" class="btn btn-info ddlSpecificEnvironmentalConcernID" style="padding:5px;" required>- Please Select -</select>
+
+
+                </div>
+
+                <div class="modal-footer">
+                    <p>Powered by TerraTechPH</p>
+                     <button type="button" id="btnChangeFinal" class="btn btn-info btnChangeFinal" data-dismiss="modal">Change</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" title="Close">Close</button>
+                </div>
+            </div>
+            <!-- Modal content-->
+        </div>
+    </div>
+    @*MODAL SECTION UPDATE END*@
 
 </body>
 </html>
@@ -173,7 +204,7 @@
     var map = L.map('mapid');
     var a = 'https://api.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiYmJyb29rMTU0IiwiYSI6ImNpcXN3dnJrdDAwMGNmd250bjhvZXpnbWsifQ.Nf9Zkfchos577IanoKMoYQ';
     var b = 'https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
-
+    var crid;
     var maxBounds = [
         [21.116625, 131.175528],
         [4.991861, 115.976455]
@@ -186,7 +217,8 @@
     var CaseReportID;
 
     $(document).ready(function () {
-
+        loadEnvironmentalConcernType();
+        loadSpecificEnvironmentalConcernType(1);
         LoadSubmittedTable();
 
     });
@@ -209,6 +241,46 @@
     });
 
 
+    function loadEnvironmentalConcernType() {
+        var temp = $(".ddlEnvironmentalConcernID").empty();
+
+        $.ajax({
+            type: "GET",
+            url: "/DataGet/GetEnvironmentalConcern",
+            dataType: "json",
+            success: function (response) {
+                $.each(response, function () {
+
+                    temp.append($("<option></option>").val(this['EnvironmentalConcernID']).html(this['Description']));
+                });
+            }
+        })
+    };
+
+    function loadSpecificEnvironmentalConcernType(id) {
+        var temp = $(".ddlSpecificEnvironmentalConcernID").empty();
+
+        $.ajax({
+            type: "GET",
+            url: "/DataGet/GetSpecificEnvironmentalConcern",
+            data: {
+                EnvironmentalConcernID: id,
+            },
+            dataType: "json",
+            success: function (response) {
+                $.each(response, function () {
+
+                    temp.append($("<option></option>").val(this['SpecificEnvironmentalConcernID']).html(this['SpecificConcern']));
+                });
+            }
+        })
+    };
+
+    $(document).on("change", ".ddlEnvironmentalConcernID", function () {
+
+        var PARAM_EnvironmentalConcernID = $('.ddlEnvironmentalConcernID').val();
+        loadSpecificEnvironmentalConcernType(PARAM_EnvironmentalConcernID);
+    });
 
     $('.leaflet-control-attribution').hide();
 
@@ -284,7 +356,7 @@
                         return edit;
                     },
                     width: "80px"
-                }, 
+                },
                 {
                     title: "No.",
                     data: "CaseReportID"
@@ -383,7 +455,7 @@
         $('#myModalUpdate').modal('show');
         var data = table.row($(this).parents('tr')).data();
         var PARAM_CaseReportID = data["CaseReportID"];
-
+        crid = PARAM_CaseReportID;
 
         CaseReportID = PARAM_CaseReportID;
 
@@ -410,11 +482,9 @@
         document.getElementById('imageID').src = imgsrc;
         document.getElementById("tbCaseReportNo").value = PARAM_CaseReportID;
         document.getElementById("tbCaseLocation").value = data["CaseLocation"] + " [" + (Math.round(data["XCoordinates"] * 100) / 100).toFixed(2) + "," + (Math.round(data["YCoordinates"] * 100) / 100).toFixed(2) +"]";
-        document.getElementById("tbConcern").value = data["Concern"];
+        document.getElementById("tbConcern").value = data["Concern"]+" - "+data["SubCategory"];
         document.getElementById("tbDateReported").value = (data["DateReported"]);
         document.getElementById("tbDateUpdated").value = data["Notes"];
-
-
 
     });
 
@@ -551,6 +621,41 @@
         }
 
      //   alert(PARAM_Year)
+    });
+
+
+    $(document).on("click", ".btnChange",  function () {
+        $('#myModalChange').modal('show');
+    });
+
+    $(document).on("click", ".btnChangeFinal", function () {
+        var ECID = $(".ddlEnvironmentalConcernID option:selected").val();
+        var SECID = $(".ddlSpecificEnvironmentalConcernID option:selected").val();
+        Swal.fire({
+            title: 'Change Concern?',
+            text: "Selected options would be updated into the database",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, change it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "GET",
+                    "url": "/DataUpdate/UpdateCaseReportConcern",
+                    dataType: "json",
+                    async: false,
+                    data: {
+                        CaseReportID: crid,
+                        EnvironmentalConcernID: ECID,
+                        SpecificEnvironmentalConcernID : SECID
+                    }
+                });
+                location.reload();
+
+            }
+        })
     });
 
 </script>

@@ -79,13 +79,13 @@ namespace MVCCapstoneBGS
             }
             return result;
         }
-        public List<Volunteer> GetVolunteer()
+        public List<UserInformation> GetVolunteer()
         {
-            var result = new List<Volunteer>();
+            var result = new List<UserInformation>();
             using (IDbConnection con = new SqlConnection(constring))
             {
                 con.Open();
-                result = con.Query<Volunteer>(
+                result = con.Query<UserInformation>(
                     StoredProcedureEnum.V_Volunteer.ToString(), commandType: CommandType.StoredProcedure).ToList();
                 //Gawa ka ng Stored Procedure
             }
@@ -139,6 +139,25 @@ namespace MVCCapstoneBGS
                 param.Add("@EndDate", EndDate);
                 result = con.Query<Records>(
                     StoredProcedureEnum.CHART_StatusLWBetweenDates.ToString(), param, commandType: CommandType.StoredProcedure).ToList();
+            }
+            return result;
+        }
+
+
+        //
+        public List<CaseReport> UpdateCaseReportConcern(CaseReport UI)
+        {
+            var result = new List<CaseReport>();
+            using (IDbConnection con = new SqlConnection(constring))
+            {
+                con.Open();
+                var param = new DynamicParameters();
+                param.Add("@CaseReportID", UI.CaseReportID);
+                param.Add("@EnvironmentalConcernID", UI.EnvironmentalConcernID);
+                param.Add("@SpecificEnvironmentalConcernID", UI.SpecificEnvironmentalConcernID);
+
+                result = con.Query<CaseReport>(
+                    StoredProcedureEnum.U_CaseReportConcern.ToString(), param, commandType: CommandType.StoredProcedure).ToList();
             }
             return result;
         }

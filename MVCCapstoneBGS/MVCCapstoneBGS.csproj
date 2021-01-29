@@ -791,6 +791,11 @@
     <Content Include="Views\Entities\Assignations.cshtml" />
     <Content Include="Views\Entities\Finalized.cshtml" />
     <Content Include="Views\Entities\ManageConcern.cshtml" />
+    <Content Include="Views\Entities\SubmittedStatus.cshtml" />
+    <Content Include="Views\Entities\AcceptedStatus.cshtml" />
+    <Content Include="Views\Entities\RejectedStatus.cshtml" />
+    <Content Include="Views\Entities\InProgressStatus.cshtml" />
+    <Content Include="Views\Entities\CompletedStatus.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

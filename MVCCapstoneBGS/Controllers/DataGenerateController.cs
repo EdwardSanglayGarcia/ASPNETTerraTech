@@ -110,11 +110,6 @@ namespace MVCCapstoneBGS.Controllers
 
         public void TweetCompleted(int CaseReportID, string Location, string Concern, string DateReported, string DateCompleted)
         {
-            //string image;
-            //image = @"C:\Users\pc\Desktop\Capstone Codes\Final Web Application\MVCCapstoneBGS\TerraMaster\upload\shutterstock_124871620.jpg";
-            //string image = @"C:\Users\pc\Desktop\Photo\Status Report.png";
-            //string image = PhotoPath + "Status Report.png";
-
 
 
             DefaultData cmd = new DefaultData();
@@ -147,16 +142,17 @@ namespace MVCCapstoneBGS.Controllers
 
 
 
-            var url= _IDataProvider.GetCaseReportPhotoIMGUR(CaseReportID).Select(x => x.PhotoLink).FirstOrDefault();
+           // var before= _IDataProvider.GetCaseReportPhotoIMGUR(CaseReportID).Select(x => x.PhotoLink).FirstOrDefault();
+            var after = _IDataProvider.GetCaseReportPhotoIMGUR(CaseReportID).Select(x => x.CaseReportPhotoLinkCompleted).FirstOrDefault();
 
-           //string url = "http://www.infinetsoft.com/Images/logoinfi.png";
+            //string url = "http://www.infinetsoft.com/Images/logoinfi.png";
             service.SendTweetWithMedia(new SendTweetWithMediaOptions
             {
                 Status =
                         "Completion Report\n" +
                         "Case Report No " + CaseReportID + " in " + Location + " having a " + Concern + " last " + DateReported + " was marked as completed (" + DateCompleted + ")." +
                         " #TerraTechPH",
-                Images = new Dictionary<string, Stream> { { "TerraTech", urltostream(url) } }
+                Images = new Dictionary<string, Stream> { { "TerraTech", urltostream(after) } }
             });
 
         }
@@ -177,7 +173,7 @@ namespace MVCCapstoneBGS.Controllers
             string image;
             using (var w = new WebClient())
             {
-                image = Server.MapPath("~/TerraAssets/Photo/Status.png");
+                image = Server.MapPath("~/TerraAssets/Photo/Status Report.png");
             }
 
 

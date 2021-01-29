@@ -87,6 +87,29 @@ namespace MVCCapstoneBGS.Controllers
             return json;
         }
 
+        public ActionResult GetMapCommunityUser(int UpdatedStatusID, int UserInformationID) 
+        {
+            var data = _IDataProvider.GetCaseReport(UpdatedStatusID).Where(x=>x.UserInformationID==UserInformationID);
+            JsonResult json = Json(data, JsonRequestBehavior.AllowGet);
+            json.MaxJsonLength = int.MaxValue;
+            return json;
+        }
+
+        public ActionResult GetMapAdmin(int UpdatedStatusID)
+        {
+            var data = _IDataProvider.GetCaseReport(UpdatedStatusID);
+            JsonResult json = Json(data, JsonRequestBehavior.AllowGet);
+            json.MaxJsonLength = int.MaxValue;
+            return json;
+        }
+
+        public ActionResult GetMapVolunteer(int UpdatedStatusID, int UserInformationID)
+        {
+            var data = _IDataProvider.GetCaseReport(UpdatedStatusID).Where(x => x.VolunteerID == UserInformationID);
+            JsonResult json = Json(data, JsonRequestBehavior.AllowGet);
+            json.MaxJsonLength = int.MaxValue;
+            return json;
+        }
 
         public ActionResult GetCaseReportPhoto(int CaseReportID)
         {

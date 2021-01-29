@@ -167,23 +167,23 @@ namespace MVCCapstoneBGS.Controllers
 
 
 
-        var commaSeparated = string.Join(",", _IDataProvider.GetCaseReport(UpdatedStatusID).
-        Select(
-        mmm => "["
-        + quote
-        + "<center><img src='" + mmm.PhotoLink+ "' style='width:150px; height:100px;' id=imageID></center>"
-        + "Case No: " + mmm.CaseReportID
-        + "<br />Reported on: " + mmm.DateReported      
-        + "<br />Updated on: " + mmm.UpdatedStatusDate
-        + "<br />Type: " + mmm.Concern
-        + "<br />City: " + mmm.CaseLocation + " [" + Convert.ToDecimal(mmm.XCoordinates).ToString("#.##") + "," + Convert.ToDecimal(mmm.YCoordinates).ToString("#.##") + "]"
-        + quote
-        + "," + mmm.XCoordinates + "," + mmm.YCoordinates + "]"
-        ));
+            var commaSeparated = string.Join(",", _IDataProvider.GetCaseReport(UpdatedStatusID).
+            Select(
+            mmm => "["
+            + quote
+            + "<center><img src='" + mmm.PhotoLink + "' style='width:150px; height:100px;' id=imageID></center>"
+            + "Case No: " + mmm.CaseReportID
+            + "<br />Reported on: " + mmm.DateReported
+            + "<br />Updated on: " + mmm.UpdatedStatusDate
+            + "<br />Type: " + mmm.Concern
+            + "<br />City: " + mmm.CaseLocation + " [" + Convert.ToDecimal(mmm.XCoordinates).ToString("#.##") + "," + Convert.ToDecimal(mmm.YCoordinates).ToString("#.##") + "]"
+            + quote
+            + "," + mmm.XCoordinates + "," + mmm.YCoordinates + "]"
+            ));
 
 
 
-            ViewBag.DUMMY2 = commaSeparated;
+            ViewBag.c = commaSeparated;
 
             return View();
         }
@@ -355,11 +355,31 @@ namespace MVCCapstoneBGS.Controllers
             else
             {
                 _IDataProvider.InsertUserInformation(2, user.Username, user.Password, user.Email, user.GivenName, user.MaidenName, user.FamilyName);
-                result = "<script>Swal.fire({  icon: 'success',  title: 'SUCCESS!',  text: 'Account successfully created!',  footer: '<a >Powered by TerraTechPH</a>'})</script>";
+                result = "<script>Swal.fire({  icon: 'success',  title: 'SUCCESS!',  text: 'Account successfully created! Please check your email to verify the account',  footer: '<a >Powered by TerraTechPH</a>'})</script>";
 
              }
             TempData["message"] = result;
             return View("Login", TempData["message"]);
+        }
+
+        public ActionResult RegisterVolunteer(UserInformation user)
+        {
+            int chkUserExist = _IDataProvider.CheckUsername(user.Username);
+            string result = "";
+            if (chkUserExist > 0)
+            {
+                result = "<script>Swal.fire({  icon: 'error',  title: 'ERROR!',  text: 'Username already exist.',  footer: '<a >Powered by TerraTechPH</a>'})</script>";
+
+            }
+
+            else
+            {
+                _IDataProvider.InsertUserInformation(3, user.Username, user.Password, user.Email, user.GivenName, user.MaidenName, user.FamilyName);
+                result = "<script>Swal.fire({  icon: 'success',  title: 'SUCCESS!',  text: 'Account successfully created! Please check your email to verify the account',  footer: '<a >Powered by TerraTechPH</a>'})</script>";
+
+            }
+            TempData["message"] = result;
+            return RedirectToAction("Accounts", "Entities", TempData["message"]);
         }
 
         public ActionResult Leaderboard()
@@ -710,9 +730,8 @@ namespace MVCCapstoneBGS.Controllers
                 "Completed Land Concern: " + LandNumber + "\n" +
                 "Completed Water Concern: " + WaterNumber + "\n" +
                 "Submitted Concerns: " + SubmittedNumber + "\n" +
-                "Pending Cases: " + Progress + "\n" +
-                "all of which are taken from the submitted data of " + Users + " users";
-            return View();
+                "Pending Cases: " + Progress + "\n";
+                return View();
         }
         public ActionResult Submitted()
         {
@@ -979,6 +998,52 @@ namespace MVCCapstoneBGS.Controllers
             ViewBag.Title = LabelStruct.CommunityUser.ViewStatus;
             return View();
         }
+
+        public ActionResult SubmittedStatus()
+        {
+            ViewBag.VBLayout = Layout_CUDashboard;
+            ViewBag.DATETIMENOW = DateTime.Now.Date.ToLongDateString() + " - " + DateTime.Now.TimeOfDay;
+
+            ViewBag.Title = LabelStruct.CommunityUser.ViewStatus;
+            return View();
+        }
+
+        public ActionResult AcceptedStatus()
+        {
+            ViewBag.VBLayout = Layout_CUDashboard;
+            ViewBag.DATETIMENOW = DateTime.Now.Date.ToLongDateString() + " - " + DateTime.Now.TimeOfDay;
+
+            ViewBag.Title = LabelStruct.CommunityUser.ViewStatus;
+            return View();
+        }
+
+        public ActionResult RejectedStatus()
+        {
+            ViewBag.VBLayout = Layout_CUDashboard;
+            ViewBag.DATETIMENOW = DateTime.Now.Date.ToLongDateString() + " - " + DateTime.Now.TimeOfDay;
+
+            ViewBag.Title = LabelStruct.CommunityUser.ViewStatus;
+            return View();
+        }
+
+        public ActionResult InProgressStatus()
+        {
+            ViewBag.VBLayout = Layout_CUDashboard;
+            ViewBag.DATETIMENOW = DateTime.Now.Date.ToLongDateString() + " - " + DateTime.Now.TimeOfDay;
+
+            ViewBag.Title = LabelStruct.CommunityUser.ViewStatus;
+            return View();
+        }
+
+        public ActionResult CompletedStatus()
+        {
+            ViewBag.VBLayout = Layout_CUDashboard;
+            ViewBag.DATETIMENOW = DateTime.Now.Date.ToLongDateString() + " - " + DateTime.Now.TimeOfDay;
+
+            ViewBag.Title = LabelStruct.CommunityUser.ViewStatus;
+            return View();
+        }
+
         public ActionResult Achievements()
         {
             ViewBag.VBLayout = Layout_CUDashboard;
@@ -1396,6 +1461,22 @@ namespace MVCCapstoneBGS.Controllers
         #region Volunteer
         public ActionResult Volunteer()
         {
+
+            var commaSeparated = string.Join(",", _IDataProvider.GetCaseReport(4).Where(x => x.VolunteerID == Convert.ToInt32(Session["UserInformationID"])).
+      Select(
+      mmm => "["
+      + quote
+      + "<center><img src='" + mmm.PhotoLink + "' style='width:150px; height:100px;' id=imageID></center>"
+      + "Case No: " + mmm.CaseReportID
+      + "<br />Reported on: " + mmm.DateReported
+      + "<br />Updated on: " + mmm.UpdatedStatusDate
+      + "<br />Type: " + mmm.Concern
+      + "<br />City: " + mmm.CaseLocation + " [" + Convert.ToDecimal(mmm.XCoordinates).ToString("#.##") + "," + Convert.ToDecimal(mmm.YCoordinates).ToString("#.##") + "]"
+      + quote
+      + "," + mmm.XCoordinates + "," + mmm.YCoordinates + "]"
+      ));
+
+            ViewBag.MapDataVolunteer = commaSeparated;
             ViewBag.VBLayout = Layout_VDashboard;
             ViewBag.UserInformationID = Convert.ToInt32(Session["UserInformationID"]);
             return View();

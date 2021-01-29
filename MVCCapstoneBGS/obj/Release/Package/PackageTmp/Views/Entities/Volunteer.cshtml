@@ -7,6 +7,13 @@
 
 <html>
 <head>
+
+    <script src="https://cdn.jsdelivr.net/gh/YuanxiangFranck/Leaflet.heat/dist/leaflet-heat.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/YuanxiangFranck/Leaflet.heat/src/HeatLayer.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+
+
     <meta name="viewport" content="width=device-width" />
     <title>@LabelStruct.Administrator.Volunteers</title>
 
@@ -20,8 +27,30 @@
         <li class="breadcrumb-item active">Dashboard</li>
     </ol>
 
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-chart-area mr-1"></i>
+            My Reported Cases
+        </div>
 
 
+        <div class="card-body">
+
+            <select name="UpdatedStatusDDL" class="btn btn-dark UpdatedStatusDDL">- Please Select -</select>
+
+
+            <div class="control-label col-xs-12 col-sm-4">
+                <label class="asteriskRequired"></label>
+            </div>
+
+            <div style="padding-top:25px; height:500px" id='map'></div>
+        </div>
+
+        <div class="card-footer small text-muted">Data as of @ViewBag.DATETIMENOW</div>
+    </div>
+
+
+    
 
 </body>
 </html>
@@ -31,9 +60,145 @@
 
 
     $(document).ready(function () {
-        LoadVolunteer();
+        LoadMap();
+        LoadUpdatedStatusDDL();
+        var addressPoints = [];
+        var resultingdata;
+    });
 
+    $(document).on("click", "#imageID", function () {
+        Swal.fire({
+            title: 'Environmental Concern',
+            text: 'Powered by TerraTech',
+            imageUrl: $(this)[0].getAttribute('src'),
+            imageWidth: 400,
+            imageHeight: 200,
+            imageAlt: 'Custom image',
+        })
 
     });
+
+
+    function LoadUpdatedStatusDDL() {
+        var temp = $(".UpdatedStatusDDL").empty();
+        temp.append($("<option>Select Status</option>"));
+        $.ajax({
+            type: "GET",
+            url: "/DataGet/GetUpdatedStatus",
+            dataType: "json",
+            success: function (response) {
+                $.each(response, function () {
+                    if (this['UpdatedStatusID'] == 4 || this['UpdatedStatusID'] == 5) {
+                        temp.append($("<option></option>").val(this['UpdatedStatusID']).html(this['Description']));
+                    }
+                    else {
+                    }
+                });
+            }
+        })
+    };
+
+        $(document).on("change", ".UpdatedStatusDDL", function () {
+        addressPoints = [];
+        ReLoadMap();
+        var PARAM_UPDATEDSTATUSID = $('.UpdatedStatusDDL').val();
+
+        $.ajax({
+            type: "GET",
+            "url": "/DataGet/GetMapVolunteer",
+            dataType: "json",
+            async: false,
+            data: {
+                UpdatedStatusID: PARAM_UPDATEDSTATUSID,
+                UserInformationID: @Session["UserInformationID"]
+            },
+            success: function (result) {
+
+                //$.each(result, function (index, value) {
+                var jsonStringify = JSON.stringify(result);
+                var jsonObj = JSON.parse(jsonStringify);
+                //console.table(jsonObj);
+                // console.log(jsonObj);
+                resultingdata = jsonObj;
+                //alert(jsonObj[0]['XCoordinates'] + ' ' + jsonObj[0]['YCoordinates']);
+                //});
+            }
+        }
+        );
+        //    console.log(resultingdata);
+        Object.keys(resultingdata).forEach(
+            (key) => addressPoints.push([
+                "<center><img src='" + resultingdata[key]['PhotoLink'] + "' style='width:250px; height:150px;' id='imageID'></center><br /><b>Case Report No: </b>" + resultingdata[key]['CaseReportID'] + "<br /><b>Reported on: </b>" + new Date(parseInt((resultingdata[key]['DateReported']).substr(6))) + "<br /><b>Updated on: </b>" + new Date(parseInt((resultingdata[key]['UpdatedStatusDate']).substr(6))) + "<br /><b>Concern: </b>" + resultingdata[key]['Concern'] + " - " + resultingdata[key]['SubCategory'] + "<br /><b>Location: </b>" + resultingdata[key]['CaseLocation']
+                , resultingdata[key]['XCoordinates']
+                , resultingdata[key]['YCoordinates']])
+        );
+        //     console.log(addressPoints);
+    });
+
+
+    function LoadAddressPoints() {
+        addressPoints = addressPoints;
+    }
+
+    function LoadMap() {
+        map = L.map('map');
+        var tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            attribution: 'a',
+        }).addTo(map);
+        map.setView([14.564946, 121.041729], 7);
+        var maxBounds = [
+            [21.116625, 131.175528],
+            [4.991861, 115.976455]
+        ];
+        map.setMaxBounds(maxBounds);
+        map.fitBounds(maxBounds);
+        $('.leaflet-control-attribution').hide();
+
+        L.easyButton('fas fa-fire-alt', function () {
+            LoadHeatMap();
+        }).addTo(map);
+
+        L.easyButton('fas fa-map-marker-alt', function () {
+            LoadMarkerMap();
+        }).addTo(map);
+
+    }
+
+    function LoadMarkerMap() {
+        ReLoadMap();
+        LoadAddressPoints();
+
+        //  console.log(addressPoints);
+        for (var i = 0; i < addressPoints.length; i++) {
+            marker = new L.marker([addressPoints[i][1], addressPoints[i][2]])
+                .bindPopup(addressPoints[i][0])
+                .addTo(map);
+        }
+        map.setView([addressPoints[1][1], addressPoints[1][2]], 25);
+
+    };
+
+    function LoadHeatMap() {
+        ReLoadMap();
+        LoadAddressPoints();
+        //     console.log(addressPoints);
+
+        var x = addressPoints.map(function (p) {
+            return [p[1], p[2]];
+        });
+        map.setView([addressPoints[1][1], addressPoints[1][2]], 25);
+
+
+        var heat = L.heatLayer(x).addTo(map);
+    }
+
+    function ReLoadMap() {
+        if (map != null) {
+            map.remove();
+            map = null;
+        }
+        LoadMap();
+    }
+
 
 </script>

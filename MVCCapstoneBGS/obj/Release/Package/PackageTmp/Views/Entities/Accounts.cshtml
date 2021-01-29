@@ -12,6 +12,8 @@
 </head>
 <body>
 
+    @Html.Raw(@TempData["message"])
+
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="">Administrator</a></li>
         <li class="breadcrumb-item"><a href="">Management</a></li>
@@ -46,79 +48,52 @@
                 <div class="modal-header">
                     <h3 class="modal-title Title">Insert : Community Volunteer</h3>
                 </div>
-                <div class="modal-body">
+                @using (Html.BeginForm("RegisterVolunteer", "Entities", FormMethod.Post))
+                {
+                    <div class="modal-body">
 
-                    <div class="modal-body mx-3">
 
-                        <div class="md-form mb-5">
-                            <input type="text" id="tbGivenName" class="form-control validate tbGivenName">
-                            <label data-error="wrong" data-success="right" for="orangeForm-name">Given Name</label>
+                        <div class="form-group">
+                            <label class="sr-only" for="form-username">Username</label>
+                            <input type="text" name="Username" placeholder="Username..." class="form-username form-control" id="form-username" required>
                         </div>
 
-                        <div class="md-form mb-5">
-                            <input type="text" id="tbMaidenName" class="form-control validate tbMaidenName">
-                            <label data-error="wrong" data-success="right" for="orangeForm-name">Maiden Name</label>
+                        <div class="form-group">
+                            <label class="sr-only" for="form-password">Password</label>
+                            <input type="password" name="Password" placeholder="Password..." class="form-password form-control" id="form-password" required>
                         </div>
 
-                        <div class="md-form mb-5">
-                            <input type="text" id="tbFamilyName" class="form-control validate tbFamilyName">
-                            <label data-error="wrong" data-success="right" for="orangeForm-name">Family Name</label>
+                        <div class="form-group">
+                            <label class="sr-only" for="form-first-name">First Name</label>
+                            <input type="text" name="GivenName" placeholder="First Name..." class="form-first-name form-control" id="form-first-name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="sr-only" for="form-middle-name">Middle Name</label>
+                            <input type="text" name="MaidenName" placeholder="Middle Name..." class="form-middle-name form-control" id="form-middle-name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="sr-only" for="form-last-name">Last Name</label>
+                            <input type="text" name="FamilyName" placeholder="Last Name..." class="form-last-name form-control" id="form-last-name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="sr-only" for="form-email">Email</label>
+                            <input type="email" name="Email" placeholder="Email..." class="form-email form-control" id="form-email" required>
                         </div>
 
                     </div>
-
-
-                </div>
-                <div class="modal-footer">
-                    <input type="submit" id="btnREQAddVolunteer" value="Insert" class="btn btn-primary btn-md btnREQAddVolunteer" />
-                    <button type="button" class="btn btn-danger" data-dismiss="modal" title="Close">Close</button>
-                </div>
+                    <div class="modal-footer">
+                        <input type="submit" id="btnREQAddVolunteer" value="Insert" class="btn btn-primary btn-md btnREQAddVolunteer" />
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" title="Close">Close</button>
+                    </div>
+                }
             </div>
             <!-- Modal content-->
         </div>
     </div>
     @*MODAL SECTION ADD END*@
-
-    @*MODAL SECTION UPDATE START*@
-    <div class="modal fade" id="myModalUpdate" role="dialog">
-        <div class="modal-dialog modal-md">
-            <!-- Modal content-->
-            <div class="modal-content" id="modalwindow">
-                <div class="modal-header">
-                    <h3 class="modal-title Title">Update : Community Volunteer</h3>
-                </div>
-                <div class="modal-body">
-
-                    <div class="modal-body mx-3">
-
-                        <div class="md-form mb-5">
-                            <input type="text" id="tbUGivenName" class="form-control validate tbUGivenName">
-                            <label data-error="wrong" data-success="right" for="orangeForm-name">Given Name</label>
-                        </div>
-
-                        <div class="md-form mb-5">
-                            <input type="text" id="tbUMaidenName" class="form-control validate tbUMaidenName">
-                            <label data-error="wrong" data-success="right" for="orangeForm-name">Maiden Name</label>
-                        </div>
-
-                        <div class="md-form mb-5">
-                            <input type="text" id="tbUFamilyName" class="form-control validate tbUFamilyName">
-                            <label data-error="wrong" data-success="right" for="orangeForm-name">Family Name</label>
-                        </div>
-
-                    </div>
-
-
-                </div>
-                <div class="modal-footer">
-                    <input type="submit" id="btnREQUpdateVolunteer" value="Update" class="btn btn-primary btn-md btnREQUpdateVolunteer" />
-                    <button type="button" class="btn btn-danger" data-dismiss="modal" title="Close">Close</button>
-                </div>
-            </div>
-            <!-- Modal content-->
-        </div>
-    </div>
-    @*MODAL SECTION UPDATE END*@
 
     <div class="modal fade" id="myModalDummy" role="dialog">
         <div class="modal-dialog modal-lg">
@@ -183,39 +158,16 @@
 
     $(document).ready(function () {
         LoadVolunteer();
-        //LoadMyTrial();
     });
 
 
-    //function LoadMyTrial() {
-    //    //debugger;
-    //    var temp;
-    //    $.ajax({
-    //        type: "GET",
-    //        "url": "/DataGet/GetVolunteer",
-           
-    //        contentType: "application/json;charset=utf-8",
-    //        dataType: "json",
-    //        success: function (result) {
-    //            //alert(JSON.stringify(result));
-    //            $.each(response, function () {
-    //                temp.append('VolunteerID');
-    //            });
-    //        },
-    //        error: function (response) {
-    //          //  debugger;
-    //            alert('eror');
-    //        }
-    //    });
-    //    alert(temp);
-    //}
+
 
     function LoadVolunteer() {
         table = $('#VolunteerTable').DataTable({
             bLengthChange: false,
             destroy: true,
             responsive: true,
-            order: [[1, 'asc']],
             ajax: {
                 type: "GET",
                 "url": "/DataGet/GetVolunteer",
@@ -224,12 +176,13 @@
                     for (var b = 0; b <= json.length - 1; b++) {
                         var c = json[b];
                         a.push({
-                            'VolunteerID': c.VolunteerID,
-                            'FamilyName': c.FamilyName,
-                            'GivenName': c.GivenName,
-                            'MaidenName': c.MaidenName,
+                            'UserInformationID': c.UserInformationID,
                             'FullName': c.GivenName + " " + c.MaidenName + " " + c.FamilyName,
-                            'Notes': c.Notes
+                            'Email': c.Email,
+                            'Notes': c.Notes,
+                            'Username': c.Username,
+                            'Email': c.Email,
+                            'IsVerified' : c.IsVerified
                         });
                     }
                     return a;
@@ -237,21 +190,20 @@
             },
             columns: [
                 {
-                    title: "Action",
-                    "render": function () {
-                        var del = "<a class='btn btn-danger btn-xs btnDelete'  title='Delete' style='color: white'><i class='fa fa-1x fa-trash'></i></a>";
-                        var edit = "<a class='btn btn-primary btn-xs btnUpdate' title='Edit' style='color: white'><i class = 'fa fa-1x fa-edit'></i></a>";
-                        return edit + "   " + del;
-                    },
-                    width: "80px"
-                },
-                {
-                    title: "ID Number",
-                    data: "VolunteerID"
-                },
-                {
                     title: "Name",
                     data: "FullName"
+                },
+                {
+                    title: "Username",
+                    data: "Username"
+                },
+                {
+                    title: "Email",
+                    data: "Email"
+                },
+                {
+                    title: "Verified",
+                    data: "IsVerified"
                 },
             ],
             'columnDefs': [
@@ -331,32 +283,6 @@
                         MaidenName: PARAM_MaidenName,
                         FamilyName: PARAM_FamilyName
                     }
-                });
-                LoadVolunteer();
-            }
-        })
-    });
-
-    $(document).on("click", ".btnDelete", function () {
-        var data = table.row($(this).parents('tr')).data();
-        var PARAM_VolunteerID = data["VolunteerID"];
-
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes. Delete it!'
-        }).then((result) => {
-            if (result.value) {
-                $.ajax({
-                    type: "GET",
-                    "url": "/DataDelete/DeleteVolunteer",
-                    dataType: "json",
-                    async: false,
-                    data: { VolunteerID: PARAM_VolunteerID }
                 });
                 LoadVolunteer();
             }
