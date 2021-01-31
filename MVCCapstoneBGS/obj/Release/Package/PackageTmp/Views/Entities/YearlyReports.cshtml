@@ -9,6 +9,17 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@LabelStruct.Administrator.YearlyReports</title>
+    <style type="text/css">
+        .mobileHide {
+            display: inline;
+        }
+        /* Smartphone Portrait and Landscape */
+        @@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+            .mobileHide {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -87,7 +98,7 @@
         </div>
     </div>
 
-    <div class="card mb-4">
+    <div class="card mb-4 mobileHide">
         <div class="card-body">
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
 
@@ -115,7 +126,7 @@
         </div>
     </div>
 
-    <div class="tab-content" id="pills-tabContent">
+    <div class="tab-content mobileHide" id="pills-tabContent">
 
         <div class="tab-pane fade show active" id="pills-submitted" role="tabpanel" aria-labelledby="pills-home-tab">
             <div class="card mb-4">

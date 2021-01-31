@@ -12,6 +12,8 @@
     <title>@LabelStruct.CommunityUser.SubmitReport</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
     <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/Leaflet/Leaflet.fullscreen/dist/Leaflet.fullscreen.min.js"></script>
+
 </head>
 
 <body>
@@ -329,6 +331,11 @@
     L.easyButton('fas fa-location-arrow', function () {
         getLocation();
     }).addTo(map);
+
+    L.easyButton('fas fa-compress', function () {
+        map.toggleFullscreen();
+    }).addTo(map);
+
 
 
 

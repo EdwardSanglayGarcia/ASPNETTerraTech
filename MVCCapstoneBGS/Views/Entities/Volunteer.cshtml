@@ -12,6 +12,7 @@
     <script src="https://cdn.jsdelivr.net/gh/YuanxiangFranck/Leaflet.heat/src/HeatLayer.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
     <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/Leaflet/Leaflet.fullscreen/dist/Leaflet.fullscreen.min.js"></script>
 
 
     <meta name="viewport" content="width=device-width" />
@@ -142,10 +143,9 @@
 
     function LoadMap() {
         map = L.map('map');
-        var tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        var tiles = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
             attribution: 'a',
         }).addTo(map);
-        map.setView([14.564946, 121.041729], 7);
         var maxBounds = [
             [21.116625, 131.175528],
             [4.991861, 115.976455]
@@ -162,6 +162,11 @@
             LoadMarkerMap();
         }).addTo(map);
 
+
+        L.easyButton('fas fa-compress', function () {
+            map.toggleFullscreen();
+        }).addTo(map);
+
     }
 
     function LoadMarkerMap() {
@@ -174,7 +179,7 @@
                 .bindPopup(addressPoints[i][0])
                 .addTo(map);
         }
-        map.setView([addressPoints[1][1], addressPoints[1][2]], 25);
+        map.setView([addressPoints[0][1], addressPoints[0][2]], 25);
 
     };
 
@@ -186,7 +191,7 @@
         var x = addressPoints.map(function (p) {
             return [p[1], p[2]];
         });
-        map.setView([addressPoints[1][1], addressPoints[1][2]], 25);
+        map.setView([addressPoints[0][1], addressPoints[0][2]], 25);
 
 
         var heat = L.heatLayer(x).addTo(map);

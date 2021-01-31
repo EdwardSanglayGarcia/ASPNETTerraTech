@@ -21,7 +21,6 @@ namespace MVCCapstoneBGS
     public class DataProvider : DataAccess, IDataProvider
     {
 
-
         public List<CaseReport> GetCaseReportPhoto(int CaseReportID)
         {
             var result = new List<CaseReport>();
