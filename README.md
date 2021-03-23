@@ -9,8 +9,8 @@
 
 
 Researchers<br />
-John Benjet M. Bendita<br />
-Edward S. Garcia<br />
+John Benjet M. Bendita - Backend Engineer<br />
+Edward S. Garcia - Lead Developer<br />
 
 Adviser<br />
 Prof. Grace Lorraine D. Intal
