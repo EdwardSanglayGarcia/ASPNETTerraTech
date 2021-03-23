@@ -2,9 +2,6 @@
 <p>Final Repository of TerraTech Microtask Crowdsourcing Application</p>
 
 <b><p>TerraTech: A Crowdsourcing Web Application that Aids Environmental Needs and Concerns</p></b>
-<p>A Capstone Presented to the School of Information Technology Mapua University</p>
-<p>In Partial Fulfillment of the Requirements for the Degree</p>
-<p>Bachelor of Science in Information Technology and Bachelor of Science in Information System</p>
 
 
 
