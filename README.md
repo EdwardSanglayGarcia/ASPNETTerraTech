@@ -26,19 +26,19 @@ Subversion Status Remodelling<br />
 
 Developed Microtask Crowdsourcing Components and Functions per International Standards<br />
 ![image](https://user-images.githubusercontent.com/42932255/112228800-d7cfab80-8c6c-11eb-8799-8749dbf7b753.png)<br />
-3.1 USER MANAGEMENT<br />
+<br />3.1 USER MANAGEMENT<br />
 Register User – the ability of the system to store user information into the TerraTech database.
 Evaluate User – checks if the registered user is qualified participate in the crowdsourcing system in which the only requirement is that the user should be inside the borders of the Philippines in land or water.
-3.2 TASK MANAGEMENT<br />
+<br />3.2 TASK MANAGEMENT<br />
 Design Task – the ability of the crowdsourcing system to store the types of tasks and sub-tasks being integrated into the system (land and water concern and their sub-categories).
 Assign Task – pertains to how the users would be able to participate on the tasks declared on the Design Task.
-3.3 CONTRIBUTION MANAGEMENT<br />
+<br />3.3 CONTRIBUTION MANAGEMENT<br />
 Evaluate Contribution – a function of TerraTech where the administrators can evaluate each report submitted by the community users in which they can either accept or reject a report.
 Select Contribution – the function of TerraTech that is used in selecting the processed contributions given by the community users through the use of an algorithm, procedure, and data processing techniques.
-3.4 WORKFLOW MANAGEMENT<br />
+<br />3.4 WORKFLOW MANAGEMENT<br />
 Define Workflow – pertains to the real-life process outside TerraTech where the people would define who would be assigned as the administrators of the system to manage the data.
 Manage Workflow – this is the function outside TerraTech where each person performs their respective task such as people who are assigned as administrators needs to manage the reports, while community users need to submit reports, and lastly, volunteers who needs to reject or complete specific reports assigned to them.
-4. TECHNICAL BACKGROUND<br />
+<br />4. TECHNICAL BACKGROUND<br />
 The TerraTech application is a web application that would be available in multiple devices, the system is presented using HTML5, CSS3, and Bootstrap, while for the functionalities of the user experience, the usage of Leaflet.js, Chart.js, SweetAltert.js, and JQuery for the maps, charts, alerts, and functions respectively. The programming language used for the development was C#, more specifically, MVC5 was used to integrate the overall functionalities together with SQL Server 2018 as its database. 
 
 
