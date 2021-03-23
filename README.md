@@ -15,6 +15,10 @@ Edward S. Garcia - Lead Developer<br />
 Adviser<br />
 Prof. Grace Lorraine D. Intal
 
+<br />System Sitemap
+<br />![image](https://user-images.githubusercontent.com/42932255/112229188-7956fd00-8c6d-11eb-8758-6b60a70a75b6.png)
+
+
 
 Master Architecture of TerraTech<br />
 ![image](https://user-images.githubusercontent.com/42932255/112228713-af47b180-8c6c-11eb-8cbb-d8b247f4097b.png)
