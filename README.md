@@ -25,7 +25,7 @@ Subversion Status Remodelling<br />
 ![image](https://user-images.githubusercontent.com/42932255/112228739-bd95cd80-8c6c-11eb-9885-e8913a785929.png)
 
 Developed Microtask Crowdsourcing Components and Functions per International Standards<br />
-![image](https://user-images.githubusercontent.com/42932255/112228800-d7cfab80-8c6c-11eb-8799-8749dbf7b753.png)
+![image](https://user-images.githubusercontent.com/42932255/112228800-d7cfab80-8c6c-11eb-8799-8749dbf7b753.png)<br />
 3.1 USER MANAGEMENT<br />
 Register User – the ability of the system to store user information into the TerraTech database.
 Evaluate User – checks if the registered user is qualified participate in the crowdsourcing system in which the only requirement is that the user should be inside the borders of the Philippines in land or water.
