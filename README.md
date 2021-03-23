@@ -42,3 +42,9 @@ Manage Workflow – this is the function outside TerraTech where each person per
 The TerraTech application is a web application that would be available in multiple devices, the system is presented using HTML5, CSS3, and Bootstrap, while for the functionalities of the user experience, the usage of Leaflet.js, Chart.js, SweetAltert.js, and JQuery for the maps, charts, alerts, and functions respectively. The programming language used for the development was C#, more specifically, MVC5 was used to integrate the overall functionalities together with SQL Server 2018 as its database. 
 
 
+<br />Finalization: Controller - Dynamic Processing from Database to JSON conversion result
+<br />![image](https://user-images.githubusercontent.com/42932255/112229076-457bd780-8c6d-11eb-972d-f098785c4ba5.png)
+
+<br />Twitter Adjustments - Finalized version
+<br />![image](https://user-images.githubusercontent.com/42932255/112229132-5f1d1f00-8c6d-11eb-9a8e-801088ab113e.png)
+
