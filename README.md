@@ -1,3 +1,5 @@
+# UPDATE - JULY 6, 2022 - For international publication under Association for Computing Machinery.
+
 # <img src="https://upload.wikimedia.org/wikipedia/en/6/65/Map%C3%BAa_University_logo.png" alt="Lamp" width="60" height="60"> Capstone BGS Model View Controller
 <p>Final Repository of TerraTech Microtask Crowdsourcing Application</p>
 
